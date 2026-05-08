@@ -1,37 +1,45 @@
 ## ─── Server dev (hot-reload) ─────────────────────────────────────
 FROM node:22-alpine AS server-dev
 
-WORKDIR /app/server
-COPY server/package*.json ./
-RUN npm install
-COPY server/ ./
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+RUN npm ci --workspace=server
+COPY server/ ./server/
 
 ## ─── Client dev (hot-reload) ─────────────────────────────────────
 FROM node:22-alpine AS client-dev
 
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm install
-COPY client/ ./
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+RUN npm ci --workspace=client
+COPY client/ ./client/
 
 ## ─── Build client for production ─────────────────────────────────
 FROM node:22-alpine AS client-builder
 
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm ci
-COPY client/ ./
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+RUN npm ci --workspace=client
+COPY client/ ./client/
 ARG VITE_SERVER_URL=/
-RUN npm run build
+RUN npm run build --workspace=client
 
 ## ─── Build server for production ─────────────────────────────────
 FROM node:22-alpine AS server-builder
 
-WORKDIR /app/server
-COPY server/package*.json ./
-RUN npm ci
-COPY server/ ./
-RUN npx tsc
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+RUN npm ci --workspace=server
+COPY server/ ./server/
+RUN npx --workspace=server tsc
 
 ## ─── Production image ────────────────────────────────────────────
 FROM node:22-alpine AS production
@@ -42,12 +50,13 @@ LABEL org.opencontainers.image.description="Team Name Game - real-time synchroni
 
 WORKDIR /app
 
-COPY --from=server-builder /app/server/dist ./server/dist
-COPY --from=server-builder /app/server/package*.json ./server/
-COPY --from=client-builder /app/client/dist ./client/dist
+COPY package.json package-lock.json ./
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+RUN npm ci --workspace=server --omit=dev
 
-WORKDIR /app/server
-RUN npm ci --omit=dev
+COPY --from=server-builder /app/server/dist ./server/dist
+COPY --from=client-builder /app/client/dist ./client/dist
 
 ENV NODE_ENV=production
 ENV PORT=8080
@@ -55,4 +64,4 @@ ENV CLIENT_ORIGIN=*
 
 EXPOSE 8080
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "server/dist/index.js"]
