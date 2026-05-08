@@ -171,8 +171,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const registerUser = useCallback(
     (name: string, role: Role): Promise<User> => {
-      return new Promise((resolve) => {
-        if (!socket) return;
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
         socket.emit('user:register', { name, role }, (user: User) => {
           dispatch({ type: 'SET_CURRENT_USER', payload: user });
           resolve(user);
@@ -184,8 +184,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const createTeam = useCallback(
     (name: string, icon: string): Promise<Team> => {
-      return new Promise((resolve) => {
-        if (!socket) return;
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
         socket.emit(
           'team:create',
           { name, icon, createdBy: state.currentUser?.id || '' },
@@ -198,9 +198,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const approveEntry = useCallback(
     (teamId: string): Promise<Team> => {
-      return new Promise((resolve) => {
-        if (!socket) return;
-        socket.emit('team:approve-entry', { teamId }, (team: Team) => resolve(team));
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
+        socket.emit('team:approve-entry', { teamId }, (team: Team | null) => {
+          if (team) resolve(team);
+          else reject(new Error('Team not found'));
+        });
       });
     },
     [socket],
@@ -216,9 +219,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const conferAbility = useCallback(
     (teamId: string, ability: AbilityType): Promise<Team> => {
-      return new Promise((resolve) => {
-        if (!socket) return;
-        socket.emit('team:confer-ability', { teamId, ability }, (team: Team) => resolve(team));
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
+        socket.emit('team:confer-ability', { teamId, ability }, (team: Team | null) => {
+          if (team) resolve(team);
+          else reject(new Error('Unable to confer ability'));
+        });
       });
     },
     [socket],
@@ -226,8 +232,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const createTimer = useCallback(
     (label: string, duration: number): Promise<NukeTimer> => {
-      return new Promise((resolve) => {
-        if (!socket) return;
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
         socket.emit(
           'timer:create',
           { label, duration, createdBy: state.currentUser?.id || '' },

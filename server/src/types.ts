@@ -50,9 +50,9 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   'user:register': (data: { name: string; role: Role }, callback: (user: User) => void) => void;
   'team:create': (data: { name: string; icon: string; createdBy: string }, callback: (team: Team) => void) => void;
-  'team:approve-entry': (data: { teamId: string }, callback: (team: Team) => void) => void;
+  'team:approve-entry': (data: { teamId: string }, callback: (team: Team | null) => void) => void;
   'team:reject-entry': (data: { teamId: string }) => void;
-  'team:confer-ability': (data: { teamId: string; ability: AbilityType }, callback: (team: Team) => void) => void;
+  'team:confer-ability': (data: { teamId: string; ability: AbilityType }, callback: (team: Team | null) => void) => void;
   'timer:create': (data: { label: string; duration: number; createdBy: string }, callback: (timer: NukeTimer) => void) => void;
   'timer:start': (data: { timerId: string }) => void;
   'timer:stop': (data: { timerId: string }) => void;

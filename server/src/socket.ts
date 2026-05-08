@@ -51,6 +51,8 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:updated', team);
+      } else {
+        callback(null);
       }
     });
 
@@ -63,6 +65,8 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:updated', team);
+      } else {
+        callback(null);
       }
     });
 

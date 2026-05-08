@@ -44,7 +44,7 @@ function AdjudicatorReview() {
   const abilitiesUnlocked = team.entriesUntilAbility === 0;
 
   const handleApprove = () => {
-    approveEntry(team.id);
+    approveEntry(team.id).catch(() => {});
   };
 
   const handleReject = () => {
@@ -58,7 +58,11 @@ function AdjudicatorReview() {
 
   const handleConfirmAbility = async () => {
     if (confirmAbility) {
-      await conferAbility(team.id, confirmAbility);
+      try {
+        await conferAbility(team.id, confirmAbility);
+      } catch {
+        // Ability may have been conferred by another adjudicator
+      }
       setConfirmAbility(null);
     }
   };
