@@ -1,0 +1,47 @@
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      releases_created: ${{ steps.rp.outputs.releases_created }}
+      tag_name: ${{ steps.rp.outputs['.--tag_name'] }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: rp
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v6
+        if: steps.rp.outputs.releases_created != 'true'
+      - name: Guard against stale release-as entries
+        if: steps.rp.outputs.releases_created != 'true'
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          with open("release-please-config.json") as f:
+              cfg = json.load(f)
+          with open(".release-please-manifest.json") as f:
+              manifest = json.load(f)
+          stale = []
+          for pkg, conf in cfg.get("packages", {}).items():
+              ra = conf.get("release-as")
+              if ra is not None and manifest.get(pkg) == ra:
+                  stale.append((pkg, ra))
+          if stale:
+              print("::error::Stale release-as entries in release-please-config.json:")
+              for pkg, ra in stale:
+                  print(f"::error::  packages.{pkg}.release-as={ra} already matches manifest — remove it.")
+              sys.exit(1)
+          PY
