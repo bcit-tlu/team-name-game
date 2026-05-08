@@ -30,6 +30,7 @@ npm run dev
 ```
 ├── client/          # React + Vite + MUI frontend
 ├── server/          # Express + Socket.io backend
+├── charts/          # Helm chart for Kubernetes deployment
 ├── conf.d/          # Nginx config (production)
 ├── Dockerfile       # Multi-stage build
 ├── docker-compose.yml
