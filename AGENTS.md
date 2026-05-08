@@ -35,7 +35,13 @@
 
 ## Testing Guidelines
 
-- Write unit tests for new utility functions
+- Use Vitest for both frontend and backend tests
+- Run all tests: `npm test`
+- Run server tests only: `npm run test --workspace=server`
+- Run client tests only: `npm run test --workspace=client`
+- Watch mode: `npm run test:watch --workspace=server` (or `client`)
+- Write unit tests for new utility functions in `src/__tests__/`
+- Client tests use `@testing-library/react` with jsdom environment
 - Manual testing via `docker compose up` with multiple browser tabs to verify real-time sync
 - Test plan: register a team → adjudicator approves 4 entries → ability unlocks → timer countdown
 - Run `npm run lint` and `npm run build` before committing
