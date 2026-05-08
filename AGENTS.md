@@ -56,6 +56,7 @@
 - `/server/src/state.ts` - In-memory game state store
 - `/server/src/socket.ts` - Socket.io event handlers
 - `/conf.d` - Nginx configuration (if using nginx reverse proxy)
+- `/charts/team-name-game` - Helm chart for Kubernetes deployment
 - `/.github/workflows` - CI/CD pipelines
 
 ## Architecture
