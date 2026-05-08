@@ -1,0 +1,36 @@
+name: ${APP_NAME:-team-name-game}
+
+services:
+
+  server:
+    build:
+      context: .
+      target: server-dev
+    command: npx tsx watch src/index.ts
+    working_dir: /app/server
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - CLIENT_ORIGIN=http://localhost:5173
+    volumes:
+      - ./server/src:/app/server/src
+    ports:
+      - "3001:3001"
+
+  client:
+    build:
+      context: .
+      target: client-dev
+    command: npx vite --host
+    working_dir: /app/client
+    environment:
+      - VITE_SERVER_URL=http://localhost:3001
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./client/src:/app/client/src
+      - ./client/index.html:/app/client/index.html
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server

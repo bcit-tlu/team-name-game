@@ -1,0 +1,44 @@
+import { Routes, Route } from 'react-router-dom';
+import { Box } from '@mui/material';
+import Layout from './components/Layout';
+import HomePage from './pages/HomePage';
+import TeamMemberName from './pages/TeamMemberName';
+import TeamRegister from './pages/TeamRegister';
+import TeamComplete from './pages/TeamComplete';
+import AdjudicatorName from './pages/AdjudicatorName';
+import AdjudicatorTeams from './pages/AdjudicatorTeams';
+import AdjudicatorReview from './pages/AdjudicatorReview';
+import TimerName from './pages/TimerName';
+import TimerDisplay from './pages/TimerDisplay';
+import WeaverName from './pages/WeaverName';
+import WeaverCamera from './pages/WeaverCamera';
+import TeamsPage from './pages/TeamsPage';
+import FeedbackPage from './pages/FeedbackPage';
+import AdminPage from './pages/AdminPage';
+
+function App() {
+  return (
+    <Box sx={{ maxWidth: 480, mx: 'auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/team-member" element={<TeamMemberName />} />
+          <Route path="/team-member/register" element={<TeamRegister />} />
+          <Route path="/team-member/complete" element={<TeamComplete />} />
+          <Route path="/adjudicator" element={<AdjudicatorName />} />
+          <Route path="/adjudicator/teams" element={<AdjudicatorTeams />} />
+          <Route path="/adjudicator/review/:teamId" element={<AdjudicatorReview />} />
+          <Route path="/timer" element={<TimerName />} />
+          <Route path="/timer/display" element={<TimerDisplay />} />
+          <Route path="/weaver" element={<WeaverName />} />
+          <Route path="/weaver/camera" element={<WeaverCamera />} />
+          <Route path="/teams" element={<TeamsPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Route>
+      </Routes>
+    </Box>
+  );
+}
+
+export default App;
