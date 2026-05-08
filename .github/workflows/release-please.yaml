@@ -45,3 +45,36 @@ jobs:
                   print(f"::error::  packages.{pkg}.release-as={ra} already matches manifest — remove it.")
               sys.exit(1)
           PY
+
+  # ── Dispatch chart & image publishing on release ────────────
+  #
+  # Releases created via GITHUB_TOKEN do NOT trigger workflows that listen
+  # on `release: published` or `push: tags:`. Dispatch helm-publish and
+  # release-retag explicitly for the released tag.
+  dispatch-publish:
+    needs: release
+    if: needs.release.outputs.releases_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch downstream workflows for the released tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.release.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${TAG}" ]]; then
+            echo "::warning::release-please reported a release but no tag_name output; skipping dispatch"
+            exit 0
+          fi
+          echo "Dispatching helm-publish.yaml for ${TAG}"
+          gh workflow run helm-publish.yaml \
+            --ref "${TAG}" \
+            -f tag_name="${TAG}"
+          echo "Dispatching release-retag.yaml for ${TAG}"
+          gh workflow run release-retag.yaml \
+            --ref "${TAG}" \
+            -f tag_name="${TAG}"
