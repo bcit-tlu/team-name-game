@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -20,6 +21,16 @@ function Layout() {
   const location = useLocation();
   const { state } = useGame();
   const { currentUser } = state;
+  const previousPathRef = useRef<string>('/');
+
+  const handleProfileClick = () => {
+    if (location.pathname === '/profile') {
+      navigate(previousPathRef.current);
+    } else {
+      previousPathRef.current = location.pathname;
+      navigate('/profile');
+    }
+  };
 
   const getNavValue = () => {
     if (location.pathname === '/teams' || location.pathname.startsWith('/teams/')) return 1;
@@ -37,7 +48,7 @@ function Layout() {
           >
             Team Name Game
           </Typography>
-          <IconButton onClick={() => navigate('/profile')} sx={{ p: 0 }}>
+          <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
             {currentUser ? (
               <Avatar
                 sx={{
@@ -73,6 +84,7 @@ function Layout() {
 
       <BottomNavigation
         value={getNavValue()}
+        showLabels
         onChange={(_e, newValue) => {
           if (newValue === 0) navigate('/');
           else if (newValue === 1) navigate('/teams');
@@ -87,12 +99,14 @@ function Layout() {
           mx: 'auto',
           borderTop: '1px solid #9F8B7B',
           bgcolor: '#F3F5F5',
+          height: 72,
+          py: 1,
         }}
       >
         <BottomNavigationAction
           label="Home"
           icon={<HomeIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/' ? 'primary.dark' : '#9F8B7B' }}
+          sx={{ color: location.pathname === '/' ? 'primary.dark' : '#9F8B7B', gap: 0.5 }}
         />
         <BottomNavigationAction
           label="Teams"
@@ -102,12 +116,13 @@ function Layout() {
               location.pathname === '/teams' || location.pathname.startsWith('/teams/')
                 ? 'primary.dark'
                 : '#9F8B7B',
+            gap: 0.5,
           }}
         />
         <BottomNavigationAction
           label="Feedback"
           icon={<RateReviewIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/feedback' ? 'primary.dark' : '#9F8B7B' }}
+          sx={{ color: location.pathname === '/feedback' ? 'primary.dark' : '#9F8B7B', gap: 0.5 }}
         />
       </BottomNavigation>
     </Box>

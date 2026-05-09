@@ -6,13 +6,15 @@ import { useGame } from '../contexts/GameContext';
 
 function TimerName() {
   const navigate = useNavigate();
-  const { registerUser, createTimer } = useGame();
+  const { state, registerUser, createTimer } = useGame();
 
   const handleSubmit = async (name: string) => {
     await registerUser(name, 'timer');
-    const DEFAULT_DURATION = 300;
-    for (let i = 0; i < 4; i++) {
-      await createTimer('', DEFAULT_DURATION);
+    if (state.timers.length === 0) {
+      const DEFAULT_DURATION = 300;
+      for (let i = 0; i < 4; i++) {
+        await createTimer('', DEFAULT_DURATION);
+      }
     }
     navigate('/timer/display');
   };

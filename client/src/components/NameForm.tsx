@@ -17,6 +17,11 @@ function NameForm({ onSubmit }: Props) {
         label="First name and last initial"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && isValid) {
+            onSubmit(name.trim());
+          }
+        }}
         variant="outlined"
         sx={{ mb: 3, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
       />

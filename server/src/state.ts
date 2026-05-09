@@ -3,6 +3,12 @@ import { randomUUID } from 'crypto';
 
 const ABILITY_THRESHOLD = 4;
 
+const ROLE_LIMITS: Record<string, number> = {
+  adjudicator: 3,
+  timer: 1,
+  weaver: 1,
+};
+
 class GameStore {
   private state: GameState = {
     users: [],
@@ -14,7 +20,12 @@ class GameStore {
     return { ...this.state };
   }
 
-  registerUser(name: string, role: User['role'], socketId: string): User {
+  registerUser(name: string, role: User['role'], socketId: string): User | undefined {
+    const limit = ROLE_LIMITS[role];
+    if (limit !== undefined) {
+      const count = this.state.users.filter((u) => u.role === role).length;
+      if (count >= limit) return undefined;
+    }
     const user: User = {
       id: randomUUID(),
       name,

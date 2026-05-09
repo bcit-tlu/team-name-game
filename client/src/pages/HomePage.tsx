@@ -2,10 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography, Link } from '@mui/material';
 import { useGame, Role } from '../contexts/GameContext';
 
+const ROLE_LIMITS: Partial<Record<Role, number>> = {
+  adjudicator: 3,
+  timer: 1,
+  weaver: 1,
+};
+
 function HomePage() {
   const navigate = useNavigate();
   const { state } = useGame();
-  const { currentUser } = state;
+  const { currentUser, users } = state;
 
   const userTeam = currentUser
     ? state.teams.find((t) => t.members.includes(currentUser.id))
@@ -27,7 +33,10 @@ function HomePage() {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {roles.map((role) => {
           const isActive = currentUser?.role === role.role;
-          const isDisabled = currentUser !== null && !isActive;
+          const limit = ROLE_LIMITS[role.role];
+          const roleCount = users.filter((u) => u.role === role.role).length;
+          const isFull = limit !== undefined && roleCount >= limit && !isActive;
+          const isDisabled = (currentUser !== null && !isActive) || isFull;
           return (
             <Button
               key={role.path}
@@ -55,6 +64,7 @@ function HomePage() {
             >
               {role.label}
               {isActive && ' (Active)'}
+              {isFull && ' (Full)'}
             </Button>
           );
         })}

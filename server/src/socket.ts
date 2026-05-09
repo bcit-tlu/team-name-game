@@ -36,8 +36,12 @@ export function setupSocketHandlers(io: GameIO): void {
 
     socket.on('user:register', (data, callback) => {
       const user = store.registerUser(data.name, data.role, socket.id);
-      callback(user);
-      io.emit('user:registered', user);
+      if (user) {
+        callback(user);
+        io.emit('user:registered', user);
+      } else {
+        callback(null as unknown as Parameters<typeof callback>[0]);
+      }
     });
 
     socket.on('user:remove-role', (data, callback) => {

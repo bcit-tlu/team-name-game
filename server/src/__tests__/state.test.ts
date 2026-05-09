@@ -9,10 +9,11 @@ describe('GameStore', () => {
   describe('registerUser', () => {
     it('should register a user and return user object', () => {
       const user = store.registerUser('Alice B', 'team-member', 'socket-1');
-      expect(user.name).toBe('Alice B');
-      expect(user.role).toBe('team-member');
-      expect(user.socketId).toBe('socket-1');
-      expect(user.id).toBeDefined();
+      expect(user).toBeDefined();
+      expect(user!.name).toBe('Alice B');
+      expect(user!.role).toBe('team-member');
+      expect(user!.socketId).toBe('socket-1');
+      expect(user!.id).toBeDefined();
     });
 
     it('should add user to state', () => {
@@ -27,6 +28,37 @@ describe('GameStore', () => {
       store.registerUser('Bob C', 'adjudicator', 'socket-2');
       const state = store.getState();
       expect(state.users).toHaveLength(2);
+    });
+
+    it('should enforce role limits for adjudicator (max 3)', () => {
+      store.registerUser('A1', 'adjudicator', 's1');
+      store.registerUser('A2', 'adjudicator', 's2');
+      store.registerUser('A3', 'adjudicator', 's3');
+      const fourth = store.registerUser('A4', 'adjudicator', 's4');
+      expect(fourth).toBeUndefined();
+      expect(store.getState().users.filter((u) => u.role === 'adjudicator')).toHaveLength(3);
+    });
+
+    it('should enforce role limits for timer (max 1)', () => {
+      store.registerUser('T1', 'timer', 's1');
+      const second = store.registerUser('T2', 'timer', 's2');
+      expect(second).toBeUndefined();
+      expect(store.getState().users.filter((u) => u.role === 'timer')).toHaveLength(1);
+    });
+
+    it('should enforce role limits for weaver (max 1)', () => {
+      store.registerUser('W1', 'weaver', 's1');
+      const second = store.registerUser('W2', 'weaver', 's2');
+      expect(second).toBeUndefined();
+      expect(store.getState().users.filter((u) => u.role === 'weaver')).toHaveLength(1);
+    });
+
+    it('should allow unlimited team-member registrations', () => {
+      for (let i = 0; i < 10; i++) {
+        const user = store.registerUser(`TM${i}`, 'team-member', `s${i}`);
+        expect(user).toBeDefined();
+      }
+      expect(store.getState().users.filter((u) => u.role === 'team-member')).toHaveLength(10);
     });
   });
 
