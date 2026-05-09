@@ -87,13 +87,15 @@ function TimerDisplay() {
                 sx={{ flex: 1, '& .MuiInputBase-input': { fontSize: '1.1rem' } }}
               />
               <Tooltip title={tooltipText}>
-                <IconButton
-                  onClick={() => !isCompleted && handleToggleTimer(timer.id, timer.isRunning)}
-                  sx={{ color: timerColor }}
-                  disabled={isCompleted}
-                >
-                  {timerIcon}
-                </IconButton>
+                <span style={{ display: 'inline-flex' }}>
+                  <IconButton
+                    onClick={() => !isCompleted && handleToggleTimer(timer.id, timer.isRunning)}
+                    sx={{ color: timerColor }}
+                    disabled={isCompleted}
+                  >
+                    {timerIcon}
+                  </IconButton>
+                </span>
               </Tooltip>
               <Typography
                 variant="body1"
