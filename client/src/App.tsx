@@ -13,6 +13,8 @@ import TimerDisplay from './pages/TimerDisplay';
 import WeaverName from './pages/WeaverName';
 import WeaverCamera from './pages/WeaverCamera';
 import TeamsPage from './pages/TeamsPage';
+import TeamDetail from './pages/TeamDetail';
+import ProfilePage from './pages/ProfilePage';
 import FeedbackPage from './pages/FeedbackPage';
 import AdminPage from './pages/AdminPage';
 
@@ -22,6 +24,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/team-member" element={<TeamMemberName />} />
           <Route path="/team-member/register" element={<TeamRegister />} />
           <Route path="/team-member/complete" element={<TeamComplete />} />
@@ -33,6 +36,7 @@ function App() {
           <Route path="/weaver" element={<WeaverName />} />
           <Route path="/weaver/camera" element={<WeaverCamera />} />
           <Route path="/teams" element={<TeamsPage />} />
+          <Route path="/teams/:teamId" element={<TeamDetail />} />
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="/admin" element={<AdminPage />} />
         </Route>

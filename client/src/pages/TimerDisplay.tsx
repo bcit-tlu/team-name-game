@@ -57,7 +57,7 @@ function TimerDisplay() {
             <Tooltip title={timer.isRunning ? 'Stop' : 'Start'}>
               <IconButton
                 onClick={() => handleToggleTimer(timer.id, timer.isRunning)}
-                sx={{ color: timer.isRunning ? 'primary.main' : 'grey.500' }}
+                sx={{ color: timer.isRunning ? 'primary.dark' : '#9F8B7B' }}
               >
                 <AccessTimeIcon sx={{ fontSize: 36 }} />
               </IconButton>
@@ -74,7 +74,7 @@ function TimerDisplay() {
               {formatTime(timer.remaining)}
             </Typography>
             <Tooltip title="Reset">
-              <IconButton onClick={() => resetTimer(timer.id)} sx={{ color: 'grey.500' }}>
+              <IconButton onClick={() => resetTimer(timer.id)} sx={{ color: '#9F8B7B' }}>
                 <RestartAltIcon sx={{ fontSize: 28 }} />
               </IconButton>
             </Tooltip>

@@ -40,6 +40,7 @@ interface GameState {
 type GameAction =
   | { type: 'SET_FULL_STATE'; payload: { users: User[]; teams: Team[]; timers: NukeTimer[] } }
   | { type: 'SET_CURRENT_USER'; payload: User }
+  | { type: 'CLEAR_CURRENT_USER' }
   | { type: 'USER_REGISTERED'; payload: User }
   | { type: 'USER_REMOVED'; payload: string }
   | { type: 'TEAM_CREATED'; payload: Team }
@@ -56,6 +57,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return { ...state, ...action.payload };
     case 'SET_CURRENT_USER':
       return { ...state, currentUser: action.payload };
+    case 'CLEAR_CURRENT_USER':
+      return { ...state, currentUser: null };
     case 'USER_REGISTERED':
       return { ...state, users: [...state.users, action.payload] };
     case 'USER_REMOVED':
@@ -89,6 +92,8 @@ interface GameContextValue {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
   registerUser: (name: string, role: Role) => Promise<User>;
+  removeRole: () => Promise<boolean>;
+  leaveTeam: (teamId: string) => Promise<boolean>;
   createTeam: (name: string, icon: string) => Promise<Team>;
   approveEntry: (teamId: string) => Promise<Team>;
   rejectEntry: (teamId: string) => void;
@@ -180,6 +185,34 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       });
     },
     [socket],
+  );
+
+  const removeRole = useCallback((): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      if (!socket) return reject(new Error('Socket not connected'));
+      if (!state.currentUser) return reject(new Error('No current user'));
+      socket.emit('user:remove-role', { userId: state.currentUser.id }, (success: boolean) => {
+        if (success) {
+          dispatch({ type: 'CLEAR_CURRENT_USER' });
+        }
+        resolve(success);
+      });
+    });
+  }, [socket, state.currentUser]);
+
+  const leaveTeam = useCallback(
+    (teamId: string): Promise<boolean> => {
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
+        if (!state.currentUser) return reject(new Error('No current user'));
+        socket.emit(
+          'team:leave',
+          { teamId, userId: state.currentUser.id },
+          (success: boolean) => resolve(success),
+        );
+      });
+    },
+    [socket, state.currentUser],
   );
 
   const createTeam = useCallback(
@@ -287,6 +320,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         state,
         dispatch,
         registerUser,
+        removeRole,
+        leaveTeam,
         createTeam,
         approveEntry,
         rejectEntry,
