@@ -6,7 +6,6 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
-    echo "team-name-game dev shell"
     echo "node $(node --version)"
     echo "npm $(npm --version)"
   '';
