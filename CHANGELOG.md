@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.4](https://github.com/bcit-tlu/team-name-game/compare/v0.4.3...v0.4.4) (2026-05-09)
+
+
+### Bug Fixes
+
+* reset versions ([1dd1b37](https://github.com/bcit-tlu/team-name-game/commit/1dd1b37a87bb54208caa67cc94673e13cdec1b55))
+
 ## [0.4.3](https://github.com/bcit-tlu/team-name-game/compare/v0.4.2...v0.4.3) (2026-05-09)
 
 
