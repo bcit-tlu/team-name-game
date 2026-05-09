@@ -2,8 +2,6 @@
 
 Real-time synchronizer app for playing the "Team Name Game" — a collaborative naming activity where teams propose entries, adjudicators approve/reject them, and abilities are unlocked at thresholds.
 
-Latest: [team-name-game](https://team-name-game.latest.ltc.bcit.ca)
-
 ## Tech Stack
 
 - **Frontend**: React + TypeScript + Vite + MUI (Material UI)
