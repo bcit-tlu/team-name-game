@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/bcit-tlu/team-name-game/compare/v0.4.2...v0.4.3) (2026-05-09)
+
+
+### Bug Fixes
+
+* removes latest url ([be5603f](https://github.com/bcit-tlu/team-name-game/commit/be5603f1260010aad764d5fecef0ab73f8b8e3fd))
+
 ## [0.4.2](https://github.com/bcit-tlu/team-name-game/compare/v0.4.1...v0.4.2) (2026-05-09)
 
 
