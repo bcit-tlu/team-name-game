@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/bcit-tlu/team-name-game/compare/v0.4.0...v0.4.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* Update shell.nix ([91f13dd](https://github.com/bcit-tlu/team-name-game/commit/91f13dd1a56084c33d60c7b1b768c91e79482673))
+
 ## [0.4.0](https://github.com/bcit-tlu/team-name-game/compare/v0.3.0...v0.4.0) (2026-05-09)
 
 
