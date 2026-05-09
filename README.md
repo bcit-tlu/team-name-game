@@ -60,5 +60,3 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v2.
 ## About
 
 Developed in 🇨🇦 Canada by the [Teaching & Learning Unit](https://www.bcit.ca/learning-teaching-centre/) at [BCIT](https://www.bcit.ca/).
-
-Footer
