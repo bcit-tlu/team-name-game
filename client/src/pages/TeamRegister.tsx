@@ -20,8 +20,8 @@ function TeamRegister() {
   const isValid = teamName.trim().length > 0 && selectedEmoji.length > 0;
 
   const handleRegister = async () => {
-    await createTeam(teamName.trim(), selectedEmoji);
-    navigate('/team-member/complete');
+    const team = await createTeam(teamName.trim(), selectedEmoji);
+    navigate(`/teams/${team.id}`);
   };
 
   return (
@@ -30,7 +30,8 @@ function TeamRegister() {
         items={[
           { label: 'Home', path: '/' },
           { label: 'Team Member', path: '/team-member' },
-          { label: 'Register' },
+          { label: 'Teams', path: '/team-member/teams' },
+          { label: 'Create' },
         ]}
       />
       <Typography variant="h1" sx={{ mb: 3 }}>

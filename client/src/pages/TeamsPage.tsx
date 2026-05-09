@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItemButton, ListItemText, ListItemAvatar, Divider } from '@mui/material';
+import { Box, Typography, List, ListItemButton, ListItemText, ListItemAvatar } from '@mui/material';
 import { useGame } from '../contexts/GameContext';
 
 function TeamsPage() {
@@ -27,7 +27,7 @@ function TeamsPage() {
         </Typography>
       ) : (
         <List>
-          {state.teams.map((team, idx) => (
+          {state.teams.map((team) => (
             <Box key={team.id}>
               <ListItemButton onClick={() => handleTeamClick(team.id)} sx={{ py: 2 }}>
                 <ListItemAvatar>
@@ -38,7 +38,6 @@ function TeamsPage() {
                   primaryTypographyProps={{ fontSize: '1.3rem', fontWeight: 500 }}
                 />
               </ListItemButton>
-              {idx < state.teams.length - 1 && <Divider />}
             </Box>
           ))}
         </List>

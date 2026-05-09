@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Divider } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useGame } from '../contexts/GameContext';
 
 function ProfilePage() {
@@ -23,7 +24,8 @@ function ProfilePage() {
 
   if (!currentUser) {
     return (
-      <Box sx={{ textAlign: 'center', pt: 4 }}>
+      <Box sx={{ textAlign: 'center', pt: 2 }}>
+        <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Profile' }]} />
         <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
           Profile
         </Typography>
@@ -41,6 +43,7 @@ function ProfilePage() {
 
   return (
     <Box sx={{ pt: 2 }}>
+      <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Profile' }]} />
       <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
         Profile
       </Typography>
@@ -53,8 +56,6 @@ function ProfilePage() {
           {currentUser.name}
         </Typography>
       </Box>
-
-      <Divider sx={{ my: 2 }} />
 
       <Box sx={{ mb: 3 }}>
         <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
@@ -72,8 +73,6 @@ function ProfilePage() {
           Remove Role
         </Button>
       </Box>
-
-      <Divider sx={{ my: 2 }} />
 
       <Box sx={{ mb: 3 }}>
         <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>

@@ -7,6 +7,10 @@ function HomePage() {
   const { state } = useGame();
   const { currentUser } = state;
 
+  const userTeam = currentUser
+    ? state.teams.find((t) => t.members.includes(currentUser.id))
+    : undefined;
+
   const roles: { label: string; path: string; role: Role }[] = [
     { label: 'Team Member', path: '/team-member', role: 'team-member' },
     { label: 'Adjudicator', path: '/adjudicator', role: 'adjudicator' },
@@ -31,7 +35,13 @@ function HomePage() {
               color="primary"
               fullWidth
               disabled={isDisabled}
-              onClick={() => navigate(role.path)}
+              onClick={() => {
+                if (isActive && role.role === 'team-member' && userTeam) {
+                  navigate(`/teams/${userTeam.id}`);
+                } else {
+                  navigate(role.path);
+                }
+              }}
               sx={{
                 py: 3,
                 fontSize: '1.3rem',

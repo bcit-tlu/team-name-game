@@ -39,6 +39,16 @@ class GameStore {
     return removed;
   }
 
+  joinTeam(teamId: string, userId: string): Team | undefined {
+    const team = this.state.teams.find((t) => t.id === teamId);
+    if (!team) return undefined;
+    if (team.members.includes(userId)) return team;
+    const alreadyOnTeam = this.state.teams.some((t) => t.members.includes(userId));
+    if (alreadyOnTeam) return undefined;
+    team.members.push(userId);
+    return team;
+  }
+
   leaveTeam(teamId: string, userId: string): Team | undefined {
     const team = this.state.teams.find((t) => t.id === teamId);
     if (!team) return undefined;
@@ -46,7 +56,9 @@ class GameStore {
     return team;
   }
 
-  createTeam(name: string, icon: string, createdBy: string): Team {
+  createTeam(name: string, icon: string, createdBy: string): Team | undefined {
+    const alreadyOnTeam = this.state.teams.some((t) => t.members.includes(createdBy));
+    if (alreadyOnTeam) return undefined;
     const team: Team = {
       id: randomUUID(),
       name,

@@ -47,12 +47,13 @@ describe('GameStore', () => {
   describe('createTeam', () => {
     it('should create a team with correct defaults', () => {
       const team = store.createTeam('Thunder', '⚡', 'user-1');
-      expect(team.name).toBe('Thunder');
-      expect(team.icon).toBe('⚡');
-      expect(team.members).toEqual(['user-1']);
-      expect(team.entriesUntilAbility).toBe(4);
-      expect(team.abilitiesEarned).toEqual([]);
-      expect(team.createdBy).toBe('user-1');
+      expect(team).toBeDefined();
+      expect(team!.name).toBe('Thunder');
+      expect(team!.icon).toBe('⚡');
+      expect(team!.members).toEqual(['user-1']);
+      expect(team!.entriesUntilAbility).toBe(4);
+      expect(team!.abilitiesEarned).toEqual([]);
+      expect(team!.createdBy).toBe('user-1');
     });
 
     it('should add team to state', () => {
@@ -60,17 +61,53 @@ describe('GameStore', () => {
       const state = store.getState();
       expect(state.teams).toHaveLength(1);
     });
+
+    it('should prevent creating a team if user is already on a team', () => {
+      store.createTeam('Thunder', '⚡', 'user-1');
+      const second = store.createTeam('Lightning', '🌩️', 'user-1');
+      expect(second).toBeUndefined();
+      expect(store.getState().teams).toHaveLength(1);
+    });
+  });
+
+  describe('joinTeam', () => {
+    it('should add user to team members', () => {
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
+      const updated = store.joinTeam(team.id, 'user-2');
+      expect(updated).toBeDefined();
+      expect(updated!.members).toContain('user-2');
+      expect(updated!.members).toHaveLength(2);
+    });
+
+    it('should return undefined for non-existent team', () => {
+      const result = store.joinTeam('non-existent', 'user-1');
+      expect(result).toBeUndefined();
+    });
+
+    it('should idempotently return team if user is already a member', () => {
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
+      const result = store.joinTeam(team.id, 'user-1');
+      expect(result).toBeDefined();
+      expect(result!.members).toEqual(['user-1']);
+    });
+
+    it('should return undefined if user is already on a different team', () => {
+      store.createTeam('Thunder', '⚡', 'user-1');
+      const team2 = store.createTeam('Lightning', '🌩️', 'user-2')!;
+      const result = store.joinTeam(team2.id, 'user-1');
+      expect(result).toBeUndefined();
+    });
   });
 
   describe('approveEntry', () => {
     it('should decrement entriesUntilAbility', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
       const updated = store.approveEntry(team.id);
       expect(updated?.entriesUntilAbility).toBe(3);
     });
 
     it('should decrement to zero', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
       store.approveEntry(team.id);
       store.approveEntry(team.id);
       store.approveEntry(team.id);
@@ -79,7 +116,7 @@ describe('GameStore', () => {
     });
 
     it('should not go below zero', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
       store.approveEntry(team.id);
       store.approveEntry(team.id);
       store.approveEntry(team.id);
@@ -96,7 +133,7 @@ describe('GameStore', () => {
 
   describe('conferAbility', () => {
     it('should add ability and reset counter when entries is 0', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
       store.approveEntry(team.id);
       store.approveEntry(team.id);
       store.approveEntry(team.id);
@@ -108,7 +145,7 @@ describe('GameStore', () => {
     });
 
     it('should not confer ability when entries remaining > 0', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
       store.approveEntry(team.id);
 
       const result = store.conferAbility(team.id, 'nuke');
@@ -116,7 +153,7 @@ describe('GameStore', () => {
     });
 
     it('should accumulate multiple abilities', () => {
-      const team = store.createTeam('Thunder', '⚡', 'user-1');
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
 
       // First ability cycle
       for (let i = 0; i < 4; i++) store.approveEntry(team.id);
