@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.0](https://github.com/bcit-tlu/team-name-game/compare/v0.3.0...v0.4.0) (2026-05-09)
+
+
+### Features
+
+* UI tweaks - darker profile icon, breadcrumbs, remove dividers, smart team routing, create/join flow, admin reset redirect ([7242f93](https://github.com/bcit-tlu/team-name-game/commit/7242f93054266c0d428677a5f7d4338f97f11d60))
+* UX tweaks batch 2 - bottom nav, enter key, timer states, profile back-nav, role caps, timer bug fix ([e5cb3b9](https://github.com/bcit-tlu/team-name-game/commit/e5cb3b9364a6cf0cb2053ffa6472bacb633f2cf9))
+
+
+### Bug Fixes
+
+* add server-side multi-team guards and disconnect cleanup per review ([ad4d41b](https://github.com/bcit-tlu/team-name-game/commit/ad4d41b663b1da675d06a84b6464858385cebaa3))
+* add workflow_dispatch trigger to release-please for manual re-runs ([1ca6e58](https://github.com/bcit-tlu/team-name-game/commit/1ca6e58709444f56ef825da7bb7ee0885cce57ce))
+* handle null response in createTeam client callback and reject when no current user ([15b48a2](https://github.com/bcit-tlu/team-name-game/commit/15b48a262993662eb989b8deca0813e3c75cc8f3))
+* handle role-full rejection in name pages and tooltip on disabled IconButton ([ef6215f](https://github.com/bcit-tlu/team-name-game/commit/ef6215f18be8b33ca38371bda63334785796ad2a))
+* prevent page flash during redirect for users with existing team ([7171d7c](https://github.com/bcit-tlu/team-name-game/commit/7171d7cea3aa10af81e6e5855cb34a1e7ced8c80))
+* use Partial&lt;Record&lt;User['role'], number&gt;&gt; for ROLE_LIMITS type safety ([7ad48d6](https://github.com/bcit-tlu/team-name-game/commit/7ad48d6322611de3d1e1e23cda535b498f362c43))
+
 ## [0.3.0](https://github.com/bcit-tlu/team-name-game/compare/v0.2.0...v0.3.0) (2026-05-09)
 
 
