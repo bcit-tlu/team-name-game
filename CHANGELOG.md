@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.5](https://github.com/bcit-tlu/team-name-game/compare/v0.4.4...v0.4.5) (2026-05-09)
+
+
+### Bug Fixes
+
+* add package-lock.json to extra-files to prevent version drift ([5dcce2a](https://github.com/bcit-tlu/team-name-game/commit/5dcce2ab8560e9c53c79772262b6e420e43fad82))
+* switch release-type from node to simple to fix component auto-derive ([2cabdff](https://github.com/bcit-tlu/team-name-game/commit/2cabdff1eb6bd918285a3180eaca963a78c103ed))
+
 ## [0.4.4](https://github.com/bcit-tlu/team-name-game/compare/v0.4.3...v0.4.4) (2026-05-09)
 
 
