@@ -238,10 +238,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     (name: string, icon: string): Promise<Team> => {
       return new Promise((resolve, reject) => {
         if (!socket) return reject(new Error('Socket not connected'));
+        if (!state.currentUser) return reject(new Error('No current user'));
         socket.emit(
           'team:create',
-          { name, icon, createdBy: state.currentUser?.id || '' },
-          (team: Team) => resolve(team),
+          { name, icon, createdBy: state.currentUser.id },
+          (team: Team | null) => {
+            if (team) resolve(team);
+            else reject(new Error('Already on a team'));
+          },
         );
       });
     },
