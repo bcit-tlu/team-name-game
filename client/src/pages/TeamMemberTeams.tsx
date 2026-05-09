@@ -27,6 +27,8 @@ function TeamMemberTeams() {
     }
   }, [userTeam, navigate]);
 
+  if (userTeam) return null;
+
   const handleJoinTeam = async (teamId: string) => {
     const team = await joinTeam(teamId);
     navigate(`/teams/${team.id}`);

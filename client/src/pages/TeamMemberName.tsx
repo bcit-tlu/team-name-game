@@ -22,6 +22,8 @@ function TeamMemberName() {
     }
   }, [currentUser, userTeam, navigate]);
 
+  if (currentUser && (userTeam || currentUser.role === 'team-member')) return null;
+
   const handleSubmit = async (name: string) => {
     await registerUser(name, 'team-member');
     navigate('/team-member/teams');
