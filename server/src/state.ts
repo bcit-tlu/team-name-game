@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 
 const ABILITY_THRESHOLD = 4;
 
-const ROLE_LIMITS: Record<string, number> = {
+const ROLE_LIMITS: Partial<Record<User['role'], number>> = {
   adjudicator: 3,
   timer: 1,
   weaver: 1,
