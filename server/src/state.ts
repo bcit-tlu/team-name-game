@@ -32,6 +32,20 @@ class GameStore {
     return removed;
   }
 
+  removeUser(userId: string): User | undefined {
+    const idx = this.state.users.findIndex((u) => u.id === userId);
+    if (idx === -1) return undefined;
+    const [removed] = this.state.users.splice(idx, 1);
+    return removed;
+  }
+
+  leaveTeam(teamId: string, userId: string): Team | undefined {
+    const team = this.state.teams.find((t) => t.id === teamId);
+    if (!team) return undefined;
+    team.members = team.members.filter((m) => m !== userId);
+    return team;
+  }
+
   createTeam(name: string, icon: string, createdBy: string): Team {
     const team: Team = {
       id: randomUUID(),

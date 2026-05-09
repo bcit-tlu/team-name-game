@@ -40,10 +40,30 @@ export function setupSocketHandlers(io: GameIO): void {
       io.emit('user:registered', user);
     });
 
+    socket.on('user:remove-role', (data, callback) => {
+      const user = store.removeUser(data.userId);
+      if (user) {
+        callback(true);
+        io.emit('user:removed', user.id);
+      } else {
+        callback(false);
+      }
+    });
+
     socket.on('team:create', (data, callback) => {
       const team = store.createTeam(data.name, data.icon, data.createdBy);
       callback(team);
       io.emit('team:created', team);
+    });
+
+    socket.on('team:leave', (data, callback) => {
+      const team = store.leaveTeam(data.teamId, data.userId);
+      if (team) {
+        callback(true);
+        io.emit('team:updated', team);
+      } else {
+        callback(false);
+      }
     });
 
     socket.on('team:approve-entry', (data, callback) => {

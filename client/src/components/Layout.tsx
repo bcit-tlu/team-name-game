@@ -1,15 +1,28 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+  Box,
+  Avatar,
+  IconButton,
+} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import PersonIcon from '@mui/icons-material/Person';
+import { useGame } from '../contexts/GameContext';
 
 function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { state } = useGame();
+  const { currentUser } = state;
 
   const getNavValue = () => {
-    if (location.pathname === '/teams') return 1;
+    if (location.pathname === '/teams' || location.pathname.startsWith('/teams/')) return 1;
     if (location.pathname === '/feedback') return 2;
     return 0;
   };
@@ -18,9 +31,39 @@ function Layout() {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static" sx={{ bgcolor: 'primary.main' }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 700, color: 'white', fontSize: '1.3rem' }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 700, color: 'white', fontSize: '1.3rem', flex: 1 }}
+          >
             Team Name Game
           </Typography>
+          <IconButton onClick={() => navigate('/profile')} sx={{ p: 0 }}>
+            {currentUser ? (
+              <Avatar
+                sx={{
+                  bgcolor: 'primary.dark',
+                  width: 36,
+                  height: 36,
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  border: '2px solid white',
+                }}
+              >
+                {currentUser.name.charAt(0).toUpperCase()}
+              </Avatar>
+            ) : (
+              <Avatar
+                sx={{
+                  bgcolor: 'grey.400',
+                  width: 36,
+                  height: 36,
+                  border: '2px solid white',
+                }}
+              >
+                <PersonIcon sx={{ fontSize: 20, color: 'white' }} />
+              </Avatar>
+            )}
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -54,7 +97,12 @@ function Layout() {
         <BottomNavigationAction
           label="Teams"
           icon={<EmojiEventsIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/teams' ? 'primary.main' : 'grey.500' }}
+          sx={{
+            color:
+              location.pathname === '/teams' || location.pathname.startsWith('/teams/')
+                ? 'primary.main'
+                : 'grey.500',
+          }}
         />
         <BottomNavigationAction
           label="Feedback"
