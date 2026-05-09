@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/bcit-tlu/team-name-game/compare/v0.4.1...v0.4.2) (2026-05-09)
+
+
+### Bug Fixes
+
+* adds tng URL to README ([03cf56a](https://github.com/bcit-tlu/team-name-game/commit/03cf56a2e0143748093ab8f1e03f8f6208507e09))
+
 ## [0.4.1](https://github.com/bcit-tlu/team-name-game/compare/v0.4.0...v0.4.1) (2026-05-09)
 
 
