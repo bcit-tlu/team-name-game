@@ -7,7 +7,7 @@ Real-time synchronizer app for playing the "Team Name Game" — a collaborative 
 - **Frontend**: React + TypeScript + Vite + MUI (Material UI)
 - **Backend**: Node.js + Express + Socket.io
 - **Dev Environment**: Docker Compose
-- **CI/CD**: GitHub Actions (OCI build, release-please)
+- **CI/CD**: GitHub Actions (OCI build, Helm OCI publish, release-please)
 
 ## Quick Start (Docker)
 
