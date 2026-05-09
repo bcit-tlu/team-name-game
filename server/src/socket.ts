@@ -58,8 +58,12 @@ export function setupSocketHandlers(io: GameIO): void {
 
     socket.on('team:create', (data, callback) => {
       const team = store.createTeam(data.name, data.icon, data.createdBy);
-      callback(team);
-      io.emit('team:created', team);
+      if (team) {
+        callback(team);
+        io.emit('team:created', team);
+      } else {
+        callback(null);
+      }
     });
 
     socket.on('team:join', (data, callback) => {
@@ -166,6 +170,12 @@ export function setupSocketHandlers(io: GameIO): void {
       console.log(`Client disconnected: ${socket.id}`);
       const user = store.removeUserBySocket(socket.id);
       if (user) {
+        const state = store.getState();
+        const affectedTeams = state.teams.filter((t) => t.members.includes(user.id));
+        for (const team of affectedTeams) {
+          const updated = store.leaveTeam(team.id, user.id);
+          if (updated) io.emit('team:updated', updated);
+        }
         io.emit('user:removed', user.id);
       }
     });
