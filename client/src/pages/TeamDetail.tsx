@@ -13,7 +13,7 @@ function TeamDetail() {
   if (!team) {
     return (
       <Box sx={{ textAlign: 'center', pt: 4 }}>
-        <Typography variant="body1" sx={{ color: 'grey.500' }}>
+        <Typography variant="body1" sx={{ color: '#9F8B7B' }}>
           Team not found.
         </Typography>
       </Box>
@@ -41,12 +41,12 @@ function TeamDetail() {
 
       <Divider sx={{ my: 2 }} />
 
-      <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: 'grey.600' }}>
+      <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: '#9F8B7B' }}>
         Members
       </Typography>
 
       {memberUsers.length === 0 ? (
-        <Typography variant="body1" sx={{ color: 'grey.500' }}>
+        <Typography variant="body1" sx={{ color: '#9F8B7B' }}>
           No members registered.
         </Typography>
       ) : (

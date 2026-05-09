@@ -54,7 +54,7 @@ function Layout() {
             ) : (
               <Avatar
                 sx={{
-                  bgcolor: 'grey.400',
+                  bgcolor: '#9F8B7B',
                   width: 36,
                   height: 36,
                   border: '2px solid white',
@@ -85,14 +85,14 @@ function Layout() {
           right: 0,
           maxWidth: 480,
           mx: 'auto',
-          borderTop: '1px solid #eee',
-          bgcolor: 'white',
+          borderTop: '1px solid #9F8B7B',
+          bgcolor: '#F3F5F5',
         }}
       >
         <BottomNavigationAction
           label="Home"
           icon={<HomeIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/' ? 'primary.main' : 'grey.500' }}
+          sx={{ color: location.pathname === '/' ? 'primary.dark' : '#9F8B7B' }}
         />
         <BottomNavigationAction
           label="Teams"
@@ -100,14 +100,14 @@ function Layout() {
           sx={{
             color:
               location.pathname === '/teams' || location.pathname.startsWith('/teams/')
-                ? 'primary.main'
-                : 'grey.500',
+                ? 'primary.dark'
+                : '#9F8B7B',
           }}
         />
         <BottomNavigationAction
           label="Feedback"
           icon={<RateReviewIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/feedback' ? 'primary.main' : 'grey.500' }}
+          sx={{ color: location.pathname === '/feedback' ? 'primary.dark' : '#9F8B7B' }}
         />
       </BottomNavigation>
     </Box>

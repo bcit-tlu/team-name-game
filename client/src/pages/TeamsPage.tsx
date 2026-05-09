@@ -22,7 +22,7 @@ function TeamsPage() {
       </Typography>
 
       {state.teams.length === 0 ? (
-        <Typography variant="body1" sx={{ color: 'grey.500', mt: 4, textAlign: 'center' }}>
+        <Typography variant="body1" sx={{ color: '#9F8B7B', mt: 4, textAlign: 'center' }}>
           No teams registered yet.
         </Typography>
       ) : (

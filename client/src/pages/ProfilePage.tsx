@@ -27,7 +27,7 @@ function ProfilePage() {
         <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
           Profile
         </Typography>
-        <Typography variant="body1" sx={{ color: 'grey.600', fontSize: '1.1rem' }}>
+        <Typography variant="body1" sx={{ color: '#9F8B7B', fontSize: '1.1rem' }}>
           No role selected yet. Go to the home screen to pick a role.
         </Typography>
       </Box>
@@ -46,7 +46,7 @@ function ProfilePage() {
       </Typography>
 
       <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: 'grey.600' }}>
+        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
           Name
         </Typography>
         <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
@@ -57,7 +57,7 @@ function ProfilePage() {
       <Divider sx={{ my: 2 }} />
 
       <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: 'grey.600' }}>
+        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
           Role
         </Typography>
         <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
@@ -76,7 +76,7 @@ function ProfilePage() {
       <Divider sx={{ my: 2 }} />
 
       <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: 'grey.600' }}>
+        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
           Team
         </Typography>
         {userTeam ? (
@@ -94,7 +94,7 @@ function ProfilePage() {
             </Button>
           </>
         ) : (
-          <Typography variant="h6" sx={{ fontSize: '1.4rem', color: 'grey.500' }}>
+          <Typography variant="h6" sx={{ fontSize: '1.4rem', color: '#9F8B7B' }}>
             Not on a team
           </Typography>
         )}

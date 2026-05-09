@@ -109,15 +109,15 @@ function AdjudicatorReview() {
               sx={{
                 width: 56,
                 height: 56,
-                bgcolor: abilitiesUnlocked ? 'primary.light' : 'grey.300',
-                color: abilitiesUnlocked ? 'primary.dark' : 'grey.500',
+                bgcolor: abilitiesUnlocked ? 'primary.light' : '#E0DDD8',
+                color: abilitiesUnlocked ? 'primary.dark' : '#9F8B7B',
                 borderRadius: '50%',
                 '&:hover': abilitiesUnlocked
                   ? { bgcolor: 'primary.main', color: 'white' }
                   : {},
                 '&.Mui-disabled': {
-                  color: 'grey.500',
-                  bgcolor: 'grey.200',
+                  color: '#9F8B7B',
+                  bgcolor: '#E0DDD8',
                 },
               }}
             >

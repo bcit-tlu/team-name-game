@@ -53,7 +53,7 @@ function HomePage() {
       <Link
         component="button"
         onClick={() => navigate('/admin')}
-        sx={{ mt: 6, display: 'block', color: 'grey.600', fontSize: '0.9rem' }}
+        sx={{ mt: 6, display: 'block', color: '#9F8B7B', fontSize: '0.9rem' }}
       >
         Admin
       </Link>
