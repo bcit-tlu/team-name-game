@@ -5,8 +5,12 @@
   "separate-pull-requests": false,
   "packages": {
     ".": {
-      "release-type": "node",
-      "component": "team-name-game"
+      "release-type": "simple",
+      "component": "team-name-game",
+      "extra-files": [
+        { "type": "generic", "path": "charts/team-name-game/Chart.yaml" },
+        { "type": "json", "path": "package.json", "jsonpath": "$.version" }
+      ]
     }
   }
 }
