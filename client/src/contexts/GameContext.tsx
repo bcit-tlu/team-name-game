@@ -42,7 +42,6 @@ type GameAction =
   | { type: 'SET_CURRENT_USER'; payload: User }
   | { type: 'CLEAR_CURRENT_USER' }
   | { type: 'USER_REGISTERED'; payload: User }
-  | { type: 'USER_UPDATED'; payload: User }
   | { type: 'USER_REMOVED'; payload: string }
   | { type: 'TEAM_CREATED'; payload: Team }
   | { type: 'TEAM_UPDATED'; payload: Team }
@@ -60,13 +59,6 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return { ...state, currentUser: action.payload };
     case 'CLEAR_CURRENT_USER':
       return { ...state, currentUser: null };
-    case 'USER_UPDATED':
-      return {
-        ...state,
-        users: state.users.map((u) => (u.id === action.payload.id ? action.payload : u)),
-        currentUser:
-          state.currentUser?.id === action.payload.id ? action.payload : state.currentUser,
-      };
     case 'USER_REGISTERED':
       return { ...state, users: [...state.users, action.payload] };
     case 'USER_REMOVED':
@@ -136,10 +128,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       dispatch({ type: 'USER_REGISTERED', payload: user });
     });
 
-    socket.on('user:updated', (user) => {
-      dispatch({ type: 'USER_UPDATED', payload: user });
-    });
-
     socket.on('user:removed', (userId) => {
       dispatch({ type: 'USER_REMOVED', payload: userId });
     });
@@ -175,7 +163,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return () => {
       socket.off('state:full');
       socket.off('user:registered');
-      socket.off('user:updated');
       socket.off('user:removed');
       socket.off('team:created');
       socket.off('team:updated');

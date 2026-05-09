@@ -37,7 +37,6 @@ export interface GameState {
 export interface ServerToClientEvents {
   'state:full': (state: GameState) => void;
   'user:registered': (user: User) => void;
-  'user:updated': (user: User) => void;
   'user:removed': (userId: string) => void;
   'team:created': (team: Team) => void;
   'team:updated': (team: Team) => void;

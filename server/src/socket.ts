@@ -41,6 +41,12 @@ export function setupSocketHandlers(io: GameIO): void {
     });
 
     socket.on('user:remove-role', (data, callback) => {
+      const state = store.getState();
+      const affectedTeams = state.teams.filter((t) => t.members.includes(data.userId));
+      for (const team of affectedTeams) {
+        const updated = store.leaveTeam(team.id, data.userId);
+        if (updated) io.emit('team:updated', updated);
+      }
       const user = store.removeUser(data.userId);
       if (user) {
         callback(true);
