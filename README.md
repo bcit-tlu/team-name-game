@@ -52,3 +52,11 @@ npm run dev
 2. Every 4 approved entries unlocks one ability (Star, Nuke, Interceptor, Meh)
 3. Teams cannot submit to the same adjudicator twice in a row
 4. Teams cannot submit the same entry twice
+
+## License
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v2.0. If a copy of the MPL was not distributed with this file, You can obtain one at <https://mozilla.org/MPL/2.0/>.
+
+## About
+
+Developed in 🇨🇦 Canada by the [Teaching & Learning Unit](https://www.bcit.ca/learning-teaching-centre/) at [BCIT](https://www.bcit.ca/).
