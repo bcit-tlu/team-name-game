@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Alert } from '@mui/material';
 import Breadcrumbs from '../components/Breadcrumbs';
 import NameForm from '../components/NameForm';
 import { useGame } from '../contexts/GameContext';
@@ -8,9 +9,15 @@ function AdjudicatorName() {
   const navigate = useNavigate();
   const { registerUser } = useGame();
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async (name: string) => {
-    await registerUser(name, 'adjudicator');
-    navigate('/adjudicator/teams');
+    try {
+      await registerUser(name, 'adjudicator');
+      navigate('/adjudicator/teams');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
+    }
   };
 
   return (
@@ -19,6 +26,7 @@ function AdjudicatorName() {
       <Typography variant="h1" sx={{ mb: 3 }}>
         Adjudicator
       </Typography>
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       <NameForm onSubmit={handleSubmit} />
     </Box>
   );

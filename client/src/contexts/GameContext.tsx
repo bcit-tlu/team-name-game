@@ -179,9 +179,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     (name: string, role: Role): Promise<User> => {
       return new Promise((resolve, reject) => {
         if (!socket) return reject(new Error('Socket not connected'));
-        socket.emit('user:register', { name, role }, (user: User) => {
-          dispatch({ type: 'SET_CURRENT_USER', payload: user });
-          resolve(user);
+        socket.emit('user:register', { name, role }, (user: User | null) => {
+          if (user) {
+            dispatch({ type: 'SET_CURRENT_USER', payload: user });
+            resolve(user);
+          } else {
+            reject(new Error('Role is full'));
+          }
         });
       });
     },

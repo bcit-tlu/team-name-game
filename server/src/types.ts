@@ -48,7 +48,7 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  'user:register': (data: { name: string; role: Role }, callback: (user: User) => void) => void;
+  'user:register': (data: { name: string; role: Role }, callback: (user: User | null) => void) => void;
   'user:remove-role': (data: { userId: string }, callback: (success: boolean) => void) => void;
   'team:create': (data: { name: string; icon: string; createdBy: string }, callback: (team: Team | null) => void) => void;
   'team:join': (data: { teamId: string; userId: string }, callback: (team: Team | null) => void) => void;

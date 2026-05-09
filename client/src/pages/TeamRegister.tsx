@@ -43,6 +43,11 @@ function TeamRegister() {
         label="Team Name"
         value={teamName}
         onChange={(e) => setTeamName(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && isValid) {
+            handleRegister();
+          }
+        }}
         variant="outlined"
         sx={{ mb: 3, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
       />
