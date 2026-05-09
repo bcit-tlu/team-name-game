@@ -6,7 +6,6 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "component": "team-name-game",
       "extra-files": [
         {
           "type": "generic",
