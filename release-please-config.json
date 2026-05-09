@@ -6,7 +6,11 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "component": "team-name-game"
+      "component": "team-name-game",
+      "extra-files": [
+        { "type": "generic", "path": "charts/team-name-game/Chart.yaml" }
+      ],
+      "release-as": "0.3.0"
     }
   }
 }
