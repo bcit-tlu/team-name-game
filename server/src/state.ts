@@ -39,6 +39,14 @@ class GameStore {
     return removed;
   }
 
+  joinTeam(teamId: string, userId: string): Team | undefined {
+    const team = this.state.teams.find((t) => t.id === teamId);
+    if (!team) return undefined;
+    if (team.members.includes(userId)) return team;
+    team.members.push(userId);
+    return team;
+  }
+
   leaveTeam(teamId: string, userId: string): Team | undefined {
     const team = this.state.teams.find((t) => t.id === teamId);
     if (!team) return undefined;

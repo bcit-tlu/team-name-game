@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { useGame } from '../contexts/GameContext';
 
 function AdminPage() {
+  const navigate = useNavigate();
   const { resetGame } = useGame();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleReset = () => {
     resetGame();
     setConfirmOpen(false);
+    navigate('/');
   };
 
   return (

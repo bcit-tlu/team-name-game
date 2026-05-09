@@ -62,6 +62,16 @@ export function setupSocketHandlers(io: GameIO): void {
       io.emit('team:created', team);
     });
 
+    socket.on('team:join', (data, callback) => {
+      const team = store.joinTeam(data.teamId, data.userId);
+      if (team) {
+        callback(team);
+        io.emit('team:updated', team);
+      } else {
+        callback(null);
+      }
+    });
+
     socket.on('team:leave', (data, callback) => {
       const team = store.leaveTeam(data.teamId, data.userId);
       if (team) {

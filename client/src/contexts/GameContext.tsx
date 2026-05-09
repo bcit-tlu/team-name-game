@@ -94,6 +94,7 @@ interface GameContextValue {
   registerUser: (name: string, role: Role) => Promise<User>;
   removeRole: () => Promise<boolean>;
   leaveTeam: (teamId: string) => Promise<boolean>;
+  joinTeam: (teamId: string) => Promise<Team>;
   createTeam: (name: string, icon: string) => Promise<Team>;
   approveEntry: (teamId: string) => Promise<Team>;
   rejectEntry: (teamId: string) => void;
@@ -215,6 +216,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     [socket, state.currentUser],
   );
 
+  const joinTeam = useCallback(
+    (teamId: string): Promise<Team> => {
+      return new Promise((resolve, reject) => {
+        if (!socket) return reject(new Error('Socket not connected'));
+        if (!state.currentUser) return reject(new Error('No current user'));
+        socket.emit(
+          'team:join',
+          { teamId, userId: state.currentUser.id },
+          (team: Team | null) => {
+            if (team) resolve(team);
+            else reject(new Error('Team not found'));
+          },
+        );
+      });
+    },
+    [socket, state.currentUser],
+  );
+
   const createTeam = useCallback(
     (name: string, icon: string): Promise<Team> => {
       return new Promise((resolve, reject) => {
@@ -322,6 +341,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         registerUser,
         removeRole,
         leaveTeam,
+        joinTeam,
         createTeam,
         approveEntry,
         rejectEntry,

@@ -54,7 +54,7 @@ function Layout() {
             ) : (
               <Avatar
                 sx={{
-                  bgcolor: '#9F8B7B',
+                  bgcolor: '#3C3F47',
                   width: 36,
                   height: 36,
                   border: '2px solid white',

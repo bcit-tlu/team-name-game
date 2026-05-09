@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItem, ListItemText, Button, Divider } from '@mui/material';
+import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 import { useGame } from '../contexts/GameContext';
 
 function TeamDetail() {
@@ -38,8 +38,6 @@ function TeamDetail() {
       <Typography variant="h1" sx={{ mb: 1, fontSize: '2rem' }}>
         {team.icon} {team.name}
       </Typography>
-
-      <Divider sx={{ my: 2 }} />
 
       <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: '#9F8B7B' }}>
         Members

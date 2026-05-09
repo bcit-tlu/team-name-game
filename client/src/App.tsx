@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import TeamMemberName from './pages/TeamMemberName';
+import TeamMemberTeams from './pages/TeamMemberTeams';
 import TeamRegister from './pages/TeamRegister';
 import TeamComplete from './pages/TeamComplete';
 import AdjudicatorName from './pages/AdjudicatorName';
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/team-member" element={<TeamMemberName />} />
+          <Route path="/team-member/teams" element={<TeamMemberTeams />} />
           <Route path="/team-member/register" element={<TeamRegister />} />
           <Route path="/team-member/complete" element={<TeamComplete />} />
           <Route path="/adjudicator" element={<AdjudicatorName />} />

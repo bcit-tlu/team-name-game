@@ -17,7 +17,7 @@ function Breadcrumbs({ items }: Props) {
   return (
     <MuiBreadcrumbs
       separator={<NavigateNextIcon fontSize="small" />}
-      sx={{ mb: 1, pb: 1, borderBottom: '1px solid #9F8B7B' }}
+      sx={{ mb: 1, pb: 1 }}
     >
       {items.map((item, idx) =>
         item.path && idx < items.length - 1 ? (
