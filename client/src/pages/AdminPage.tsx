@@ -17,6 +17,10 @@ function AdminPage() {
         Admin
       </Typography>
 
+      <Typography variant="body2" sx={{ mb: 4, color: '#9F8B7B' }}>
+        Version {__APP_VERSION__}
+      </Typography>
+
       <Typography variant="body1" sx={{ mb: 4 }}>
         Reset all game data including teams, entries, abilities, and timers.
       </Typography>
