@@ -70,6 +70,35 @@ describe('GameStore', () => {
     });
   });
 
+  describe('joinTeam', () => {
+    it('should add user to team members', () => {
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
+      const updated = store.joinTeam(team.id, 'user-2');
+      expect(updated).toBeDefined();
+      expect(updated!.members).toContain('user-2');
+      expect(updated!.members).toHaveLength(2);
+    });
+
+    it('should return undefined for non-existent team', () => {
+      const result = store.joinTeam('non-existent', 'user-1');
+      expect(result).toBeUndefined();
+    });
+
+    it('should idempotently return team if user is already a member', () => {
+      const team = store.createTeam('Thunder', '⚡', 'user-1')!;
+      const result = store.joinTeam(team.id, 'user-1');
+      expect(result).toBeDefined();
+      expect(result!.members).toEqual(['user-1']);
+    });
+
+    it('should return undefined if user is already on a different team', () => {
+      store.createTeam('Thunder', '⚡', 'user-1');
+      const team2 = store.createTeam('Lightning', '🌩️', 'user-2')!;
+      const result = store.joinTeam(team2.id, 'user-1');
+      expect(result).toBeUndefined();
+    });
+  });
+
   describe('approveEntry', () => {
     it('should decrement entriesUntilAbility', () => {
       const team = store.createTeam('Thunder', '⚡', 'user-1')!;
