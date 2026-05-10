@@ -14,13 +14,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import PersonIcon from '@mui/icons-material/Person';
-import { useGame } from '../contexts/GameContext';
+import { useSession } from '../contexts/SessionContext';
 
 function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = useGame();
-  const { currentUser } = state;
+  const { sessionInfo } = useSession();
   const previousPathRef = useRef<string>('/');
 
   const handleProfileClick = () => {
@@ -49,18 +48,17 @@ function Layout() {
             Team Name Game
           </Typography>
           <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
-            {currentUser ? (
+            {sessionInfo ? (
               <Avatar
                 sx={{
                   bgcolor: 'primary.dark',
                   width: 36,
                   height: 36,
-                  fontSize: '1rem',
-                  fontWeight: 700,
+                  fontSize: '1.2rem',
                   border: '2px solid white',
                 }}
               >
-                {currentUser.name.charAt(0).toUpperCase()}
+                {sessionInfo.emoji}
               </Avatar>
             ) : (
               <Avatar

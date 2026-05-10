@@ -17,6 +17,7 @@ import StarIcon from '@mui/icons-material/Star';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useGame, AbilityType } from '../contexts/GameContext';
 
 const ABILITY_ICONS: { type: AbilityType; icon: React.ReactNode; label: string }[] = [
@@ -69,6 +70,14 @@ function AdjudicatorReview() {
 
   return (
     <Box>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', path: '/' },
+          { label: 'Adjudicator', path: '/adjudicator' },
+          { label: 'Teams', path: '/adjudicator/teams' },
+          { label: team.name },
+        ]}
+      />
       <Box sx={{ textAlign: 'center', mt: 1 }}>
         <Typography variant="h1" sx={{ fontSize: '2.2rem', mb: 3 }}>
           {team.icon} {team.name}

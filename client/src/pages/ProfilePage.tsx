@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useGame } from '../contexts/GameContext';
+import { useSession } from '../contexts/SessionContext';
 
 function ProfilePage() {
   const navigate = useNavigate();
   const { state, removeRole, leaveTeam } = useGame();
+  const { sessionInfo } = useSession();
   const { currentUser, teams } = state;
 
   const userTeam = currentUser
@@ -24,11 +26,21 @@ function ProfilePage() {
 
   if (!currentUser) {
     return (
-      <Box sx={{ textAlign: 'center', pt: 2 }}>
+      <Box sx={{ pt: 2 }}>
         <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Profile' }]} />
         <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
           Profile
         </Typography>
+        {sessionInfo && (
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body1" sx={{ fontSize: '2rem', mb: 1 }}>
+              {sessionInfo.emoji}
+            </Typography>
+            <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
+              {sessionInfo.name}
+            </Typography>
+          </Box>
+        )}
         <Typography variant="body1" sx={{ color: '#9F8B7B', fontSize: '1.1rem' }}>
           No role selected yet. Go to the home screen to pick a role.
         </Typography>
@@ -53,7 +65,7 @@ function ProfilePage() {
           Name
         </Typography>
         <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
-          {currentUser.name}
+          {sessionInfo?.emoji && `${sessionInfo.emoji} `}{currentUser.name}
         </Typography>
       </Box>
 

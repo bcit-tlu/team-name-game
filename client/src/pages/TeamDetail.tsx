@@ -1,12 +1,22 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
-import { useGame } from '../contexts/GameContext';
+import { useParams } from 'react-router-dom';
+import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import { useGame, AbilityType } from '../contexts/GameContext';
+
+const ABILITY_ICONS: Record<AbilityType, React.ReactNode> = {
+  star: <StarIcon sx={{ fontSize: 28 }} />,
+  nuke: <LocalFireDepartmentIcon sx={{ fontSize: 28 }} />,
+  interceptor: <CelebrationIcon sx={{ fontSize: 28 }} />,
+  meh: <SentimentNeutralIcon sx={{ fontSize: 28 }} />,
+};
 
 function TeamDetail() {
   const { teamId } = useParams<{ teamId: string }>();
-  const navigate = useNavigate();
-  const { state, leaveTeam } = useGame();
-  const { currentUser, teams, users } = state;
+  const { state } = useGame();
+  const { teams, users } = state;
 
   const team = teams.find((t) => t.id === teamId);
 
@@ -23,15 +33,6 @@ function TeamDetail() {
   const memberUsers = team.members
     .map((memberId) => users.find((u) => u.id === memberId))
     .filter(Boolean);
-
-  const isCurrentUserMember = currentUser
-    ? team.members.includes(currentUser.id)
-    : false;
-
-  const handleLeaveTeam = async () => {
-    await leaveTeam(team.id);
-    navigate('/teams');
-  };
 
   return (
     <Box sx={{ pt: 2 }}>
@@ -60,15 +61,31 @@ function TeamDetail() {
         </List>
       )}
 
-      {isCurrentUserMember && (
-        <Button
-          variant="contained"
-          color="error"
-          onClick={handleLeaveTeam}
-          sx={{ mt: 3, textTransform: 'none', fontSize: '1rem' }}
-        >
-          Leave Team
-        </Button>
+      {team.abilitiesEarned.length > 0 && (
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: '#9F8B7B' }}>
+            Abilities Earned
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            {team.abilitiesEarned.map((ability, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: 'primary.light',
+                  borderRadius: 1,
+                  color: 'primary.dark',
+                }}
+              >
+                {ABILITY_ICONS[ability]}
+              </Box>
+            ))}
+          </Box>
+        </Box>
       )}
     </Box>
   );

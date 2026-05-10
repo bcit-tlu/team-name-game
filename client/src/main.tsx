@@ -6,6 +6,7 @@ import App from './App';
 import { theme } from './theme/theme';
 import { SocketProvider } from './contexts/SocketContext';
 import { GameProvider } from './contexts/GameContext';
+import { SessionProvider } from './contexts/SessionContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -13,9 +14,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <SocketProvider>
-          <GameProvider>
-            <App />
-          </GameProvider>
+          <SessionProvider>
+            <GameProvider>
+              <App />
+            </GameProvider>
+          </SessionProvider>
         </SocketProvider>
       </ThemeProvider>
     </BrowserRouter>
