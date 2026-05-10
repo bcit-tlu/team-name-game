@@ -6,12 +6,17 @@ describe('NameForm', () => {
   it('should render the text field and button', () => {
     render(<NameForm onSubmit={() => {}} />);
     expect(screen.getByLabelText(/first name and last initial/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /add name/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument();
+  });
+
+  it('should respect a custom submit label', () => {
+    render(<NameForm onSubmit={() => {}} submitLabel="Register" />);
+    expect(screen.getByRole('button', { name: /register/i })).toBeInTheDocument();
   });
 
   it('should disable button when input is less than 2 characters', () => {
     render(<NameForm onSubmit={() => {}} />);
-    const button = screen.getByRole('button', { name: /add name/i });
+    const button = screen.getByRole('button', { name: /continue/i });
     expect(button).toBeDisabled();
 
     const input = screen.getByLabelText(/first name and last initial/i);
@@ -24,10 +29,10 @@ describe('NameForm', () => {
     const input = screen.getByLabelText(/first name and last initial/i);
     fireEvent.change(input, { target: { value: 'Al' } });
     // Still disabled without emoji
-    expect(screen.getByRole('button', { name: /add name/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /continue/i })).toBeDisabled();
     // Select an emoji
     fireEvent.click(screen.getByText('🍕'));
-    expect(screen.getByRole('button', { name: /add name/i })).toBeEnabled();
+    expect(screen.getByRole('button', { name: /continue/i })).toBeEnabled();
   });
 
   it('should call onSubmit with trimmed name and selected emoji', () => {
@@ -36,7 +41,7 @@ describe('NameForm', () => {
     const input = screen.getByLabelText(/first name and last initial/i);
     fireEvent.change(input, { target: { value: '  Alice B  ' } });
     fireEvent.click(screen.getByText('🍕'));
-    fireEvent.click(screen.getByRole('button', { name: /add name/i }));
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
     expect(mockSubmit).toHaveBeenCalledWith('Alice B', '🍕');
   });
 });

@@ -1,25 +1,21 @@
 import { useState } from 'react';
-import { Box, TextField, Button, IconButton, Typography } from '@mui/material';
-
-const USER_EMOJIS = [
-  '🐶', '🐱', '🦊', '🐻', '🐼', '🦁', '🐸', '🦋', '🌻', '🌲',
-  '🍕', '🍔', '🌮', '🍩', '🍦', '🧁', '🍿', '☕', '🍉', '🍒',
-  '✈️', '🚀', '🏖️', '⛰️', '🌋', '🗼', '🎡', '🏕️', '🌅', '🗺️',
-  '💡', '🎸', '🔮', '🎯', '🧲', '🔑', '💎', '🎩', '📸', '🧸',
-];
+import { Box, TextField, Button, Typography, Stack } from '@mui/material';
+import EmojiPicker from './EmojiPicker';
+import { USER_EMOJIS } from '../theme/emojis';
 
 interface Props {
   onSubmit: (name: string, emoji: string) => void;
+  submitLabel?: string;
 }
 
-function NameForm({ onSubmit }: Props) {
+function NameForm({ onSubmit, submitLabel = 'Continue' }: Props) {
   const [name, setName] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('');
 
   const isValid = name.trim().length >= 2 && selectedEmoji.length > 0;
 
   return (
-    <Box>
+    <Stack spacing={3}>
       <TextField
         fullWidth
         label="First name and last initial"
@@ -31,43 +27,32 @@ function NameForm({ onSubmit }: Props) {
           }
         }}
         variant="outlined"
-        sx={{ mb: 3, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
+        autoFocus
       />
 
-      <Typography variant="h3" sx={{ mb: 2 }}>
-        Select Your Icon
-      </Typography>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {USER_EMOJIS.map((emoji) => (
-          <IconButton
-            key={emoji}
-            onClick={() => setSelectedEmoji(emoji)}
-            sx={{
-              fontSize: '1.8rem',
-              width: 48,
-              height: 48,
-              border: selectedEmoji === emoji ? '2px solid' : '2px solid transparent',
-              borderColor: selectedEmoji === emoji ? 'primary.main' : 'transparent',
-              borderRadius: 2,
-            }}
-          >
-            {emoji}
-          </IconButton>
-        ))}
+      <Box>
+        <Typography variant="h3" sx={{ mb: 1.5 }}>
+          Select your icon
+        </Typography>
+        <EmojiPicker
+          emojis={USER_EMOJIS}
+          selected={selectedEmoji}
+          onSelect={setSelectedEmoji}
+        />
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           variant="contained"
           color="primary"
+          size="large"
           disabled={!isValid}
           onClick={() => onSubmit(name.trim(), selectedEmoji)}
-          sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
         >
-          Add Name
+          {submitLabel}
         </Button>
       </Box>
-    </Box>
+    </Stack>
   );
 }
 

@@ -1,6 +1,6 @@
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import Breadcrumbs from '../components/Breadcrumbs';
+import PageHeader from '../components/PageHeader';
 
 function WeaverCamera() {
   const handleCameraClick = () => {
@@ -13,30 +13,28 @@ function WeaverCamera() {
 
   return (
     <Box>
-      <Breadcrumbs
-        items={[
+      <PageHeader
+        title="Weaver"
+        description="Capture the game board so everyone can review the round."
+        breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Weaver', path: '/weaver' },
           { label: 'Camera' },
         ]}
       />
 
-      <Box sx={{ textAlign: 'center', mt: 6 }}>
-        <IconButton
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
+        <Button
           onClick={handleCameraClick}
-          sx={{
-            bgcolor: 'primary.main',
-            color: 'white',
-            width: 120,
-            height: 120,
-            borderRadius: 3,
-            '&:hover': { bgcolor: 'primary.dark' },
-          }}
+          variant="contained"
+          size="large"
+          startIcon={<CameraAltIcon />}
+          sx={{ px: 4 }}
         >
-          <CameraAltIcon sx={{ fontSize: 64 }} />
-        </IconButton>
-        <Typography variant="h2" sx={{ mt: 3, fontSize: '1.5rem' }}>
-          Take a picture of the game board
+          Take a picture
+        </Button>
+        <Typography variant="body2" sx={{ mt: 3, color: 'text.secondary' }}>
+          Opens your device camera to capture the current board.
         </Typography>
       </Box>
     </Box>

@@ -1,6 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItemButton, ListItemText, ListItemAvatar, Divider } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import {
+  Box,
+  Typography,
+  List,
+  ListItemButton,
+  ListItemText,
+  ListItemAvatar,
+} from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import { useGame } from '../contexts/GameContext';
 
 function AdjudicatorTeams() {
@@ -9,38 +16,37 @@ function AdjudicatorTeams() {
 
   return (
     <Box>
-      <Breadcrumbs
-        items={[
-          { label: 'Home', path: '/' },
-          { label: 'Teams' },
-        ]}
+      <PageHeader
+        title="Select a team"
+        description="Tap a team to review their entries."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Teams' }]}
       />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Select a Team
-      </Typography>
 
       {state.teams.length === 0 ? (
-        <Typography variant="body1" sx={{ color: '#9F8B7B', mt: 4, textAlign: 'center' }}>
-          No teams registered yet. Waiting for teams to join...
+        <Typography
+          variant="body2"
+          sx={{ color: 'text.secondary', mt: 4, textAlign: 'center' }}
+        >
+          No teams registered yet. Waiting for teams to join…
         </Typography>
       ) : (
-        <List>
-          {state.teams.map((team, idx) => (
-            <Box key={team.id}>
-              <ListItemButton
-                onClick={() => navigate(`/adjudicator/review/${team.id}`)}
-                sx={{ py: 2 }}
-              >
-                <ListItemAvatar>
-                  <Typography sx={{ fontSize: '2rem' }}>{team.icon}</Typography>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={team.name}
-                  primaryTypographyProps={{ fontSize: '1.3rem', fontWeight: 500 }}
-                />
-              </ListItemButton>
-              {idx < state.teams.length - 1 && <Divider />}
-            </Box>
+        <List disablePadding>
+          {state.teams.map((team) => (
+            <ListItemButton
+              key={team.id}
+              onClick={() => navigate(`/adjudicator/review/${team.id}`)}
+              sx={{ py: 1.5, mb: 0.5 }}
+            >
+              <ListItemAvatar>
+                <Typography component="span" sx={{ fontSize: '1.75rem' }}>
+                  {team.icon}
+                </Typography>
+              </ListItemAvatar>
+              <ListItemText
+                primary={team.name}
+                primaryTypographyProps={{ variant: 'h3', component: 'span' }}
+              />
+            </ListItemButton>
           ))}
         </List>
       )}

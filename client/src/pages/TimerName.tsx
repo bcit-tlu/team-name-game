@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Alert } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, Alert } from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import NameForm from '../components/NameForm';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
@@ -65,11 +65,16 @@ function TimerName() {
 
   return (
     <Box>
-      <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Timer' }]} />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Timer
-      </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      <PageHeader
+        title="Timer"
+        description="Add your name and pick an icon to represent you."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Timer' }]}
+      />
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <NameForm onSubmit={handleSubmit} />
     </Box>
   );

@@ -8,10 +8,65 @@ import {
   ListItemAvatar,
   Avatar,
   Button,
-  Divider,
+  Stack,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import { useGame } from '../contexts/GameContext';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import GavelIcon from '@mui/icons-material/Gavel';
+import PageHeader from '../components/PageHeader';
+import { useGame, Role } from '../contexts/GameContext';
+
+const ROLE_ICONS: Record<Exclude<Role, 'team-member'>, React.ReactNode> = {
+  adjudicator: <GavelIcon fontSize="small" />,
+  timer: <HourglassEmptyIcon fontSize="small" />,
+  weaver: <CameraAltIcon fontSize="small" />,
+};
+
+const ROLE_LABELS: Record<Exclude<Role, 'team-member'>, string> = {
+  adjudicator: 'Adjudicators',
+  timer: 'Timer',
+  weaver: 'Weaver',
+};
+
+function PersonRow({ name, icon }: { name: string; icon: React.ReactNode }) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, py: 0.75 }}>
+      <Avatar
+        sx={{
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+          width: 32,
+          height: 32,
+          fontSize: '0.9rem',
+        }}
+      >
+        {name.charAt(0).toUpperCase()}
+      </Avatar>
+      <Typography variant="body1">{name}</Typography>
+      <Box sx={{ ml: 'auto', color: 'text.secondary', display: 'flex' }}>{icon}</Box>
+    </Box>
+  );
+}
+
+function RoleSection({
+  role,
+  users,
+}: {
+  role: Exclude<Role, 'team-member'>;
+  users: { id: string; name: string }[];
+}) {
+  if (users.length === 0) return null;
+  return (
+    <Box>
+      <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 0.5 }}>
+        {ROLE_LABELS[role]}
+      </Typography>
+      {users.map((user) => (
+        <PersonRow key={user.id} name={user.name} icon={ROLE_ICONS[role]} />
+      ))}
+    </Box>
+  );
+}
 
 function TeamsPage() {
   const navigate = useNavigate();
@@ -36,98 +91,60 @@ function TeamsPage() {
 
   return (
     <Box>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Teams & Roles
-      </Typography>
+      <PageHeader
+        title="Teams & Roles"
+        description="See who's playing and the teams in this round."
+      />
 
       {isTeamMember && !userTeam && (
         <Button
           variant="contained"
           color="primary"
           fullWidth
+          size="large"
           onClick={() => navigate('/team-member/teams')}
-          sx={{ py: 2, fontSize: '1.1rem', fontWeight: 600, mb: 3 }}
+          sx={{ mb: 3 }}
         >
-          Join or Create a Team
+          Join or create a team
         </Button>
       )}
 
-      <Typography variant="h6" sx={{ mb: 1, fontSize: '1.1rem', color: '#9F8B7B' }}>
-        Teams
-      </Typography>
-
-      {state.teams.length === 0 ? (
-        <Typography variant="body1" sx={{ color: '#9F8B7B', mb: 3 }}>
-          No teams registered yet.
-        </Typography>
-      ) : (
-        <List sx={{ mb: 2 }}>
-          {state.teams.map((team) => (
-            <Box key={team.id}>
-              <ListItemButton onClick={() => handleTeamClick(team.id)} sx={{ py: 2 }}>
-                <ListItemAvatar>
-                  <Typography sx={{ fontSize: '2rem' }}>{team.icon}</Typography>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={team.name}
-                  primaryTypographyProps={{ fontSize: '1.3rem', fontWeight: 500 }}
-                />
-              </ListItemButton>
-            </Box>
-          ))}
-        </List>
-      )}
-
-      <Divider sx={{ mb: 2 }} />
-
-      <Typography variant="h6" sx={{ mb: 1, fontSize: '1.1rem', color: '#9F8B7B' }}>
-        Adjudicators
-      </Typography>
-
-      {adjudicators.length === 0 ? (
-        <Typography variant="body2" sx={{ color: '#9F8B7B', mb: 2 }}>
-          No adjudicators registered.
-        </Typography>
-      ) : (
-        <List sx={{ mb: 2 }}>
-          {adjudicators.map((user) => (
-            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', py: 1, px: 2 }}>
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '1rem' }}>
-                  {user.name.charAt(0).toUpperCase()}
-                </Avatar>
-              </ListItemAvatar>
-              <Typography sx={{ fontSize: '1.1rem' }}>{user.name}</Typography>
-            </Box>
-          ))}
-        </List>
-      )}
-
-      {timers.length > 0 && (
-        <Box sx={{ mb: 1.5 }}>
-          {timers.map((user) => (
-            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, py: 0.5 }}>
-              <PersonIcon sx={{ color: 'primary.main', fontSize: 24 }} />
-              <Typography sx={{ fontSize: '1.1rem' }}>
-                Timer: {user.name}
-              </Typography>
-            </Box>
-          ))}
+      <Stack spacing={3}>
+        <Box>
+          <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 0.5 }}>
+            Teams
+          </Typography>
+          {state.teams.length === 0 ? (
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              No teams registered yet.
+            </Typography>
+          ) : (
+            <List disablePadding>
+              {state.teams.map((team) => (
+                <ListItemButton
+                  key={team.id}
+                  onClick={() => handleTeamClick(team.id)}
+                  sx={{ py: 1.5, mb: 0.5 }}
+                >
+                  <ListItemAvatar>
+                    <Typography component="span" sx={{ fontSize: '1.75rem' }}>
+                      {team.icon}
+                    </Typography>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={team.name}
+                    primaryTypographyProps={{ variant: 'h3', component: 'span' }}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          )}
         </Box>
-      )}
 
-      {weavers.length > 0 && (
-        <Box sx={{ mb: 1.5 }}>
-          {weavers.map((user) => (
-            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, py: 0.5 }}>
-              <PersonIcon sx={{ color: 'primary.main', fontSize: 24 }} />
-              <Typography sx={{ fontSize: '1.1rem' }}>
-                Weaver: {user.name}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      )}
+        <RoleSection role="adjudicator" users={adjudicators} />
+        <RoleSection role="timer" users={timers} />
+        <RoleSection role="weaver" users={weavers} />
+      </Stack>
     </Box>
   );
 }

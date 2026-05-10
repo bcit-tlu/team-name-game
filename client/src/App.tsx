@@ -21,7 +21,16 @@ import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
-    <Box sx={{ maxWidth: 480, mx: 'auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box
+      sx={{
+        maxWidth: 480,
+        mx: 'auto',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        bgcolor: 'background.default',
+      }}
+    >
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />

@@ -1,16 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  Stack,
+  Paper,
+  Avatar,
+  Divider,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
+import PageHeader from '../components/PageHeader';
+import EditProfileForm from '../components/EditProfileForm';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
 
-const USER_EMOJIS = [
-  '🐶', '🐱', '🦊', '🐻', '🐼', '🦁', '🐸', '🦋', '🌻', '🌲',
-  '🍕', '🍔', '🌮', '🍩', '🍦', '🧁', '🍿', '☕', '🍉', '🍒',
-  '✈️', '🚀', '🏖️', '⛰️', '🌋', '🗼', '🎡', '🏕️', '🌅', '🗺️',
-  '💡', '🎸', '🔮', '🎯', '🧲', '🔑', '💎', '🎩', '📸', '🧸',
-];
+function formatRole(role: string): string {
+  return role
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -18,8 +31,6 @@ function ProfilePage() {
   const { sessionInfo, setSessionInfo } = useSession();
   const { currentUser, teams } = state;
   const [editing, setEditing] = useState(false);
-  const [editName, setEditName] = useState('');
-  const [editEmoji, setEditEmoji] = useState('');
 
   const userTeam = currentUser
     ? teams.find((t) => t.members.includes(currentUser.id))
@@ -35,192 +46,122 @@ function ProfilePage() {
     await leaveTeam(userTeam.id);
   };
 
-  const handleStartEdit = () => {
-    setEditName(sessionInfo?.name ?? currentUser?.name ?? '');
-    setEditEmoji(sessionInfo?.emoji ?? '');
-    setEditing(true);
+  const handleSaveEdit = (name: string, emoji: string) => {
+    setSessionInfo({ name, emoji });
+    setEditing(false);
   };
 
-  const handleSaveEdit = () => {
-    if (editName.trim().length >= 2 && editEmoji.length > 0) {
-      setSessionInfo({ name: editName.trim(), emoji: editEmoji });
-      setEditing(false);
-    }
-  };
-
-  if (!currentUser) {
-    return (
-      <Box sx={{ pt: 2 }}>
-        <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
-          Profile
-        </Typography>
-        {sessionInfo && (
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="body1" sx={{ fontSize: '2rem', mb: 1 }}>
-              {sessionInfo.emoji}
-            </Typography>
-            <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
-              {sessionInfo.name}
-            </Typography>
-            <Button
-              variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={handleStartEdit}
-              sx={{ mt: 2, textTransform: 'none', fontSize: '1rem' }}
-            >
-              Change Name &amp; Icon
-            </Button>
-          </Box>
-        )}
-        <Typography variant="body1" sx={{ color: '#9F8B7B', fontSize: '1.1rem' }}>
-          No role selected yet. Go to the home screen to pick a role.
-        </Typography>
-
-        {editing && (
-          <Box sx={{ mt: 3 }}>
-            <TextField
-              fullWidth
-              label="First name and last initial"
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-              variant="outlined"
-              sx={{ mb: 2, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
-            />
-            <Typography variant="h3" sx={{ mb: 1 }}>Select Your Icon</Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-              {USER_EMOJIS.map((emoji) => (
-                <IconButton
-                  key={emoji}
-                  onClick={() => setEditEmoji(emoji)}
-                  sx={{
-                    fontSize: '1.8rem', width: 48, height: 48,
-                    border: editEmoji === emoji ? '2px solid' : '2px solid transparent',
-                    borderColor: editEmoji === emoji ? 'primary.main' : 'transparent',
-                    borderRadius: 2,
-                  }}
-                >
-                  {emoji}
-                </IconButton>
-              ))}
-            </Box>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button variant="contained" onClick={handleSaveEdit}
-                disabled={editName.trim().length < 2 || editEmoji.length === 0}
-              >
-                Save
-              </Button>
-              <Button variant="outlined" onClick={() => setEditing(false)}>Cancel</Button>
-            </Box>
-          </Box>
-        )}
-      </Box>
-    );
-  }
-
-  const roleName = currentUser.role
-    .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+  const displayName = sessionInfo?.name ?? currentUser?.name ?? '';
+  const displayEmoji = sessionInfo?.emoji ?? '';
 
   return (
-    <Box sx={{ pt: 2 }}>
-      <Typography variant="h1" sx={{ mb: 3, fontSize: '1.8rem' }}>
-        Profile
-      </Typography>
+    <Box>
+      <PageHeader title="Profile" />
 
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
-          Name
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
-            {sessionInfo?.emoji && `${sessionInfo.emoji} `}{currentUser.name}
-          </Typography>
-          <IconButton size="small" onClick={handleStartEdit}>
-            <EditIcon sx={{ fontSize: 20, color: '#9F8B7B' }} />
-          </IconButton>
-        </Box>
-      </Box>
-
-      {editing && (
-        <Box sx={{ mb: 3 }}>
-          <TextField
-            fullWidth
-            label="First name and last initial"
-            value={editName}
-            onChange={(e) => setEditName(e.target.value)}
-            variant="outlined"
-            sx={{ mb: 2, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
-          />
-          <Typography variant="h3" sx={{ mb: 1 }}>Select Your Icon</Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-            {USER_EMOJIS.map((emoji) => (
-              <IconButton
-                key={emoji}
-                onClick={() => setEditEmoji(emoji)}
-                sx={{
-                  fontSize: '1.8rem', width: 48, height: 48,
-                  border: editEmoji === emoji ? '2px solid' : '2px solid transparent',
-                  borderColor: editEmoji === emoji ? 'primary.main' : 'transparent',
-                  borderRadius: 2,
-                }}
-              >
-                {emoji}
-              </IconButton>
-            ))}
-          </Box>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button variant="contained" onClick={handleSaveEdit}
-              disabled={editName.trim().length < 2 || editEmoji.length === 0}
+      {editing ? (
+        <EditProfileForm
+          initialName={displayName}
+          initialEmoji={displayEmoji}
+          onSave={handleSaveEdit}
+          onCancel={() => setEditing(false)}
+        />
+      ) : (
+        <Stack spacing={3}>
+          <Paper
+            elevation={0}
+            sx={{
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 2,
+              p: 2.5,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+            }}
+          >
+            <Avatar
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText',
+                width: 56,
+                height: 56,
+                fontSize: '1.5rem',
+              }}
             >
-              Save
-            </Button>
-            <Button variant="outlined" onClick={() => setEditing(false)}>Cancel</Button>
-          </Box>
-        </Box>
-      )}
+              {displayEmoji || displayName.charAt(0).toUpperCase() || '?'}
+            </Avatar>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                Name
+              </Typography>
+              <Typography variant="h3" sx={{ wordBreak: 'break-word' }}>
+                {displayName || 'Not set'}
+              </Typography>
+            </Box>
+            <IconButton
+              aria-label="Edit profile"
+              onClick={() => setEditing(true)}
+              sx={{ color: 'text.secondary' }}
+            >
+              <EditIcon />
+            </IconButton>
+          </Paper>
 
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
-          Role
-        </Typography>
-        <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
-          {roleName}
-        </Typography>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={handleRemoveRole}
-          sx={{ mt: 2, textTransform: 'none', fontSize: '1rem' }}
-        >
-          Remove Role
-        </Button>
-      </Box>
+          {currentUser ? (
+            <Paper
+              elevation={0}
+              sx={{
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 2,
+                p: 2.5,
+              }}
+            >
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                Role
+              </Typography>
+              <Typography variant="h3">{formatRole(currentUser.role)}</Typography>
 
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#9F8B7B' }}>
-          Team
-        </Typography>
-        {userTeam ? (
-          <>
-            <Typography variant="h6" sx={{ fontSize: '1.4rem', fontWeight: 600 }}>
-              {userTeam.icon} {userTeam.name}
+              {userTeam && (
+                <>
+                  <Divider sx={{ my: 2 }} />
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    Team
+                  </Typography>
+                  <Typography variant="h3">
+                    {userTeam.icon} {userTeam.name}
+                  </Typography>
+                </>
+              )}
+
+              <Stack spacing={1.5} sx={{ mt: 2.5 }}>
+                {userTeam && (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<GroupRemoveIcon />}
+                    onClick={handleLeaveTeam}
+                  >
+                    Leave team
+                  </Button>
+                )}
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<LogoutIcon />}
+                  onClick={handleRemoveRole}
+                >
+                  Sign out of role
+                </Button>
+              </Stack>
+            </Paper>
+          ) : (
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              No role selected yet. Go to the home screen to pick a role.
             </Typography>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={handleLeaveTeam}
-              sx={{ mt: 2, textTransform: 'none', fontSize: '1rem' }}
-            >
-              Leave Team
-            </Button>
-          </>
-        ) : (
-          <Typography variant="h6" sx={{ fontSize: '1.4rem', color: '#9F8B7B' }}>
-            Not on a team
-          </Typography>
-        )}
-      </Box>
+          )}
+        </Stack>
+      )}
     </Box>
   );
 }

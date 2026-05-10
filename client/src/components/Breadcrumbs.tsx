@@ -17,25 +17,46 @@ function Breadcrumbs({ items }: Props) {
   return (
     <MuiBreadcrumbs
       separator={<NavigateNextIcon fontSize="small" />}
-      sx={{ mb: 1, pb: 1 }}
+      aria-label="breadcrumb"
+      sx={{ mb: 2 }}
     >
-      {items.map((item, idx) =>
-        item.path && idx < items.length - 1 ? (
-          <Link
+      {items.map((item, idx) => {
+        const isLast = idx === items.length - 1;
+        if (item.path && !isLast) {
+          return (
+            <Link
+              key={idx}
+              component="button"
+              onClick={() => navigate(item.path!)}
+              underline="hover"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                background: 'none',
+                border: 'none',
+                p: 0,
+              }}
+            >
+              {item.label}
+            </Link>
+          );
+        }
+        return (
+          <Typography
             key={idx}
-            component="button"
-            variant="body2"
-            onClick={() => navigate(item.path!)}
-            sx={{ color: 'primary.main', textDecoration: 'none', cursor: 'pointer', fontSize: '1rem' }}
+            component="span"
+            sx={{
+              color: 'text.primary',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+            }}
           >
             {item.label}
-          </Link>
-        ) : (
-          <Typography key={idx} variant="body2" sx={{ color: 'text.primary', fontSize: '1rem' }}>
-            {item.label}
           </Typography>
-        ),
-      )}
+        );
+      })}
     </MuiBreadcrumbs>
   );
 }

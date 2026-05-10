@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Box, Typography, TextField, Button, Snackbar, Alert, Link } from '@mui/material';
+import { Box, TextField, Button, Snackbar, Alert, Link } from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import { useSession } from '../contexts/SessionContext';
 
-const SERVER_URL = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3001').replace(/\/+$/, '');
+const SERVER_URL = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3001').replace(
+  /\/+$/,
+  '',
+);
 
 function FeedbackPage() {
   const { sessionInfo } = useSession();
@@ -62,30 +66,31 @@ function FeedbackPage() {
 
   return (
     <Box>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Feedback
-      </Typography>
+      <PageHeader
+        title="Feedback"
+        description="Spotted a bug or have an idea? Send it our way — it becomes a GitHub issue."
+      />
 
       <TextField
         fullWidth
         multiline
-        rows={8}
-        placeholder="Share your thoughts..."
+        minRows={6}
+        placeholder="Share your thoughts…"
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}
         variant="outlined"
-        sx={{ mb: 3, '& .MuiInputBase-input': { fontSize: '1.1rem' } }}
+        sx={{ mb: 3 }}
       />
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           variant="contained"
           color="primary"
+          size="large"
           disabled={!feedback.trim() || submitting}
           onClick={handleSubmit}
-          sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
         >
-          {submitting ? 'Submitting...' : 'Submit'}
+          {submitting ? 'Submitting…' : 'Submit feedback'}
         </Button>
       </Box>
 
@@ -97,12 +102,13 @@ function FeedbackPage() {
         <Alert
           severity={result.severity}
           onClose={() => setResult((prev) => ({ ...prev, open: false }))}
+          variant="filled"
         >
           {result.message}
           {result.issueUrl && (
             <>
               {' '}
-              <Link href={result.issueUrl} target="_blank" rel="noopener">
+              <Link href={result.issueUrl} target="_blank" rel="noopener" sx={{ color: 'inherit', textDecorationColor: 'inherit' }}>
                 View issue
               </Link>
             </>
