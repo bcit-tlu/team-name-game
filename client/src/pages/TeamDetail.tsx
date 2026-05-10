@@ -1,16 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import CelebrationIcon from '@mui/icons-material/Celebration';
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useGame, AbilityType } from '../contexts/GameContext';
 
-const ABILITY_ICONS: Record<AbilityType, React.ReactNode> = {
-  star: <StarIcon sx={{ fontSize: 28 }} />,
-  nuke: <LocalFireDepartmentIcon sx={{ fontSize: 28 }} />,
-  interceptor: <CelebrationIcon sx={{ fontSize: 28 }} />,
-  meh: <SentimentNeutralIcon sx={{ fontSize: 28 }} />,
+const ABILITY_ICONS: Record<AbilityType, { icon: React.ReactNode; color: string }> = {
+  star: { icon: <StarIcon sx={{ fontSize: 28 }} />, color: '#FFD600' },
+  nuke: { icon: <CrisisAlertIcon sx={{ fontSize: 28 }} />, color: '#F44336' },
+  interceptor: { icon: <AutoFixNormalIcon sx={{ fontSize: 28 }} />, color: '#4CAF50' },
+  meh: { icon: <SentimentNeutralIcon sx={{ fontSize: 28 }} />, color: '#FFD600' },
 };
 
 function TeamDetail() {
@@ -40,6 +42,21 @@ function TeamDetail() {
         {team.icon} {team.name}
       </Typography>
 
+      <Box sx={{ display: 'flex', gap: 3, mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <CheckCircleIcon sx={{ color: '#4CAF50', fontSize: 22 }} />
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+            {team.approvedCount}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <CancelIcon sx={{ color: '#F44336', fontSize: 22 }} />
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+            {team.rejectedCount}
+          </Typography>
+        </Box>
+      </Box>
+
       <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: '#9F8B7B' }}>
         Members
       </Typography>
@@ -67,23 +84,26 @@ function TeamDetail() {
             Abilities Earned
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-            {team.abilitiesEarned.map((ability, idx) => (
-              <Box
-                key={idx}
-                sx={{
-                  width: 48,
-                  height: 48,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  bgcolor: 'primary.light',
-                  borderRadius: 1,
-                  color: 'primary.dark',
-                }}
-              >
-                {ABILITY_ICONS[ability]}
-              </Box>
-            ))}
+            {team.abilitiesEarned.map((ability, idx) => {
+              const def = ABILITY_ICONS[ability];
+              return (
+                <Box
+                  key={idx}
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bgcolor: 'primary.light',
+                    borderRadius: '50%',
+                    color: def.color,
+                  }}
+                >
+                  {def.icon}
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       )}

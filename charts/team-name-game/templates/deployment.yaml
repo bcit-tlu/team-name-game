@@ -44,6 +44,15 @@ spec:
           env:
             - name: NODE_ENV
               value: production
+            {{- if .Values.reportIssue.enabled }}
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.reportIssue.existingSecret | default (printf "%s-report-issue-pat" (include "team-name-game.fullname" .)) }}
+                  key: token
+            - name: GITHUB_REPO
+              value: {{ .Values.reportIssue.githubRepo | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
