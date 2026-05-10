@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Typography, TextField, Button, Snackbar, Alert, Link } from '@mui/material';
 import { useSession } from '../contexts/SessionContext';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
+const SERVER_URL = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3001').replace(/\/+$/, '');
 
 function FeedbackPage() {
   const { sessionInfo } = useSession();
