@@ -19,19 +19,24 @@ describe('NameForm', () => {
     expect(button).toBeDisabled();
   });
 
-  it('should enable button when input has 2+ characters', () => {
+  it('should enable button when input has 2+ characters and emoji is selected', () => {
     render(<NameForm onSubmit={() => {}} />);
     const input = screen.getByLabelText(/first name and last initial/i);
     fireEvent.change(input, { target: { value: 'Al' } });
+    // Still disabled without emoji
+    expect(screen.getByRole('button', { name: /add name/i })).toBeDisabled();
+    // Select an emoji
+    fireEvent.click(screen.getByText('🍕'));
     expect(screen.getByRole('button', { name: /add name/i })).toBeEnabled();
   });
 
-  it('should call onSubmit with trimmed name', () => {
+  it('should call onSubmit with trimmed name and selected emoji', () => {
     const mockSubmit = vi.fn();
     render(<NameForm onSubmit={mockSubmit} />);
     const input = screen.getByLabelText(/first name and last initial/i);
     fireEvent.change(input, { target: { value: '  Alice B  ' } });
+    fireEvent.click(screen.getByText('🍕'));
     fireEvent.click(screen.getByRole('button', { name: /add name/i }));
-    expect(mockSubmit).toHaveBeenCalledWith('Alice B');
+    expect(mockSubmit).toHaveBeenCalledWith('Alice B', '🍕');
   });
 });

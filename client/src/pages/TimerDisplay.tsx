@@ -55,17 +55,20 @@ function TimerDisplay() {
           let timerColor: string;
           let tooltipText: string;
 
+          let timerBgColor = 'transparent';
           if (isCompleted) {
             timerIcon = <LocalFireDepartmentIcon sx={{ fontSize: 36 }} />;
             timerColor = '#d32f2f';
             tooltipText = 'Completed – Reset to restart';
           } else if (timer.isRunning) {
             timerIcon = <AccessTimeIcon sx={{ fontSize: 36 }} />;
-            timerColor = '#837061';
+            timerColor = 'white';
+            timerBgColor = '#837061';
             tooltipText = 'Pause';
           } else if (isPaused) {
             timerIcon = <PauseCircleOutlineIcon sx={{ fontSize: 36 }} />;
-            timerColor = '#9A9682';
+            timerColor = 'white';
+            timerBgColor = '#9A9682';
             tooltipText = 'Resume';
           } else {
             timerIcon = <AccessTimeIcon sx={{ fontSize: 36 }} />;
@@ -90,7 +93,15 @@ function TimerDisplay() {
                 <span style={{ display: 'inline-flex' }}>
                   <IconButton
                     onClick={() => !isCompleted && handleToggleTimer(timer.id, timer.isRunning)}
-                    sx={{ color: timerColor }}
+                    sx={{
+                      color: timerColor,
+                      bgcolor: timerBgColor,
+                      borderRadius: '50%',
+                      '&:hover': {
+                        bgcolor: timerBgColor === 'transparent' ? undefined : timerBgColor,
+                        opacity: 0.85,
+                      },
+                    }}
                     disabled={isCompleted}
                   >
                     {timerIcon}
