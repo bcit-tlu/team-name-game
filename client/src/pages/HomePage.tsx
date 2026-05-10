@@ -23,13 +23,13 @@ const ROLES: { label: string; description: string; path: string; role: Role }[] 
   },
   {
     label: 'Timer',
-    description: 'Manage countdown timers',
+    description: 'Manage game countdown timers',
     path: '/timer',
     role: 'timer',
   },
   {
     label: 'Weaver',
-    description: 'Capture the game board',
+    description: 'Manage and capture the game board',
     path: '/weaver',
     role: 'weaver',
   },
@@ -46,14 +46,8 @@ function HomePage() {
 
   return (
     <Box>
-      <Typography variant="h1" sx={{ mb: 1, textAlign: 'center' }}>
+      <Typography variant="h1" sx={{ mb: 4, textAlign: 'center' }}>
         Select your role
-      </Typography>
-      <Typography
-        variant="body2"
-        sx={{ color: 'text.secondary', mb: 4, textAlign: 'center' }}
-      >
-        Pick how you'll participate in this round.
       </Typography>
 
       <Stack spacing={1.5}>

@@ -14,8 +14,8 @@ function TimerName() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const doRegister = async (name: string) => {
-    await registerUser(name, 'timer');
+  const doRegister = async (name: string, emoji: string) => {
+    await registerUser(name, 'timer', emoji);
     if (state.timers.length === 0) {
       const DEFAULT_DURATION = 300;
       for (let i = 0; i < 4; i++) {
@@ -34,7 +34,7 @@ function TimerName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'timer')
+      registerUser(sessionInfo.name, 'timer', sessionInfo.emoji)
         .then(async () => {
           if (state.timers.length === 0) {
             const DEFAULT_DURATION = 300;
@@ -56,7 +56,7 @@ function TimerName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await doRegister(name);
+      await doRegister(name, emoji);
       setSessionInfo({ name, emoji });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');

@@ -23,7 +23,7 @@ function WeaverName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'weaver')
+      registerUser(sessionInfo.name, 'weaver', sessionInfo.emoji)
         .then(() => navigate('/weaver/camera', { replace: true }))
         .catch((err) => {
           autoRegistered.current = false;
@@ -37,7 +37,7 @@ function WeaverName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await registerUser(name, 'weaver');
+      await registerUser(name, 'weaver', emoji);
       setSessionInfo({ name, emoji });
       navigate('/weaver/camera');
     } catch (err) {

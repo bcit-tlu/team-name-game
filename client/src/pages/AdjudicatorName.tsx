@@ -23,7 +23,7 @@ function AdjudicatorName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'adjudicator')
+      registerUser(sessionInfo.name, 'adjudicator', sessionInfo.emoji)
         .then(() => navigate('/adjudicator/teams', { replace: true }))
         .catch((err) => {
           autoRegistered.current = false;
@@ -37,7 +37,7 @@ function AdjudicatorName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await registerUser(name, 'adjudicator');
+      await registerUser(name, 'adjudicator', emoji);
       setSessionInfo({ name, emoji });
       navigate('/adjudicator/teams');
     } catch (err) {

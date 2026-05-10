@@ -30,7 +30,7 @@ function TeamMemberName() {
   useEffect(() => {
     if (!currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'team-member')
+      registerUser(sessionInfo.name, 'team-member', sessionInfo.emoji)
         .then(() => navigate('/team-member/teams', { replace: true }))
         .catch((err) => {
           autoRegistered.current = false;
@@ -44,7 +44,7 @@ function TeamMemberName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await registerUser(name, 'team-member');
+      await registerUser(name, 'team-member', emoji);
       setSessionInfo({ name, emoji });
       navigate('/team-member/teams');
     } catch (err) {

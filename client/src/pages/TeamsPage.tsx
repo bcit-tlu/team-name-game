@@ -28,20 +28,43 @@ const ROLE_LABELS: Record<Exclude<Role, 'team-member'>, string> = {
   weaver: 'Weaver',
 };
 
-function PersonRow({ name, icon }: { name: string; icon: React.ReactNode }) {
+function PersonRow({
+  name,
+  emoji,
+  icon,
+}: {
+  name: string;
+  emoji?: string;
+  icon: React.ReactNode;
+}) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, py: 0.75 }}>
-      <Avatar
-        sx={{
-          bgcolor: 'primary.main',
-          color: 'primary.contrastText',
-          width: 32,
-          height: 32,
-          fontSize: '0.9rem',
-        }}
-      >
-        {name.charAt(0).toUpperCase()}
-      </Avatar>
+      {emoji ? (
+        <Avatar
+          sx={{
+            bgcolor: 'background.paper',
+            border: '1px solid',
+            borderColor: 'divider',
+            width: 36,
+            height: 36,
+            fontSize: '1.125rem',
+          }}
+        >
+          {emoji}
+        </Avatar>
+      ) : (
+        <Avatar
+          sx={{
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            width: 36,
+            height: 36,
+            fontSize: '0.9rem',
+          }}
+        >
+          {name.charAt(0).toUpperCase()}
+        </Avatar>
+      )}
       <Typography variant="body1">{name}</Typography>
       <Box sx={{ ml: 'auto', color: 'text.secondary', display: 'flex' }}>{icon}</Box>
     </Box>
@@ -53,7 +76,7 @@ function RoleSection({
   users,
 }: {
   role: Exclude<Role, 'team-member'>;
-  users: { id: string; name: string }[];
+  users: { id: string; name: string; icon?: string }[];
 }) {
   if (users.length === 0) return null;
   return (
@@ -62,7 +85,12 @@ function RoleSection({
         {ROLE_LABELS[role]}
       </Typography>
       {users.map((user) => (
-        <PersonRow key={user.id} name={user.name} icon={ROLE_ICONS[role]} />
+        <PersonRow
+          key={user.id}
+          name={user.name}
+          emoji={user.icon}
+          icon={ROLE_ICONS[role]}
+        />
       ))}
     </Box>
   );

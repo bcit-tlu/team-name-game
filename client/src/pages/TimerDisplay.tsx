@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Box, Typography, TextField, IconButton, Tooltip, Stack } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
@@ -64,10 +65,28 @@ function getTimerVisual(timer: {
 
 function TimerDisplay() {
   const { state, startTimer, stopTimer, resetTimer, updateTimerLabel, createTimer } = useGame();
+  const [labelErrors, setLabelErrors] = useState<Record<string, boolean>>({});
+  const labelRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
-  const handleToggleTimer = (timerId: string, isRunning: boolean) => {
+  const handleToggleTimer = (timerId: string, isRunning: boolean, label: string) => {
+    if (!isRunning && label.trim().length === 0) {
+      setLabelErrors((prev) => ({ ...prev, [timerId]: true }));
+      labelRefs.current[timerId]?.focus();
+      return;
+    }
     if (isRunning) stopTimer(timerId);
     else startTimer(timerId);
+  };
+
+  const handleLabelChange = (timerId: string, value: string) => {
+    updateTimerLabel(timerId, value);
+    if (value.trim().length > 0 && labelErrors[timerId]) {
+      setLabelErrors((prev) => {
+        const next = { ...prev };
+        delete next[timerId];
+        return next;
+      });
+    }
   };
 
   const handleAddTimer = () => {
@@ -81,8 +100,7 @@ function TimerDisplay() {
         description="Tap a timer's clock to start, pause, or resume the countdown."
         breadcrumbs={[
           { label: 'Home', path: '/' },
-          { label: 'Timer', path: '/timer' },
-          { label: 'Display' },
+          { label: 'Timers' },
         ]}
       />
 
@@ -91,33 +109,45 @@ function TimerDisplay() {
           const visual = getTimerVisual(timer);
           const isCompleted = timer.remaining <= 0;
           const isLowTime = timer.remaining <= 60 && timer.isRunning;
+          const hasLabelError = !!labelErrors[timer.id];
 
           return (
             <Box
               key={timer.id}
               sx={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 gap: 1,
               }}
             >
-              <TextField
-                variant="outlined"
-                size="small"
-                placeholder="Timer label"
-                value={timer.label}
-                onChange={(e) => updateTimerLabel(timer.id, e.target.value)}
-                sx={{ flex: 1 }}
-              />
+              <Box sx={{ flex: 1 }}>
+                <TextField
+                  inputRef={(el: HTMLInputElement | null) => {
+                    labelRefs.current[timer.id] = el;
+                  }}
+                  variant="outlined"
+                  size="small"
+                  placeholder="Timer label"
+                  value={timer.label}
+                  onChange={(e) => handleLabelChange(timer.id, e.target.value)}
+                  fullWidth
+                  error={hasLabelError}
+                  helperText={hasLabelError ? 'Add a label to start this timer.' : undefined}
+                />
+              </Box>
               <Tooltip title={visual.tooltip}>
                 <span style={{ display: 'inline-flex' }}>
                   <IconButton
-                    onClick={() => !isCompleted && handleToggleTimer(timer.id, timer.isRunning)}
+                    onClick={() =>
+                      !isCompleted &&
+                      handleToggleTimer(timer.id, timer.isRunning, timer.label)
+                    }
                     aria-label={visual.tooltip}
                     disabled={isCompleted}
                     sx={{
                       width: 44,
                       height: 44,
+                      mt: 0.25,
                       color: visual.color,
                       bgcolor: visual.bgColor,
                       borderRadius: '50%',
@@ -140,6 +170,7 @@ function TimerDisplay() {
                   fontVariantNumeric: 'tabular-nums',
                   minWidth: 56,
                   textAlign: 'right',
+                  mt: 1,
                   color: isCompleted || isLowTime ? 'error.main' : 'text.primary',
                 }}
               >
@@ -149,7 +180,7 @@ function TimerDisplay() {
                 <IconButton
                   onClick={() => resetTimer(timer.id)}
                   aria-label="Reset timer"
-                  sx={{ color: 'text.secondary' }}
+                  sx={{ color: 'text.secondary', mt: 0.25 }}
                 >
                   <RestartAltIcon />
                 </IconButton>

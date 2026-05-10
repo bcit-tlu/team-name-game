@@ -107,17 +107,32 @@ function TeamDetail() {
             {memberUsers.map((member) => (
               <ListItem key={member!.id} disablePadding sx={{ py: 0.5 }}>
                 <ListItemAvatar>
-                  <Avatar
-                    sx={{
-                      bgcolor: 'primary.main',
-                      color: 'primary.contrastText',
-                      width: 36,
-                      height: 36,
-                      fontSize: '1rem',
-                    }}
-                  >
-                    {member!.name.charAt(0).toUpperCase()}
-                  </Avatar>
+                  {member!.icon ? (
+                    <Avatar
+                      sx={{
+                        bgcolor: 'background.paper',
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        width: 36,
+                        height: 36,
+                        fontSize: '1.125rem',
+                      }}
+                    >
+                      {member!.icon}
+                    </Avatar>
+                  ) : (
+                    <Avatar
+                      sx={{
+                        bgcolor: 'primary.main',
+                        color: 'primary.contrastText',
+                        width: 36,
+                        height: 36,
+                        fontSize: '1rem',
+                      }}
+                    >
+                      {member!.name.charAt(0).toUpperCase()}
+                    </Avatar>
+                  )}
                 </ListItemAvatar>
                 <ListItemText
                   primary={member!.name}

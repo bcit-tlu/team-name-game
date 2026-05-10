@@ -7,6 +7,7 @@ export type AbilityType = 'star' | 'nuke' | 'interceptor' | 'meh';
 export interface User {
   id: string;
   name: string;
+  icon?: string;
   role: Role;
   socketId: string;
 }
@@ -93,7 +94,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 interface GameContextValue {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
-  registerUser: (name: string, role: Role) => Promise<User>;
+  registerUser: (name: string, role: Role, icon?: string) => Promise<User>;
   removeRole: () => Promise<boolean>;
   leaveTeam: (teamId: string) => Promise<boolean>;
   joinTeam: (teamId: string) => Promise<Team>;
@@ -178,10 +179,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, [socket]);
 
   const registerUser = useCallback(
-    (name: string, role: Role): Promise<User> => {
+    (name: string, role: Role, icon?: string): Promise<User> => {
       return new Promise((resolve, reject) => {
         if (!socket) return reject(new Error('Socket not connected'));
-        socket.emit('user:register', { name, role }, (user: User | null) => {
+        socket.emit('user:register', { name, role, icon }, (user: User | null) => {
           if (user) {
             dispatch({ type: 'SET_CURRENT_USER', payload: user });
             resolve(user);

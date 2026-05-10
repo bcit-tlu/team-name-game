@@ -68,7 +68,7 @@ function FeedbackPage() {
     <Box>
       <PageHeader
         title="Feedback"
-        description="Spotted a bug or have an idea? Send it our way — it becomes a GitHub issue."
+        description="Spotted a bug or have an idea?"
       />
 
       <TextField

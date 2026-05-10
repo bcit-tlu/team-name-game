@@ -20,7 +20,12 @@ class GameStore {
     return { ...this.state };
   }
 
-  registerUser(name: string, role: User['role'], socketId: string): User | undefined {
+  registerUser(
+    name: string,
+    role: User['role'],
+    socketId: string,
+    icon?: string,
+  ): User | undefined {
     const limit = ROLE_LIMITS[role];
     if (limit !== undefined) {
       const count = this.state.users.filter((u) => u.role === role).length;
@@ -29,6 +34,7 @@ class GameStore {
     const user: User = {
       id: randomUUID(),
       name,
+      icon,
       role,
       socketId,
     };
