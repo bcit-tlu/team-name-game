@@ -37,8 +37,8 @@ function AdjudicatorName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      setSessionInfo({ name, emoji });
       await registerUser(name, 'adjudicator');
+      setSessionInfo({ name, emoji });
       navigate('/adjudicator/teams');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');

@@ -47,8 +47,8 @@ function TimerName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      setSessionInfo({ name, emoji });
       await doRegister(name);
+      setSessionInfo({ name, emoji });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     }

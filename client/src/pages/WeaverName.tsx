@@ -37,8 +37,8 @@ function WeaverName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      setSessionInfo({ name, emoji });
       await registerUser(name, 'weaver');
+      setSessionInfo({ name, emoji });
       navigate('/weaver/camera');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
