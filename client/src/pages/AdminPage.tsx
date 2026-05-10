@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Paper,
+} from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
 
@@ -19,29 +30,43 @@ function AdminPage() {
 
   return (
     <Box>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Admin
-      </Typography>
+      <PageHeader
+        title="Admin"
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Admin' }]}
+      />
 
-      <Typography variant="body2" sx={{ mb: 4, color: '#9F8B7B' }}>
+      <Paper
+        elevation={0}
+        sx={{
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 2,
+          p: 2.5,
+          mb: 3,
+        }}
+      >
+        <Typography variant="h3" sx={{ mb: 1 }}>
+          Reset game
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2.5 }}>
+          Clears all teams, entries, abilities, and timers. This cannot be undone.
+        </Typography>
+        <Button
+          variant="contained"
+          color="error"
+          size="large"
+          onClick={() => setConfirmOpen(true)}
+        >
+          Reset game
+        </Button>
+      </Paper>
+
+      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
         Version {__APP_VERSION__}
       </Typography>
 
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        Reset all game data including teams, entries, abilities, and timers.
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="error"
-        onClick={() => setConfirmOpen(true)}
-        sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
-      >
-        Reset Game
-      </Button>
-
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-        <DialogTitle>Confirm Reset</DialogTitle>
+        <DialogTitle>Reset game?</DialogTitle>
         <DialogContent>
           <DialogContentText>
             This will delete all teams, entries, abilities, and reset all timers. This cannot be

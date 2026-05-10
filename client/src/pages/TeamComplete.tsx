@@ -1,21 +1,39 @@
-import { Box, Typography } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import PageHeader from '../components/PageHeader';
+import { useGame } from '../contexts/GameContext';
 
 function TeamComplete() {
+  const navigate = useNavigate();
+  const { state } = useGame();
+  const userTeam = state.currentUser
+    ? state.teams.find((t) => t.members.includes(state.currentUser!.id))
+    : undefined;
+
   return (
     <Box>
-      <Breadcrumbs
-        items={[
+      <PageHeader
+        title="Get ready to play!"
+        breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Team Member', path: '/team-member' },
           { label: 'Register', path: '/team-member/register' },
           { label: 'Complete' },
         ]}
       />
-      <Typography variant="h1" sx={{ mb: 2 }}>
-        Get ready to play!
+      <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
+        Think of unique names that adjudicators won't have heard before.
       </Typography>
-      <Typography variant="h2">Think of unique names!</Typography>
+      {userTeam && (
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={() => navigate(`/teams/${userTeam.id}`)}
+        >
+          Go to your team
+        </Button>
+      )}
     </Box>
   );
 }

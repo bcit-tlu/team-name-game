@@ -8,8 +8,10 @@ import {
   ListItemButton,
   ListItemText,
   ListItemAvatar,
+  Stack,
 } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import AddIcon from '@mui/icons-material/Add';
+import PageHeader from '../components/PageHeader';
 import { useGame } from '../contexts/GameContext';
 
 function TeamMemberTeams() {
@@ -36,51 +38,56 @@ function TeamMemberTeams() {
 
   return (
     <Box>
-      <Breadcrumbs
-        items={[
-          { label: 'Home', path: '/' },
-          { label: 'Teams' },
-        ]}
+      <PageHeader
+        title="Join or create a team"
+        description="Pick an existing team or start a new one."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Teams' }]}
       />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Join or Create a Team
-      </Typography>
 
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={() => navigate('/team-member/register')}
-        sx={{ py: 2, fontSize: '1.2rem', fontWeight: 600, mb: 4 }}
-      >
-        Create New Team
-      </Button>
+      <Stack spacing={3}>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          size="large"
+          startIcon={<AddIcon />}
+          onClick={() => navigate('/team-member/register')}
+        >
+          Create new team
+        </Button>
 
-      {teams.length > 0 && (
-        <>
-          <Typography variant="h6" sx={{ mb: 2, fontSize: '1.2rem', color: '#9F8B7B' }}>
-            Or join an existing team
-          </Typography>
-          <List>
-            {teams.map((team) => (
-              <ListItemButton
-                key={team.id}
-                onClick={() => handleJoinTeam(team.id)}
-                sx={{ py: 2 }}
-              >
-                <ListItemAvatar>
-                  <Typography sx={{ fontSize: '2rem' }}>{team.icon}</Typography>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={team.name}
-                  secondary={`${team.members.length} member${team.members.length !== 1 ? 's' : ''}`}
-                  primaryTypographyProps={{ fontSize: '1.3rem', fontWeight: 500 }}
-                />
-              </ListItemButton>
-            ))}
-          </List>
-        </>
-      )}
+        {teams.length > 0 && (
+          <Box>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: 'text.secondary', mb: 1 }}
+            >
+              Or join an existing team
+            </Typography>
+            <List disablePadding>
+              {teams.map((team) => (
+                <ListItemButton
+                  key={team.id}
+                  onClick={() => handleJoinTeam(team.id)}
+                  sx={{ py: 1.5, mb: 0.5 }}
+                >
+                  <ListItemAvatar>
+                    <Typography component="span" sx={{ fontSize: '1.75rem' }}>
+                      {team.icon}
+                    </Typography>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={team.name}
+                    primaryTypographyProps={{ variant: 'h3', component: 'span' }}
+                    secondary={`${team.members.length} member${team.members.length !== 1 ? 's' : ''}`}
+                    secondaryTypographyProps={{ variant: 'body2' }}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          </Box>
+        )}
+      </Stack>
     </Box>
   );
 }

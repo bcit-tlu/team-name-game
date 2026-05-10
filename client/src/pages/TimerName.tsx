@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Alert } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, Alert } from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import NameForm from '../components/NameForm';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
@@ -14,8 +14,8 @@ function TimerName() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const doRegister = async (name: string) => {
-    await registerUser(name, 'timer');
+  const doRegister = async (name: string, emoji: string) => {
+    await registerUser(name, 'timer', emoji);
     if (state.timers.length === 0) {
       const DEFAULT_DURATION = 300;
       for (let i = 0; i < 4; i++) {
@@ -34,7 +34,7 @@ function TimerName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'timer')
+      registerUser(sessionInfo.name, 'timer', sessionInfo.emoji)
         .then(async () => {
           if (state.timers.length === 0) {
             const DEFAULT_DURATION = 300;
@@ -56,7 +56,7 @@ function TimerName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await doRegister(name);
+      await doRegister(name, emoji);
       setSessionInfo({ name, emoji });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
@@ -65,11 +65,16 @@ function TimerName() {
 
   return (
     <Box>
-      <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Timer' }]} />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Timer
-      </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      <PageHeader
+        title="Timer"
+        description="Add your name and pick an icon to represent you."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Timer' }]}
+      />
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <NameForm onSubmit={handleSubmit} />
     </Box>
   );

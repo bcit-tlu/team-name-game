@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Alert } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, Alert } from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import NameForm from '../components/NameForm';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
@@ -30,7 +30,7 @@ function TeamMemberName() {
   useEffect(() => {
     if (!currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'team-member')
+      registerUser(sessionInfo.name, 'team-member', sessionInfo.emoji)
         .then(() => navigate('/team-member/teams', { replace: true }))
         .catch((err) => {
           autoRegistered.current = false;
@@ -44,7 +44,7 @@ function TeamMemberName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await registerUser(name, 'team-member');
+      await registerUser(name, 'team-member', emoji);
       setSessionInfo({ name, emoji });
       navigate('/team-member/teams');
     } catch (err) {
@@ -54,11 +54,16 @@ function TeamMemberName() {
 
   return (
     <Box>
-      <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Team Member' }]} />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Team Member
-      </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      <PageHeader
+        title="Team Member"
+        description="Add your name and pick an icon to represent you."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Team Member' }]}
+      />
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <NameForm onSubmit={handleSubmit} />
     </Box>
   );

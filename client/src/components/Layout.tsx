@@ -9,12 +9,16 @@ import {
   Box,
   Avatar,
   IconButton,
+  Container,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSession } from '../contexts/SessionContext';
+
+const APP_MAX_WIDTH = 480;
+const BOTTOM_NAV_HEIGHT = 64;
 
 function Layout() {
   const navigate = useNavigate();
@@ -38,24 +42,37 @@ function Layout() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="static" sx={{ bgcolor: 'primary.main' }}>
-        <Toolbar>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        bgcolor: 'background.default',
+      }}
+    >
+      <AppBar position="static">
+        <Toolbar sx={{ gap: 1 }}>
           <Typography
-            variant="h6"
-            sx={{ fontWeight: 700, color: 'white', fontSize: '1.3rem', flex: 1 }}
+            variant="h2"
+            component="h1"
+            sx={{ flex: 1, color: 'primary.contrastText', fontSize: '1.125rem' }}
           >
             Team Name Game
           </Typography>
-          <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
+          <IconButton
+            onClick={handleProfileClick}
+            aria-label="Open profile"
+            sx={{ p: 0.5, color: 'primary.contrastText' }}
+          >
             {sessionInfo ? (
               <Avatar
                 sx={{
                   bgcolor: 'primary.dark',
                   width: 36,
                   height: 36,
-                  fontSize: '1.2rem',
-                  border: '2px solid white',
+                  fontSize: '1.125rem',
+                  border: '1px solid',
+                  borderColor: 'primary.contrastText',
                 }}
               >
                 {sessionInfo.emoji}
@@ -63,22 +80,34 @@ function Layout() {
             ) : (
               <Avatar
                 sx={{
-                  bgcolor: '#3C3F47',
+                  bgcolor: 'primary.dark',
                   width: 36,
                   height: 36,
-                  border: '2px solid white',
+                  border: '1px solid',
+                  borderColor: 'primary.contrastText',
                 }}
               >
-                <PersonIcon sx={{ fontSize: 20, color: 'white' }} />
+                <PersonIcon sx={{ fontSize: 20, color: 'primary.contrastText' }} />
               </Avatar>
             )}
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ flex: 1, p: 2, pb: 10 }}>
+      <Container
+        component="main"
+        maxWidth={false}
+        sx={{
+          flex: 1,
+          px: 2,
+          pt: 2,
+          pb: `${BOTTOM_NAV_HEIGHT + 16}px`,
+          maxWidth: APP_MAX_WIDTH,
+          width: '100%',
+        }}
+      >
         <Outlet />
-      </Box>
+      </Container>
 
       <BottomNavigation
         value={getNavValue()}
@@ -93,35 +122,13 @@ function Layout() {
           bottom: 0,
           left: 0,
           right: 0,
-          maxWidth: 480,
+          maxWidth: APP_MAX_WIDTH,
           mx: 'auto',
-          borderTop: '1px solid #9F8B7B',
-          bgcolor: '#F3F5F5',
-          height: 72,
-          py: 1,
         }}
       >
-        <BottomNavigationAction
-          label="Home"
-          icon={<HomeIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/' ? 'primary.dark' : '#9F8B7B', gap: 0.5 }}
-        />
-        <BottomNavigationAction
-          label="Teams & Roles"
-          icon={<EmojiEventsIcon sx={{ fontSize: 32 }} />}
-          sx={{
-            color:
-              location.pathname === '/teams' || location.pathname.startsWith('/teams/')
-                ? 'primary.dark'
-                : '#9F8B7B',
-            gap: 0.5,
-          }}
-        />
-        <BottomNavigationAction
-          label="Feedback"
-          icon={<RateReviewIcon sx={{ fontSize: 32 }} />}
-          sx={{ color: location.pathname === '/feedback' ? 'primary.dark' : '#9F8B7B', gap: 0.5 }}
-        />
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Teams & Roles" icon={<EmojiEventsIcon />} />
+        <BottomNavigationAction label="Feedback" icon={<RateReviewIcon />} />
       </BottomNavigation>
     </Box>
   );

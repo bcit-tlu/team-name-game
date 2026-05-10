@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, TextField, Button, IconButton } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, TextField, Button, Stack, Typography } from '@mui/material';
+import PageHeader from '../components/PageHeader';
+import EmojiPicker from '../components/EmojiPicker';
+import { TEAM_EMOJIS } from '../theme/emojis';
 import { useGame } from '../contexts/GameContext';
-
-const EMOJIS = {
-  city: ['🏙️', '🌆', '🏛️', '🏢', '⛩️'],
-  nature: ['🌲', '🌊', '🏔️', '🌺', '🦋'],
-  sports: ['⚽', '🏀', '🎾', '🏈', '⚾'],
-};
 
 function TeamRegister() {
   const navigate = useNavigate();
@@ -16,7 +12,6 @@ function TeamRegister() {
   const [teamName, setTeamName] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('');
 
-  const allEmojis = [...EMOJIS.city, ...EMOJIS.nature, ...EMOJIS.sports];
   const isValid = teamName.trim().length > 0 && selectedEmoji.length > 0;
 
   const handleRegister = async () => {
@@ -26,66 +21,55 @@ function TeamRegister() {
 
   return (
     <Box>
-      <Breadcrumbs
-        items={[
+      <PageHeader
+        title="Register your team"
+        description="Give your team a name and pick an icon."
+        breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Team Member', path: '/team-member' },
           { label: 'Teams', path: '/team-member/teams' },
           { label: 'Create' },
         ]}
       />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Register Your Team
-      </Typography>
 
-      <TextField
-        fullWidth
-        label="Team Name"
-        value={teamName}
-        onChange={(e) => setTeamName(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && isValid) {
-            handleRegister();
-          }
-        }}
-        variant="outlined"
-        sx={{ mb: 3, '& .MuiInputBase-input': { fontSize: '1.2rem' } }}
-      />
+      <Stack spacing={3}>
+        <TextField
+          fullWidth
+          label="Team name"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && isValid) handleRegister();
+          }}
+          variant="outlined"
+          autoFocus
+        />
 
-      <Typography variant="h3" sx={{ mb: 2 }}>
-        Select an Emoji
-      </Typography>
+        <Box>
+          <Typography variant="h3" sx={{ mb: 1.5 }}>
+            Select a team icon
+          </Typography>
+          <EmojiPicker
+            emojis={TEAM_EMOJIS}
+            selected={selectedEmoji}
+            onSelect={setSelectedEmoji}
+            size={56}
+            fontSize="1.875rem"
+          />
+        </Box>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-        {allEmojis.map((emoji) => (
-          <IconButton
-            key={emoji}
-            onClick={() => setSelectedEmoji(emoji)}
-            sx={{
-              fontSize: '2rem',
-              width: 56,
-              height: 56,
-              border: selectedEmoji === emoji ? '2px solid' : '2px solid transparent',
-              borderColor: selectedEmoji === emoji ? 'primary.main' : 'transparent',
-              borderRadius: 2,
-            }}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={!isValid}
+            onClick={handleRegister}
           >
-            {emoji}
-          </IconButton>
-        ))}
-      </Box>
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={!isValid}
-          onClick={handleRegister}
-          sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
-        >
-          Register
-        </Button>
-      </Box>
+            Register team
+          </Button>
+        </Box>
+      </Stack>
     </Box>
   );
 }

@@ -35,7 +35,7 @@ export function setupSocketHandlers(io: GameIO): void {
     socket.emit('state:full', store.getState());
 
     socket.on('user:register', (data, callback) => {
-      const user = store.registerUser(data.name, data.role, socket.id);
+      const user = store.registerUser(data.name, data.role, socket.id, data.icon);
       if (user) {
         callback(user);
         io.emit('user:registered', user);

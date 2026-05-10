@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Alert } from '@mui/material';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { Box, Alert } from '@mui/material';
+import PageHeader from '../components/PageHeader';
 import NameForm from '../components/NameForm';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
@@ -23,7 +23,7 @@ function AdjudicatorName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      registerUser(sessionInfo.name, 'adjudicator')
+      registerUser(sessionInfo.name, 'adjudicator', sessionInfo.emoji)
         .then(() => navigate('/adjudicator/teams', { replace: true }))
         .catch((err) => {
           autoRegistered.current = false;
@@ -37,7 +37,7 @@ function AdjudicatorName() {
 
   const handleSubmit = async (name: string, emoji: string) => {
     try {
-      await registerUser(name, 'adjudicator');
+      await registerUser(name, 'adjudicator', emoji);
       setSessionInfo({ name, emoji });
       navigate('/adjudicator/teams');
     } catch (err) {
@@ -47,11 +47,16 @@ function AdjudicatorName() {
 
   return (
     <Box>
-      <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Adjudicator' }]} />
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        Adjudicator
-      </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      <PageHeader
+        title="Adjudicator"
+        description="Add your name and pick an icon to represent you."
+        breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Adjudicator' }]}
+      />
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <NameForm onSubmit={handleSubmit} />
     </Box>
   );
