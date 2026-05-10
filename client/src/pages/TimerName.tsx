@@ -34,13 +34,22 @@ function TimerName() {
   useEffect(() => {
     if (!state.currentUser && sessionInfo && !autoRegistered.current) {
       autoRegistered.current = true;
-      doRegister(sessionInfo.name).catch((err) => {
-        autoRegistered.current = false;
-        setError(err instanceof Error ? err.message : 'Registration failed');
-      });
+      registerUser(sessionInfo.name, 'timer')
+        .then(async () => {
+          if (state.timers.length === 0) {
+            const DEFAULT_DURATION = 300;
+            for (let i = 0; i < 4; i++) {
+              await createTimer('', DEFAULT_DURATION);
+            }
+          }
+          navigate('/timer/display', { replace: true });
+        })
+        .catch((err) => {
+          autoRegistered.current = false;
+          setError(err instanceof Error ? err.message : 'Registration failed');
+        });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.currentUser, sessionInfo]);
+  }, [state.currentUser, state.timers.length, sessionInfo, registerUser, createTimer, navigate]);
 
   if (state.currentUser?.role === 'timer') return null;
   if (sessionInfo && !state.currentUser) return null;
