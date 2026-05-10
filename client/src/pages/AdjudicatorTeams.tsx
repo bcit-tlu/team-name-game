@@ -12,7 +12,6 @@ function AdjudicatorTeams() {
       <Breadcrumbs
         items={[
           { label: 'Home', path: '/' },
-          { label: 'Adjudicator', path: '/adjudicator' },
           { label: 'Teams' },
         ]}
       />
