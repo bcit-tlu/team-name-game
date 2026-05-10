@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Fab from '@mui/material/Fab';
 import PageHeader from '../components/PageHeader';
+import { BOTTOM_NAV_HEIGHT } from '../components/Layout';
 import { useGame } from '../contexts/GameContext';
 
 function formatTime(seconds: number): string {
@@ -190,7 +191,7 @@ function TimerDisplay() {
         })}
       </Stack>
 
-      <Box sx={{ position: 'fixed', bottom: 80, right: 24 }}>
+      <Box sx={{ position: 'fixed', bottom: BOTTOM_NAV_HEIGHT + 16, right: 24 }}>
         <Tooltip title="Add timer">
           <Fab color="primary" onClick={handleAddTimer} size="medium" aria-label="Add timer">
             <AddIcon />

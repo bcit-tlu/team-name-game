@@ -18,7 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useSession } from '../contexts/SessionContext';
 
 const APP_MAX_WIDTH = 540;
-const BOTTOM_NAV_HEIGHT = 76;
+export const BOTTOM_NAV_HEIGHT = 76;
 
 function Layout() {
   const navigate = useNavigate();
