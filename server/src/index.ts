@@ -5,6 +5,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { setupSocketHandlers } from './socket.js';
+import issuesRouter from './issues.js';
 import type { ClientToServerEvents, ServerToClientEvents } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,8 @@ app.use(express.json());
 app.get('/healthz', (_req, res) => {
   res.json({ status: 'HEALTHY' });
 });
+
+app.use(issuesRouter);
 
 if (isProduction) {
   const clientDist = path.resolve(__dirname, '../../client/dist');

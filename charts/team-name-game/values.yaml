@@ -43,6 +43,24 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+# ── Issue reporting (GitHub PAT) ─────────────────────────────
+# The server creates GitHub Issues from user feedback via
+# POST /api/issues.  It needs a GitHub PAT with Issues
+# read/write scope on the target repository.
+#
+# Secret resolution order:
+#   1. reportIssue.existingSecret  → operator-managed K8s Secret
+#   2. Neither                     → chart does not inject env vars
+#
+# To supply a PAT:
+#   kubectl create secret generic team-name-game-report-issue-pat \
+#     --from-literal=token=ghp_YOUR_SCOPED_PAT -n team-name-game
+#   then set reportIssue.existingSecret: team-name-game-report-issue-pat
+reportIssue:
+  enabled: false
+  githubRepo: "bcit-tlu/team-name-game"
+  existingSecret: ""
+
 # ── High-availability / topology spreading ────────────────────
 # When enabled, adds a required pod anti-affinity rule so that no two
 # replicas land in the same topology zone (e.g. datacenter).
