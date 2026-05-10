@@ -97,12 +97,14 @@ function TeamDetail() {
         </List>
       )}
 
-      <Typography
-        variant="body2"
-        sx={{ textAlign: 'center', color: '#9F8B7B', mt: 3, fontStyle: 'italic' }}
-      >
-        Click your profile icon in the top right to leave the team
-      </Typography>
+      {state.currentUser && team.members.includes(state.currentUser.id) && (
+        <Typography
+          variant="body2"
+          sx={{ textAlign: 'center', color: '#9F8B7B', mt: 3, fontStyle: 'italic' }}
+        >
+          Click your profile icon in the top right to leave the team
+        </Typography>
+      )}
 
       {team.abilitiesEarned.length > 0 && (
         <Box sx={{ mt: 3 }}>
