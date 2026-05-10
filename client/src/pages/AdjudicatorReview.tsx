@@ -73,7 +73,6 @@ function AdjudicatorReview() {
       <Breadcrumbs
         items={[
           { label: 'Home', path: '/' },
-          { label: 'Adjudicator', path: '/adjudicator' },
           { label: 'Teams', path: '/adjudicator/teams' },
           { label: team.name },
         ]}
@@ -103,11 +102,11 @@ function AdjudicatorReview() {
         </Box>
 
         <Typography variant="body1" sx={{ fontSize: '1.3rem', mb: 4, textAlign: 'left' }}>
-          Entries until next ability: {team.entriesUntilAbility}
+          Entries until next ability unlocks: {team.entriesUntilAbility}
         </Typography>
 
         <Typography variant="h3" sx={{ textAlign: 'left', mb: 2 }}>
-          Abilities unlocked
+          Abilities to unlock
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
           {ABILITY_ICONS.map(({ type, icon, color }) => (
