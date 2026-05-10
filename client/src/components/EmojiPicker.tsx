@@ -8,7 +8,7 @@ interface Props {
   fontSize?: string;
 }
 
-function EmojiPicker({ emojis, selected, onSelect, size = 48, fontSize = '1.6rem' }: Props) {
+function EmojiPicker({ emojis, selected, onSelect, size = 56, fontSize = '1.875rem' }: Props) {
   return (
     <Box
       role="radiogroup"

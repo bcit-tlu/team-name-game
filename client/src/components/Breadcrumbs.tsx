@@ -31,7 +31,7 @@ function Breadcrumbs({ items }: Props) {
               underline="hover"
               sx={{
                 color: 'text.secondary',
-                fontSize: '0.875rem',
+                fontSize: '1rem',
                 fontWeight: 500,
                 cursor: 'pointer',
                 background: 'none',
@@ -49,7 +49,7 @@ function Breadcrumbs({ items }: Props) {
             component="span"
             sx={{
               color: 'text.primary',
-              fontSize: '0.875rem',
+              fontSize: '1rem',
               fontWeight: 600,
             }}
           >

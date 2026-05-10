@@ -96,7 +96,7 @@ function AdjudicatorReview() {
               aria-label="Approve entry"
               sx={{ p: 0, color: 'success.main' }}
             >
-              <CheckCircleIcon sx={{ fontSize: 72 }} />
+              <CheckCircleIcon sx={{ fontSize: 88 }} />
             </IconButton>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
               Approve
@@ -108,7 +108,7 @@ function AdjudicatorReview() {
               aria-label="Reject entry"
               sx={{ p: 0, color: 'error.main' }}
             >
-              <CancelIcon sx={{ fontSize: 72 }} />
+              <CancelIcon sx={{ fontSize: 88 }} />
             </IconButton>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
               Reject
@@ -136,8 +136,8 @@ function AdjudicatorReview() {
                 disabled={!abilitiesUnlocked}
                 aria-label={`Confer ${def.label}`}
                 sx={{
-                  width: 56,
-                  height: 56,
+                  width: 68,
+                  height: 68,
                   borderRadius: '50%',
                   border: '1.5px solid',
                   borderColor: 'divider',

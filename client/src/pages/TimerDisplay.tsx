@@ -33,7 +33,7 @@ function getTimerVisual(timer: {
 
   if (isCompleted) {
     return {
-      icon: <LocalFireDepartmentIcon sx={{ fontSize: 32 }} />,
+      icon: <LocalFireDepartmentIcon sx={{ fontSize: 40 }} />,
       color: 'error.main',
       bgColor: 'transparent',
       tooltip: 'Completed — reset to restart',
@@ -41,7 +41,7 @@ function getTimerVisual(timer: {
   }
   if (timer.isRunning) {
     return {
-      icon: <AccessTimeIcon sx={{ fontSize: 32 }} />,
+      icon: <AccessTimeIcon sx={{ fontSize: 40 }} />,
       color: 'primary.contrastText',
       bgColor: 'primary.dark',
       tooltip: 'Pause',
@@ -49,14 +49,14 @@ function getTimerVisual(timer: {
   }
   if (isPaused) {
     return {
-      icon: <PauseCircleOutlineIcon sx={{ fontSize: 32 }} />,
+      icon: <PauseCircleOutlineIcon sx={{ fontSize: 40 }} />,
       color: 'primary.contrastText',
       bgColor: 'primary.main',
       tooltip: 'Resume',
     };
   }
   return {
-    icon: <AccessTimeIcon sx={{ fontSize: 32 }} />,
+    icon: <AccessTimeIcon sx={{ fontSize: 40 }} />,
     color: 'text.secondary',
     bgColor: 'transparent',
     tooltip: 'Start',
@@ -145,8 +145,8 @@ function TimerDisplay() {
                     aria-label={visual.tooltip}
                     disabled={isCompleted}
                     sx={{
-                      width: 44,
-                      height: 44,
+                      width: 52,
+                      height: 52,
                       mt: 0.25,
                       color: visual.color,
                       bgcolor: visual.bgColor,
@@ -168,7 +168,7 @@ function TimerDisplay() {
                 variant="h3"
                 sx={{
                   fontVariantNumeric: 'tabular-nums',
-                  minWidth: 56,
+                  minWidth: 72,
                   textAlign: 'right',
                   mt: 1,
                   color: isCompleted || isLowTime ? 'error.main' : 'text.primary',

@@ -111,49 +111,49 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontSize: '1.75rem',
+      fontSize: '2rem',
       fontWeight: 700,
       lineHeight: 1.2,
       letterSpacing: '-0.01em',
     },
     h2: {
-      fontSize: '1.375rem',
+      fontSize: '1.625rem',
       fontWeight: 700,
       lineHeight: 1.25,
     },
     h3: {
-      fontSize: '1.125rem',
+      fontSize: '1.3125rem',
       fontWeight: 600,
       lineHeight: 1.3,
     },
-    h4: { fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.3 },
-    h5: { fontSize: '1rem', fontWeight: 600, lineHeight: 1.4 },
-    h6: { fontSize: '1rem', fontWeight: 600, lineHeight: 1.4 },
+    h4: { fontSize: '1.3125rem', fontWeight: 600, lineHeight: 1.3 },
+    h5: { fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.4 },
+    h6: { fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.4 },
     subtitle1: {
-      fontSize: '0.875rem',
+      fontSize: '1rem',
       fontWeight: 600,
       lineHeight: 1.4,
       letterSpacing: '0.04em',
       textTransform: 'uppercase',
     },
-    subtitle2: { fontSize: '0.875rem', fontWeight: 600, lineHeight: 1.4 },
+    subtitle2: { fontSize: '1rem', fontWeight: 600, lineHeight: 1.4 },
     body1: {
-      fontSize: '1rem',
+      fontSize: '1.125rem',
       fontWeight: 400,
       lineHeight: 1.5,
     },
     body2: {
-      fontSize: '0.875rem',
+      fontSize: '1rem',
       fontWeight: 400,
       lineHeight: 1.5,
     },
     button: {
-      fontSize: '0.9375rem',
+      fontSize: '1.0625rem',
       fontWeight: 600,
       letterSpacing: '0.02em',
     },
     caption: {
-      fontSize: '0.8125rem',
+      fontSize: '0.9375rem',
       fontWeight: 400,
       lineHeight: 1.4,
     },
@@ -180,13 +180,13 @@ export const theme = createTheme({
         root: {
           textTransform: 'none',
           borderRadius: 8,
-          paddingLeft: 20,
-          paddingRight: 20,
-          minHeight: 44,
+          paddingLeft: 24,
+          paddingRight: 24,
+          minHeight: 52,
         },
         sizeLarge: {
-          minHeight: 52,
-          fontSize: '1rem',
+          minHeight: 60,
+          fontSize: '1.125rem',
         },
         contained: {
           boxShadow: 'none',
@@ -213,7 +213,7 @@ export const theme = createTheme({
     MuiToolbar: {
       styleOverrides: {
         root: {
-          minHeight: 56,
+          minHeight: 64,
         },
       },
     },
@@ -238,7 +238,7 @@ export const theme = createTheme({
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontSize: '1.125rem',
+          fontSize: '1.3125rem',
           fontWeight: 600,
         },
       },
@@ -248,7 +248,7 @@ export const theme = createTheme({
         root: {
           backgroundColor: '#FFFFFF',
           borderTop: `1px solid ${palette.taupe[200]}`,
-          height: 64,
+          height: 76,
         },
       },
     },
@@ -256,17 +256,17 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           color: palette.ink.muted,
-          minWidth: 64,
-          paddingTop: 6,
+          minWidth: 72,
+          paddingTop: 8,
           '&.Mui-selected': {
             color: palette.taupe[700],
           },
           '& .MuiBottomNavigationAction-label': {
-            fontSize: '0.75rem',
+            fontSize: '0.875rem',
             fontWeight: 500,
-            marginTop: 2,
+            marginTop: 4,
             '&.Mui-selected': {
-              fontSize: '0.75rem',
+              fontSize: '0.875rem',
               fontWeight: 600,
             },
           },
@@ -290,7 +290,7 @@ export const theme = createTheme({
           },
         },
         input: {
-          fontSize: '1rem',
+          fontSize: '1.125rem',
         },
       },
     },
@@ -349,7 +349,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 8,
-          fontSize: '0.9375rem',
+          fontSize: '1.0625rem',
         },
       },
     },
@@ -357,7 +357,7 @@ export const theme = createTheme({
       styleOverrides: {
         tooltip: {
           backgroundColor: palette.taupe[800],
-          fontSize: '0.8125rem',
+          fontSize: '0.9375rem',
         },
         arrow: {
           color: palette.taupe[800],

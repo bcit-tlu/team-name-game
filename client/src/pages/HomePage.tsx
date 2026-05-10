@@ -89,7 +89,7 @@ function HomePage() {
             >
               <Typography
                 component="span"
-                sx={{ fontSize: '1rem', fontWeight: 600, lineHeight: 1.3 }}
+                sx={{ fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.3 }}
               >
                 {role.label}
                 {suffix}
@@ -97,7 +97,7 @@ function HomePage() {
               <Typography
                 component="span"
                 sx={{
-                  fontSize: '0.8125rem',
+                  fontSize: '0.9375rem',
                   fontWeight: 400,
                   opacity: isActive ? 0.85 : 0.75,
                   textTransform: 'none',
@@ -116,7 +116,7 @@ function HomePage() {
           component="button"
           onClick={() => navigate('/admin')}
           underline="hover"
-          sx={{ color: 'text.secondary', fontSize: '0.875rem' }}
+          sx={{ color: 'text.secondary', fontSize: '1rem' }}
         >
           Admin
         </Link>

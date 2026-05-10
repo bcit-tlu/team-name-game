@@ -45,9 +45,9 @@ function PersonRow({
             bgcolor: 'background.paper',
             border: '1px solid',
             borderColor: 'divider',
-            width: 36,
-            height: 36,
-            fontSize: '1.125rem',
+            width: 44,
+            height: 44,
+            fontSize: '1.375rem',
           }}
         >
           {emoji}
@@ -57,9 +57,9 @@ function PersonRow({
           sx={{
             bgcolor: 'primary.main',
             color: 'primary.contrastText',
-            width: 36,
-            height: 36,
-            fontSize: '0.9rem',
+            width: 44,
+            height: 44,
+            fontSize: '1.0625rem',
           }}
         >
           {name.charAt(0).toUpperCase()}
@@ -155,7 +155,7 @@ function TeamsPage() {
                   sx={{ py: 1.5, mb: 0.5 }}
                 >
                   <ListItemAvatar>
-                    <Typography component="span" sx={{ fontSize: '1.75rem' }}>
+                    <Typography component="span" sx={{ fontSize: '2rem' }}>
                       {team.icon}
                     </Typography>
                   </ListItemAvatar>
