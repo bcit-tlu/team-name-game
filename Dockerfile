@@ -28,6 +28,8 @@ COPY client/package.json ./client/
 RUN npm ci --workspace=client
 COPY client/ ./client/
 ARG VITE_SERVER_URL=/
+ARG APP_VERSION
+ENV VITE_APP_VERSION=${APP_VERSION}
 RUN npm run build --workspace=client
 
 ## ─── Build server for production ─────────────────────────────────

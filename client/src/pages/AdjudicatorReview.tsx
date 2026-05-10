@@ -14,17 +14,17 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import StarIcon from '@mui/icons-material/Star';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import CelebrationIcon from '@mui/icons-material/Celebration';
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useGame, AbilityType } from '../contexts/GameContext';
 
-const ABILITY_ICONS: { type: AbilityType; icon: React.ReactNode; label: string }[] = [
-  { type: 'star', icon: <StarIcon sx={{ fontSize: 36 }} />, label: 'Star' },
-  { type: 'nuke', icon: <LocalFireDepartmentIcon sx={{ fontSize: 36 }} />, label: 'Nuke' },
-  { type: 'interceptor', icon: <CelebrationIcon sx={{ fontSize: 36 }} />, label: 'Interceptor' },
-  { type: 'meh', icon: <SentimentNeutralIcon sx={{ fontSize: 36 }} />, label: 'Meh' },
+const ABILITY_ICONS: { type: AbilityType; icon: React.ReactNode; label: string; color: string }[] = [
+  { type: 'star', icon: <StarIcon sx={{ fontSize: 36 }} />, label: 'Star', color: '#FFD600' },
+  { type: 'nuke', icon: <CrisisAlertIcon sx={{ fontSize: 36 }} />, label: 'Nuke', color: '#F44336' },
+  { type: 'interceptor', icon: <AutoFixNormalIcon sx={{ fontSize: 36 }} />, label: 'Interceptor', color: '#4CAF50' },
+  { type: 'meh', icon: <SentimentNeutralIcon sx={{ fontSize: 36 }} />, label: 'Meh', color: '#FFD600' },
 ];
 
 function AdjudicatorReview() {
@@ -110,7 +110,7 @@ function AdjudicatorReview() {
           Abilities unlocked
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-          {ABILITY_ICONS.map(({ type, icon }) => (
+          {ABILITY_ICONS.map(({ type, icon, color }) => (
             <IconButton
               key={type}
               onClick={() => handleAbilityClick(type)}
@@ -119,7 +119,7 @@ function AdjudicatorReview() {
                 width: 56,
                 height: 56,
                 bgcolor: abilitiesUnlocked ? 'primary.light' : '#E0DDD8',
-                color: abilitiesUnlocked ? 'primary.dark' : '#9F8B7B',
+                color: abilitiesUnlocked ? color : '#9F8B7B',
                 borderRadius: '50%',
                 '&:hover': abilitiesUnlocked
                   ? { bgcolor: 'primary.main', color: 'white' }
@@ -151,8 +151,8 @@ function AdjudicatorReview() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   bgcolor: 'primary.light',
-                  borderRadius: 1,
-                  color: 'primary.dark',
+                  borderRadius: '50%',
+                  color: abilityDef?.color ?? 'primary.dark',
                 }}
               >
                 {abilityDef?.icon}
@@ -165,7 +165,7 @@ function AdjudicatorReview() {
       <Dialog open={confirmAbility !== null} onClose={() => setConfirmAbility(null)}>
         <DialogTitle>Confirm Ability</DialogTitle>
         <DialogContent>
-          <DialogContentText>Are you sure you want to unlock this ability?</DialogContentText>
+          <DialogContentText>Is the team sure they want this ability?</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmAbility(null)}>No</Button>

@@ -16,6 +16,8 @@ export interface Team {
   members: string[];
   entriesUntilAbility: number;
   abilitiesEarned: AbilityType[];
+  approvedCount: number;
+  rejectedCount: number;
   createdBy: string;
 }
 

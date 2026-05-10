@@ -100,8 +100,11 @@ export function setupSocketHandlers(io: GameIO): void {
       }
     });
 
-    socket.on('team:reject-entry', () => {
-      // Reject does nothing to state per requirements
+    socket.on('team:reject-entry', (data) => {
+      const team = store.rejectEntry(data.teamId);
+      if (team) {
+        io.emit('team:updated', team);
+      }
     });
 
     socket.on('team:confer-ability', (data, callback) => {

@@ -77,6 +77,8 @@ class GameStore {
       members: [createdBy],
       entriesUntilAbility: ABILITY_THRESHOLD,
       abilitiesEarned: [],
+      approvedCount: 0,
+      rejectedCount: 0,
       createdBy,
     };
     this.state.teams.push(team);
@@ -86,9 +88,17 @@ class GameStore {
   approveEntry(teamId: string): Team | undefined {
     const team = this.state.teams.find((t) => t.id === teamId);
     if (!team) return undefined;
+    team.approvedCount++;
     if (team.entriesUntilAbility > 0) {
       team.entriesUntilAbility--;
     }
+    return team;
+  }
+
+  rejectEntry(teamId: string): Team | undefined {
+    const team = this.state.teams.find((t) => t.id === teamId);
+    if (!team) return undefined;
+    team.rejectedCount++;
     return team;
   }
 

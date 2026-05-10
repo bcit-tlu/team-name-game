@@ -39,7 +39,6 @@ function TeamMemberTeams() {
       <Breadcrumbs
         items={[
           { label: 'Home', path: '/' },
-          { label: 'Team Member', path: '/team-member' },
           { label: 'Teams' },
         ]}
       />
