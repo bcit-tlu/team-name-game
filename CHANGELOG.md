@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.5.0](https://github.com/bcit-tlu/team-name-game/compare/v0.4.5...v0.5.0) (2026-05-10)
+
+
+### Features
+
+* add GitHub issue creation from feedback with snackbar link ([0473859](https://github.com/bcit-tlu/team-name-game/commit/0473859f11ca5919f28c53b01d6553d6ea764d1b))
+* **client:** timer label gate, breadcrumb cleanup, and player icons on Teams & Roles ([0b3301e](https://github.com/bcit-tlu/team-name-game/commit/0b3301e0b0d31bccec5aff83a55b0f4d7461bcb5))
+* **client:** unify taupe design system and tighten UX ([83fe76d](https://github.com/bcit-tlu/team-name-game/commit/83fe76d4390a0e463a36f4aa3131c5f1f558636a))
+* UX adjustments batch 4 - emoji labels, totals, icons, profile editing, titles, breadcrumbs, version ([f1069be](https://github.com/bcit-tlu/team-name-game/commit/f1069be3872ce2afba28eeac37e46d045394558d))
+* UX tweaks batch 3 - session emoji, abilities display, timer icons, breadcrumbs ([b10f522](https://github.com/bcit-tlu/team-name-game/commit/b10f52251b1b1199b48a15c5be45cf58a5ddba45))
+* UX tweaks batch 5 - stylized totals, member avatars, text changes, roles listing ([1a6b0a9](https://github.com/bcit-tlu/team-name-game/commit/1a6b0a906f53012c2316003d02e9c21b4553c964))
+
+
+### Bug Fixes
+
+* add missing deps to TimerName auto-registration effect ([4d464a9](https://github.com/bcit-tlu/team-name-game/commit/4d464a94a04aa1e23b54018e3491f2696185768f))
+* move setSessionInfo after successful registration, add try-catch to TeamMemberName ([7d236d1](https://github.com/bcit-tlu/team-name-game/commit/7d236d13a945d3910ae7ffceece817750c02c609))
+* only show leave-team hint to team members ([929b710](https://github.com/bcit-tlu/team-name-game/commit/929b710c21697393b804882ea6c219115d9d4235))
+* remove Adjudicator breadcrumb from adjudicator teams page ([3a18738](https://github.com/bcit-tlu/team-name-game/commit/3a18738ca8f87c5a3eb5984f2b6b33fa7b781b63))
+* strip trailing slashes from SERVER_URL to prevent double-slash in production ([7a4e22f](https://github.com/bcit-tlu/team-name-game/commit/7a4e22fecf931ead5e026bf9a1d69299b4640a45))
+
 ## [0.4.5](https://github.com/bcit-tlu/team-name-game/compare/v0.4.4...v0.4.5) (2026-05-09)
 
 
