@@ -107,7 +107,7 @@ function Layout() {
           sx={{ color: location.pathname === '/' ? 'primary.dark' : '#9F8B7B', gap: 0.5 }}
         />
         <BottomNavigationAction
-          label="Teams"
+          label="Teams & Roles"
           icon={<EmojiEventsIcon sx={{ fontSize: 32 }} />}
           sx={{
             color:

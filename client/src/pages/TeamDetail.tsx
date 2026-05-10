@@ -1,5 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+} from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
@@ -42,17 +50,23 @@ function TeamDetail() {
         {team.icon} {team.name}
       </Typography>
 
-      <Box sx={{ display: 'flex', gap: 3, mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <CheckCircleIcon sx={{ color: '#4CAF50', fontSize: 22 }} />
-          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+      <Box sx={{ display: 'flex', gap: 4, mb: 4, justifyContent: 'center' }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <CheckCircleIcon sx={{ color: '#4CAF50', fontSize: 48 }} />
+          <Typography variant="h4" sx={{ fontWeight: 700, color: '#4CAF50' }}>
             {team.approvedCount}
           </Typography>
+          <Typography variant="body2" sx={{ color: '#9F8B7B', fontSize: '0.95rem' }}>
+            Accepted entries
+          </Typography>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <CancelIcon sx={{ color: '#F44336', fontSize: 22 }} />
-          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <CancelIcon sx={{ color: '#F44336', fontSize: 48 }} />
+          <Typography variant="h4" sx={{ fontWeight: 700, color: '#F44336' }}>
             {team.rejectedCount}
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#9F8B7B', fontSize: '0.95rem' }}>
+            Rejected entries
           </Typography>
         </Box>
       </Box>
@@ -69,6 +83,11 @@ function TeamDetail() {
         <List>
           {memberUsers.map((member) => (
             <ListItem key={member!.id} sx={{ py: 1 }}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '1rem' }}>
+                  {member!.name.charAt(0).toUpperCase()}
+                </Avatar>
+              </ListItemAvatar>
               <ListItemText
                 primary={member!.name}
                 primaryTypographyProps={{ fontSize: '1.2rem' }}
@@ -76,6 +95,15 @@ function TeamDetail() {
             </ListItem>
           ))}
         </List>
+      )}
+
+      {state.currentUser && team.members.includes(state.currentUser.id) && (
+        <Typography
+          variant="body2"
+          sx={{ textAlign: 'center', color: '#9F8B7B', mt: 3, fontStyle: 'italic' }}
+        >
+          Click your profile icon in the top right to leave the team
+        </Typography>
       )}
 
       {team.abilitiesEarned.length > 0 && (

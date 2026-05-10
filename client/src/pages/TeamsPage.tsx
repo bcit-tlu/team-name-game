@@ -1,5 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItemButton, ListItemText, ListItemAvatar, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  List,
+  ListItemButton,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Button,
+  Divider,
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 import { useGame } from '../contexts/GameContext';
 
 function TeamsPage() {
@@ -10,6 +21,10 @@ function TeamsPage() {
   const userTeam = state.currentUser
     ? state.teams.find((t) => t.members.includes(state.currentUser!.id))
     : undefined;
+
+  const adjudicators = state.users.filter((u) => u.role === 'adjudicator');
+  const timers = state.users.filter((u) => u.role === 'timer');
+  const weavers = state.users.filter((u) => u.role === 'weaver');
 
   const handleTeamClick = (teamId: string) => {
     if (isAdjudicator) {
@@ -22,7 +37,7 @@ function TeamsPage() {
   return (
     <Box>
       <Typography variant="h1" sx={{ mb: 3 }}>
-        Teams
+        Teams & Roles
       </Typography>
 
       {isTeamMember && !userTeam && (
@@ -37,12 +52,16 @@ function TeamsPage() {
         </Button>
       )}
 
+      <Typography variant="h6" sx={{ mb: 1, fontSize: '1.1rem', color: '#9F8B7B' }}>
+        Teams
+      </Typography>
+
       {state.teams.length === 0 ? (
-        <Typography variant="body1" sx={{ color: '#9F8B7B', mt: 4, textAlign: 'center' }}>
+        <Typography variant="body1" sx={{ color: '#9F8B7B', mb: 3 }}>
           No teams registered yet.
         </Typography>
       ) : (
-        <List>
+        <List sx={{ mb: 2 }}>
           {state.teams.map((team) => (
             <Box key={team.id}>
               <ListItemButton onClick={() => handleTeamClick(team.id)} sx={{ py: 2 }}>
@@ -57,6 +76,57 @@ function TeamsPage() {
             </Box>
           ))}
         </List>
+      )}
+
+      <Divider sx={{ mb: 2 }} />
+
+      <Typography variant="h6" sx={{ mb: 1, fontSize: '1.1rem', color: '#9F8B7B' }}>
+        Adjudicators
+      </Typography>
+
+      {adjudicators.length === 0 ? (
+        <Typography variant="body2" sx={{ color: '#9F8B7B', mb: 2 }}>
+          No adjudicators registered.
+        </Typography>
+      ) : (
+        <List sx={{ mb: 2 }}>
+          {adjudicators.map((user) => (
+            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', py: 1, px: 2 }}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: 'primary.main', width: 36, height: 36, fontSize: '1rem' }}>
+                  {user.name.charAt(0).toUpperCase()}
+                </Avatar>
+              </ListItemAvatar>
+              <Typography sx={{ fontSize: '1.1rem' }}>{user.name}</Typography>
+            </Box>
+          ))}
+        </List>
+      )}
+
+      {timers.length > 0 && (
+        <Box sx={{ mb: 1.5 }}>
+          {timers.map((user) => (
+            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, py: 0.5 }}>
+              <PersonIcon sx={{ color: 'primary.main', fontSize: 24 }} />
+              <Typography sx={{ fontSize: '1.1rem' }}>
+                Timer: {user.name}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
+
+      {weavers.length > 0 && (
+        <Box sx={{ mb: 1.5 }}>
+          {weavers.map((user) => (
+            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, py: 0.5 }}>
+              <PersonIcon sx={{ color: 'primary.main', fontSize: 24 }} />
+              <Typography sx={{ fontSize: '1.1rem' }}>
+                Weaver: {user.name}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       )}
     </Box>
   );
