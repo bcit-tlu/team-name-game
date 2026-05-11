@@ -17,7 +17,7 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSession } from '../contexts/SessionContext';
 
-export const APP_MAX_WIDTH = 540;
+export const APP_MAX_WIDTH = 480;
 export const BOTTOM_NAV_HEIGHT = 76;
 
 function Layout() {
