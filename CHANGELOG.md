@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.6.0](https://github.com/bcit-tlu/team-name-game/compare/v0.5.0...v0.6.0) (2026-05-11)
+
+
+### Features
+
+* **admin:** show deployed app version and hide raw GitHub errors ([69ede62](https://github.com/bcit-tlu/team-name-game/commit/69ede625b29aa11569adfa8b9e054ad1a000f000))
+* **chart:** strip rc timestamp from deploy-time APP_VERSION ([fa72fa1](https://github.com/bcit-tlu/team-name-game/commit/fa72fa134fa33dc759f091ccba503fbb0cdb0ada))
+* **client:** scale up typography and component sizes one level ([d36572b](https://github.com/bcit-tlu/team-name-game/commit/d36572b30850a576e27376a6e1b92e1e7f36938e))
+
+
+### Bug Fixes
+
+* **client:** keep Add-timer FAB clear of taller bottom nav ([63b65a2](https://github.com/bcit-tlu/team-name-game/commit/63b65a250c069fa622d15c32d7cbe4a347ee117a))
+* **client:** share APP_MAX_WIDTH between App and Layout ([4220031](https://github.com/bcit-tlu/team-name-game/commit/4220031fa4c67cbf232364f1e46b9c02f4061d72))
+
+
+### Reverts
+
+* **client:** restore APP_MAX_WIDTH to 480 ([80717ae](https://github.com/bcit-tlu/team-name-game/commit/80717ae4a62679c934deb673d7345329351c9c67))
+
 ## [0.5.0](https://github.com/bcit-tlu/team-name-game/compare/v0.4.5...v0.5.0) (2026-05-10)
 
 
