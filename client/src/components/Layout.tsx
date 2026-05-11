@@ -55,7 +55,7 @@ function Layout() {
           <Typography
             variant="h2"
             component="h1"
-            sx={{ flex: 1, color: 'primary.contrastText', fontSize: '1.3125rem' }}
+            sx={{ flex: 1, color: 'primary.contrastText', fontSize: '1.25rem' }}
           >
             Team Name Game
           </Typography>

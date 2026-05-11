@@ -111,22 +111,22 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontSize: '2rem',
+      fontSize: '1.75rem',
       fontWeight: 700,
       lineHeight: 1.2,
       letterSpacing: '-0.01em',
     },
     h2: {
-      fontSize: '1.625rem',
+      fontSize: '1.5rem',
       fontWeight: 700,
       lineHeight: 1.25,
     },
     h3: {
-      fontSize: '1.3125rem',
+      fontSize: '1.25rem',
       fontWeight: 600,
       lineHeight: 1.3,
     },
-    h4: { fontSize: '1.3125rem', fontWeight: 600, lineHeight: 1.3 },
+    h4: { fontSize: '1.25rem', fontWeight: 600, lineHeight: 1.3 },
     h5: { fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.4 },
     h6: { fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.4 },
     subtitle1: {
@@ -238,7 +238,7 @@ export const theme = createTheme({
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontSize: '1.3125rem',
+          fontSize: '1.25rem',
           fontWeight: 600,
         },
       },
@@ -257,16 +257,19 @@ export const theme = createTheme({
         root: {
           color: palette.ink.muted,
           minWidth: 72,
-          paddingTop: 8,
+          paddingTop: 6,
           '&.Mui-selected': {
             color: palette.taupe[700],
           },
+          '& .MuiSvgIcon-root': {
+            fontSize: 32,
+          },
           '& .MuiBottomNavigationAction-label': {
-            fontSize: '0.875rem',
+            fontSize: '0.9375rem',
             fontWeight: 500,
             marginTop: 4,
             '&.Mui-selected': {
-              fontSize: '0.875rem',
+              fontSize: '0.9375rem',
               fontWeight: 600,
             },
           },
