@@ -87,9 +87,13 @@ router.post('/api/issues', async (req: Request, res: Response) => {
     );
 
     if (createResp.status !== 201) {
-      res
-        .status(502)
-        .json({ error: `GitHub API error: ${createResp.status}` });
+      const responseBody = await createResp.text().catch(() => '');
+      console.error(
+        `GitHub issue creation failed: status=${createResp.status} body=${responseBody}`,
+      );
+      res.status(502).json({
+        error: 'Feedback submission failed. Please try again later.',
+      });
       return;
     }
 
@@ -121,7 +125,9 @@ router.post('/api/issues', async (req: Request, res: Response) => {
     res.status(201).json({ issueUrl: data.html_url });
   } catch (err) {
     console.error('Failed to create GitHub issue:', err);
-    res.status(502).json({ error: 'Failed to create GitHub issue' });
+    res.status(502).json({
+      error: 'Feedback submission failed. Please try again later.',
+    });
   }
 });
 

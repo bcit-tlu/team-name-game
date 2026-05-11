@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -15,11 +15,34 @@ import PageHeader from '../components/PageHeader';
 import { useGame } from '../contexts/GameContext';
 import { useSession } from '../contexts/SessionContext';
 
+const SERVER_URL = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3001').replace(
+  /\/+$/,
+  '',
+);
+
 function AdminPage() {
   const navigate = useNavigate();
   const { resetGame } = useGame();
   const { clearSessionInfo } = useSession();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [runtimeVersion, setRuntimeVersion] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${SERVER_URL}/api/version`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: { version: string | null } | null) => {
+        if (!cancelled && data?.version) {
+          setRuntimeVersion(data.version);
+        }
+      })
+      .catch(() => {
+        // Fall back to build-time __APP_VERSION__
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleReset = () => {
     resetGame();
@@ -62,7 +85,7 @@ function AdminPage() {
       </Paper>
 
       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-        Version {__APP_VERSION__}
+        Version {runtimeVersion ?? __APP_VERSION__}
       </Typography>
 
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>

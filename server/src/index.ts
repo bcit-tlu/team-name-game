@@ -22,6 +22,10 @@ app.get('/healthz', (_req, res) => {
   res.json({ status: 'HEALTHY' });
 });
 
+app.get('/api/version', (_req, res) => {
+  res.json({ version: process.env.APP_VERSION ?? null });
+});
+
 app.use(issuesRouter);
 
 if (isProduction) {
