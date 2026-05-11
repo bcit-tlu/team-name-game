@@ -17,8 +17,8 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSession } from '../contexts/SessionContext';
 
-const APP_MAX_WIDTH = 480;
-const BOTTOM_NAV_HEIGHT = 64;
+export const APP_MAX_WIDTH = 480;
+export const BOTTOM_NAV_HEIGHT = 76;
 
 function Layout() {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ function Layout() {
           <Typography
             variant="h2"
             component="h1"
-            sx={{ flex: 1, color: 'primary.contrastText', fontSize: '1.125rem' }}
+            sx={{ flex: 1, color: 'primary.contrastText', fontSize: '1.25rem' }}
           >
             Team Name Game
           </Typography>
@@ -68,9 +68,9 @@ function Layout() {
               <Avatar
                 sx={{
                   bgcolor: 'primary.dark',
-                  width: 36,
-                  height: 36,
-                  fontSize: '1.125rem',
+                  width: 44,
+                  height: 44,
+                  fontSize: '1.375rem',
                   border: '1px solid',
                   borderColor: 'primary.contrastText',
                 }}
@@ -81,13 +81,13 @@ function Layout() {
               <Avatar
                 sx={{
                   bgcolor: 'primary.dark',
-                  width: 36,
-                  height: 36,
+                  width: 44,
+                  height: 44,
                   border: '1px solid',
                   borderColor: 'primary.contrastText',
                 }}
               >
-                <PersonIcon sx={{ fontSize: 20, color: 'primary.contrastText' }} />
+                <PersonIcon sx={{ fontSize: 24, color: 'primary.contrastText' }} />
               </Avatar>
             )}
           </IconButton>

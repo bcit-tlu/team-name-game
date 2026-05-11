@@ -83,13 +83,13 @@ function TeamDetail() {
         <StatTile
           count={team.approvedCount}
           label="Approved"
-          icon={<CheckCircleIcon sx={{ fontSize: 36 }} />}
+          icon={<CheckCircleIcon sx={{ fontSize: 44 }} />}
           color="success.main"
         />
         <StatTile
           count={team.rejectedCount}
           label="Rejected"
-          icon={<CancelIcon sx={{ fontSize: 36 }} />}
+          icon={<CancelIcon sx={{ fontSize: 44 }} />}
           color="error.main"
         />
       </Stack>
@@ -113,9 +113,9 @@ function TeamDetail() {
                         bgcolor: 'background.paper',
                         border: '1px solid',
                         borderColor: 'divider',
-                        width: 36,
-                        height: 36,
-                        fontSize: '1.125rem',
+                        width: 44,
+                        height: 44,
+                        fontSize: '1.375rem',
                       }}
                     >
                       {member!.icon}
@@ -125,9 +125,9 @@ function TeamDetail() {
                       sx={{
                         bgcolor: 'primary.main',
                         color: 'primary.contrastText',
-                        width: 36,
-                        height: 36,
-                        fontSize: '1rem',
+                        width: 44,
+                        height: 44,
+                        fontSize: '1.125rem',
                       }}
                     >
                       {member!.name.charAt(0).toUpperCase()}

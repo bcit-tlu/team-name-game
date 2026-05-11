@@ -72,7 +72,7 @@ function TeamMemberTeams() {
                   sx={{ py: 1.5, mb: 0.5 }}
                 >
                   <ListItemAvatar>
-                    <Typography component="span" sx={{ fontSize: '1.75rem' }}>
+                    <Typography component="span" sx={{ fontSize: '2rem' }}>
                       {team.icon}
                     </Typography>
                   </ListItemAvatar>

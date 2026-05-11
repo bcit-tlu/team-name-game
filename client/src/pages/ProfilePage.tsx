@@ -83,9 +83,9 @@ function ProfilePage() {
               sx={{
                 bgcolor: 'primary.main',
                 color: 'primary.contrastText',
-                width: 56,
-                height: 56,
-                fontSize: '1.5rem',
+                width: 68,
+                height: 68,
+                fontSize: '1.75rem',
               }}
             >
               {displayEmoji || displayName.charAt(0).toUpperCase() || '?'}

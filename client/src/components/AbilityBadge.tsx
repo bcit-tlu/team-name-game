@@ -9,7 +9,7 @@ interface Props {
   variant?: 'filled' | 'outlined';
 }
 
-function AbilityBadge({ ability, size = 48, iconSize = 28, variant = 'outlined' }: Props) {
+function AbilityBadge({ ability, size = 56, iconSize = 32, variant = 'outlined' }: Props) {
   const def = ABILITIES[ability];
   return (
     <Box
