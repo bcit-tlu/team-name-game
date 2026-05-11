@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
-import Layout from './components/Layout';
+import Layout, { APP_MAX_WIDTH } from './components/Layout';
 import HomePage from './pages/HomePage';
 import TeamMemberName from './pages/TeamMemberName';
 import TeamMemberTeams from './pages/TeamMemberTeams';
@@ -23,7 +23,7 @@ function App() {
   return (
     <Box
       sx={{
-        maxWidth: 480,
+        maxWidth: APP_MAX_WIDTH,
         mx: 'auto',
         minHeight: '100vh',
         display: 'flex',
