@@ -44,6 +44,18 @@ spec:
           env:
             - name: NODE_ENV
               value: production
+            # Display version surfaced by /api/version and the Admin
+            # page. Rendered from `.Values.image.tag | default
+            # .Chart.AppVersion` with the main-build `-rc.<ts>.`
+            # timestamp segment stripped (see the
+            # `team-name-game.displayVersion` helper). Supplying the
+            # value at deploy time rather than baking it as a build-arg
+            # keeps retag-promoted production images (same digest,
+            # different tag under `release-retag.yaml`) displaying a
+            # clean `<ver>` while the main-build `latest` env renders
+            # `<ver>-rc.<short>`.
+            - name: APP_VERSION
+              value: {{ include "team-name-game.displayVersion" . | quote }}
             {{- if .Values.reportIssue.enabled }}
             - name: GITHUB_TOKEN
               valueFrom:
