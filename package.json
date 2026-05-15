@@ -1,6 +1,6 @@
 {
   "name": "team-name-game",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "description": "Real-time synchronizer app for a Team Name Game",
   "workspaces": [
