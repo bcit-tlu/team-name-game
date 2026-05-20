@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/bcit-tlu/team-name-game/compare/v0.6.1...v0.7.0) (2026-05-20)
+
+
+### Features
+
+* add OpenTelemetry instrumentation for client-side traces ([d63e658](https://github.com/bcit-tlu/team-name-game/commit/d63e65893459bce26b76748d3161b4e69a22c2d7))
+* add OpenTelemetry instrumentation for client-side traces ([88e55a7](https://github.com/bcit-tlu/team-name-game/commit/88e55a7112992ac192e7f31473dd8da4f6720786))
+* **server:** add analytics event tracking with OpenTelemetry logs ([0ed0edb](https://github.com/bcit-tlu/team-name-game/commit/0ed0edb6b9276bf353f75434a03e1382a4f8f039))
+* **server:** add analytics event tracking with OpenTelemetry logs ([e8a9b8e](https://github.com/bcit-tlu/team-name-game/commit/e8a9b8e2fd90fa009fdb2da15937cc3d859cf0be))
+* **server:** add OpenTelemetry instrumentation for traces and logs ([3870f60](https://github.com/bcit-tlu/team-name-game/commit/3870f605dd5fad14456888641abb04d92f725722))
+* **server:** add OpenTelemetry instrumentation for traces and logs ([c28ff34](https://github.com/bcit-tlu/team-name-game/commit/c28ff34a2bc69a1ff9d015fd20c5db5ff1df94fc))
+
 ## [0.6.1](https://github.com/bcit-tlu/team-name-game/compare/v0.6.0...v0.6.1) (2026-05-15)
 
 
