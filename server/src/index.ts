@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { setupSocketHandlers } from './socket.js';
 import issuesRouter from './issues.js';
+import { auditMiddleware } from './middleware/audit.js';
 import type { ClientToServerEvents, ServerToClientEvents } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,6 +18,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(auditMiddleware);
 
 app.get('/healthz', (_req, res) => {
   res.json({ status: 'HEALTHY' });

@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import { store } from './state.js';
+import { analytics } from './analytics.js';
 import type { ClientToServerEvents, ServerToClientEvents, NukeTimer } from './types.js';
 
 type GameIO = Server<ClientToServerEvents, ServerToClientEvents>;
@@ -39,6 +40,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (user) {
         callback(user);
         io.emit('user:registered', user);
+        analytics.userRegistered({ user_id: user.id, user_name: user.name, role: user.role, socket_id: user.socketId });
       } else {
         callback(null as unknown as Parameters<typeof callback>[0]);
       }
@@ -65,6 +67,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:created', team);
+        analytics.teamCreated({ team_id: team.id, team_name: team.name, created_by: team.createdBy });
       } else {
         callback(null);
       }
@@ -75,6 +78,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:updated', team);
+        analytics.teamJoined({ team_id: team.id, user_id: data.userId });
       } else {
         callback(null);
       }
@@ -85,6 +89,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(true);
         io.emit('team:updated', team);
+        analytics.teamLeft({ team_id: team.id, user_id: data.userId });
       } else {
         callback(false);
       }
@@ -95,6 +100,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:updated', team);
+        analytics.teamEntryApproved({ team_id: team.id, approved_entries: team.approvedCount });
       } else {
         callback(null);
       }
@@ -104,6 +110,7 @@ export function setupSocketHandlers(io: GameIO): void {
       const team = store.rejectEntry(data.teamId);
       if (team) {
         io.emit('team:updated', team);
+        analytics.teamEntryRejected({ team_id: team.id });
       }
     });
 
@@ -112,6 +119,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (team) {
         callback(team);
         io.emit('team:updated', team);
+        analytics.teamAbilityConferred({ team_id: team.id, ability: data.ability });
       } else {
         callback(null);
       }
@@ -121,6 +129,7 @@ export function setupSocketHandlers(io: GameIO): void {
       const timer = store.createTimer(data.label, data.duration, data.createdBy);
       callback(timer);
       io.emit('timer:created', timer);
+      analytics.timerCreated({ timer_id: timer.id, label: timer.label, duration: timer.duration, created_by: timer.createdBy });
     });
 
     socket.on('timer:start', (data) => {
@@ -128,6 +137,7 @@ export function setupSocketHandlers(io: GameIO): void {
       if (timer) {
         io.emit('timer:updated', timer);
         startTimerInterval(io, timer);
+        analytics.timerStarted({ timer_id: timer.id });
       }
     });
 
@@ -140,6 +150,7 @@ export function setupSocketHandlers(io: GameIO): void {
           timerIntervals.delete(timer.id);
         }
         io.emit('timer:updated', timer);
+        analytics.timerStopped({ timer_id: timer.id });
       }
     });
 
@@ -171,12 +182,14 @@ export function setupSocketHandlers(io: GameIO): void {
       }
       store.reset();
       io.emit('game:reset');
+      analytics.gameReset();
     });
 
     socket.on('disconnect', () => {
       console.log(`Client disconnected: ${socket.id}`);
       const user = store.removeUserBySocket(socket.id);
       if (user) {
+        analytics.userDisconnected({ user_id: user.id, socket_id: socket.id });
         const state = store.getState();
         const affectedTeams = state.teams.filter((t) => t.members.includes(user.id));
         for (const team of affectedTeams) {
