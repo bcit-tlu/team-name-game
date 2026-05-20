@@ -10,12 +10,16 @@ const resource = new Resource({
   [ATTR_SERVICE_NAME]: 'team-name-game',
 });
 
+const otelEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
+
+console.log(`[OTEL] Initializing with endpoint: ${otelEndpoint}`);
+
 const traceExporter = new OTLPTraceExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+  url: otelEndpoint,
 });
 
 const logExporter = new OTLPLogExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+  url: otelEndpoint,
 });
 
 const sdk = new NodeSDK({
@@ -26,3 +30,13 @@ const sdk = new NodeSDK({
 });
 
 sdk.start();
+
+console.log('[OTEL] SDK started successfully');
+
+process.on('SIGTERM', () => {
+  console.log('[OTEL] Shutting down SDK...');
+  sdk.shutdown()
+    .then(() => console.log('[OTEL] SDK shut down successfully'))
+    .catch((err) => console.error('[OTEL] Error shutting down SDK:', err))
+    .finally(() => process.exit(0));
+});
