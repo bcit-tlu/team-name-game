@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/bcit-tlu/team-name-game/compare/v0.7.1...v0.7.2) (2026-05-20)
+
+
+### Bug Fixes
+
+* **otel:** use BatchSpanProcessor and add debug option ([b6630f1](https://github.com/bcit-tlu/team-name-game/commit/b6630f188e74dae510feef5adcb792a52d1b79f7))
+
 ## [0.7.1](https://github.com/bcit-tlu/team-name-game/compare/v0.7.0...v0.7.1) (2026-05-20)
 
 
