@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Features
+
+* Add OpenTelemetry instrumentation for server traces and logs
+* Add OpenTelemetry instrumentation for client-side traces
+* Add analytics event tracking with structured logging
+
 ## [0.6.1](https://github.com/bcit-tlu/team-name-game/compare/v0.6.0...v0.6.1) (2026-05-15)
 
 
