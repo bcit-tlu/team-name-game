@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/bcit-tlu/team-name-game/compare/v0.7.0...v0.7.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* **otel:** add SDK logging and shutdown hook for trace flushing ([381ce42](https://github.com/bcit-tlu/team-name-game/commit/381ce426342b410b8949c2927e475e61fc8a89cb))
+
 ## [0.7.0](https://github.com/bcit-tlu/team-name-game/compare/v0.6.1...v0.7.0) (2026-05-20)
 
 
