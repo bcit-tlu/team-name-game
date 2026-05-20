@@ -66,4 +66,4 @@ ENV CLIENT_ORIGIN=*
 
 EXPOSE 8080
 
-CMD ["node", "server/dist/index.js"]
+CMD ["node", "--import", "./server/dist/instrumentation.js", "server/dist/index.js"]

@@ -71,6 +71,11 @@ zoneAntiAffinity:
   enabled: false
   topologyKey: topology.kubernetes.io/zone
 
+# ── OpenTelemetry instrumentation ────────────────────────────────
+otel:
+  enabled: false
+  collectorEndpoint: "http://opentelemetry-collector.observability.svc:4317"
+
 nodeSelector: {}
 tolerations: []
 affinity: {}
