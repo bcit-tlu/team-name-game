@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.1](https://github.com/bcit-tlu/team-name-game/compare/v0.9.0...v0.9.1) (2026-05-21)
+
+
+### Bug Fixes
+
+* **otel:** correct logRecordProcessor property name to logRecordProcessors ([724121c](https://github.com/bcit-tlu/team-name-game/commit/724121cdc1ffbe7a26589a8d4573d87f619d8b48))
+* **otel:** wrap logRecordProcessors in array for correct SDK initialization ([d70d654](https://github.com/bcit-tlu/team-name-game/commit/d70d654c9648bc1521081122019f2a47e2f87cb9))
+
 ## [0.9.0](https://github.com/bcit-tlu/team-name-game/compare/v0.8.0...v0.9.0) (2026-05-21)
 
 
