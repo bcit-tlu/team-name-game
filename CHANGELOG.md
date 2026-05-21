@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3](https://github.com/bcit-tlu/team-name-game/compare/v0.7.2...v0.7.3) (2026-05-21)
+
+
+### Bug Fixes
+
+* **otel:** strip http:// prefix from gRPC endpoint ([f5fa9bf](https://github.com/bcit-tlu/team-name-game/commit/f5fa9bfea60563411b96f185963085444deacf14))
+
 ## [0.7.2](https://github.com/bcit-tlu/team-name-game/compare/v0.7.1...v0.7.2) (2026-05-20)
 
 
