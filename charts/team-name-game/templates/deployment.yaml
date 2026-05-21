@@ -56,17 +56,19 @@ spec:
             # `<ver>-rc.<short>`.
             - name: APP_VERSION
               value: {{ include "team-name-game.displayVersion" . | quote }}
-            {{- if .Values.otel.enabled }}
+            {{- if .Values.observability.openTelemetry.enabled }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: {{ .Values.otel.collectorEndpoint | quote }}
+              value: {{ .Values.observability.openTelemetry.exporter.endpoint | quote }}
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: {{ .Values.observability.openTelemetry.exporter.protocol | quote }}
             - name: OTEL_SERVICE_NAME
-              value: "team-name-game"
-            - name: OTEL_LOGS_EXPORTER
-              value: "otlp"
+              value: {{ .Values.observability.openTelemetry.serviceName | quote }}
             - name: OTEL_TRACES_EXPORTER
-              value: "otlp"
+              value: {{ .Values.observability.openTelemetry.exporter.traces | quote }}
             - name: OTEL_METRICS_EXPORTER
-              value: "none"
+              value: {{ .Values.observability.openTelemetry.exporter.metrics | quote }}
+            - name: OTEL_LOGS_EXPORTER
+              value: {{ .Values.observability.openTelemetry.exporter.logs | quote }}
             {{- end }}
             {{- if .Values.reportIssue.enabled }}
             - name: GITHUB_TOKEN

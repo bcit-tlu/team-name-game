@@ -72,9 +72,16 @@ zoneAntiAffinity:
   topologyKey: topology.kubernetes.io/zone
 
 # ── OpenTelemetry instrumentation ────────────────────────────────
-otel:
-  enabled: false
-  collectorEndpoint: "http://opentelemetry-collector.observability.svc:4318"
+observability:
+  openTelemetry:
+    enabled: false
+    serviceName: team-name-game
+    exporter:
+      traces: otlp
+      metrics: otlp
+      logs: otlp
+      endpoint: "http://opentelemetry-collector.observability.svc.cluster.local:4318"
+      protocol: http/protobuf
 
 nodeSelector: {}
 tolerations: []
