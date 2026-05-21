@@ -5,6 +5,12 @@ import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
 import { Resource } from '@opentelemetry/resources';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
+import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
+
+// Enable diagnostic logging
+if (process.env.OTEL_DEBUG === 'true') {
+  diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+}
 
 const resource = new Resource({
   [ATTR_SERVICE_NAME]: 'team-name-game',
