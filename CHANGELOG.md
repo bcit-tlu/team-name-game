@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/bcit-tlu/team-name-game/compare/v0.7.6...v0.8.0) (2026-05-21)
+
+
+### Features
+
+* **otel:** add health check exclusion and enable logging auto-instrumentation ([84e862d](https://github.com/bcit-tlu/team-name-game/commit/84e862d5837afd5a281cd71418df95446c1e3895))
+
 ## [0.7.6](https://github.com/bcit-tlu/team-name-game/compare/v0.7.5...v0.7.6) (2026-05-21)
 
 

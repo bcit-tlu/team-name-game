@@ -3,4 +3,4 @@ name: team-name-game
 description: Team Name Game — real-time collaborative naming activity synchronizer
 type: application
 version: 0.1.0
-appVersion: "0.7.6" # x-release-please-version
+appVersion: "0.8.0" # x-release-please-version
