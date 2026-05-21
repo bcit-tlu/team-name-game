@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.4](https://github.com/bcit-tlu/team-name-game/compare/v0.7.3...v0.7.4) (2026-05-21)
+
+
+### Bug Fixes
+
+* **otel:** switch from gRPC to HTTP/protobuf exporters and update collector port to 4318 ([c24d0c9](https://github.com/bcit-tlu/team-name-game/commit/c24d0c9ed14087b9d04b17a5d8c120eb09b871d7))
+
 ## [0.7.3](https://github.com/bcit-tlu/team-name-game/compare/v0.7.2...v0.7.3) (2026-05-21)
 
 
