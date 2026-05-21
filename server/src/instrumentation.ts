@@ -1,16 +1,11 @@
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
-import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 import { Resource } from '@opentelemetry/resources';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
-import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
-
-// Enable diagnostic logging
-if (process.env.OTEL_DEBUG === 'true') {
-  diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
-}
+// Note: HTTP/JSON exporter sends to ${OTEL_EXPORTER_OTLP_ENDPOINT}/v1/traces
 
 const resource = new Resource({
   [ATTR_SERVICE_NAME]: 'team-name-game',
