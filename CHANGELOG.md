@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.6](https://github.com/bcit-tlu/team-name-game/compare/v0.7.5...v0.7.6) (2026-05-21)
+
+
+### Bug Fixes
+
+* **otel:** switch from protobuf to HTTP/JSON exporters and remove debug logging ([aa94597](https://github.com/bcit-tlu/team-name-game/commit/aa945978474edffb6eb33a724932d5522c9cffae))
+
 ## [0.7.5](https://github.com/bcit-tlu/team-name-game/compare/v0.7.4...v0.7.5) (2026-05-21)
 
 
