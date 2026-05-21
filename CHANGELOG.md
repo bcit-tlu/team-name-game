@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/bcit-tlu/team-name-game/compare/v0.8.0...v0.9.0) (2026-05-21)
+
+
+### Features
+
+* **otel:** add log level and excluded URLs environment variables to deployment ([72b3a84](https://github.com/bcit-tlu/team-name-game/commit/72b3a84135cfbeffe315296555704fcc9a30f013))
+
 ## [0.8.0](https://github.com/bcit-tlu/team-name-game/compare/v0.7.6...v0.8.0) (2026-05-21)
 
 
