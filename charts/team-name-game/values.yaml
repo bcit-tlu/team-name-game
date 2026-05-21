@@ -74,7 +74,7 @@ zoneAntiAffinity:
 # ── OpenTelemetry instrumentation ────────────────────────────────
 otel:
   enabled: false
-  collectorEndpoint: "http://opentelemetry-collector.observability.svc:4317"
+  collectorEndpoint: "http://opentelemetry-collector.observability.svc:4318"
 
 nodeSelector: {}
 tolerations: []
