@@ -16,7 +16,7 @@ console.log(`[OTEL] Initializing with endpoint: ${process.env.OTEL_EXPORTER_OTLP
 const sdk = new NodeSDK({
   resource,
   traceExporter: new OTLPTraceExporter(),
-  logRecordProcessor: new SimpleLogRecordProcessor(new OTLPLogExporter()),
+  logRecordProcessors: new SimpleLogRecordProcessor(new OTLPLogExporter()),
   instrumentations: [getNodeAutoInstrumentations()],
 });
 
