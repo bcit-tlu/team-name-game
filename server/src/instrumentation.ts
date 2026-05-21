@@ -11,9 +11,11 @@ const resource = new Resource({
   [ATTR_SERVICE_NAME]: 'team-name-game',
 });
 
-const otelEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
+const rawEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT || '';
+// Strip http:// or https:// prefix for gRPC exporters
+const otelEndpoint = rawEndpoint.replace(/^https?:\/\//, '');
 
-console.log(`[OTEL] Initializing with endpoint: ${otelEndpoint}`);
+console.log(`[OTEL] Initializing with endpoint: ${otelEndpoint} (raw: ${rawEndpoint})`);
 
 const traceExporter = new OTLPTraceExporter({
   url: otelEndpoint,
