@@ -69,6 +69,10 @@ spec:
               value: {{ .Values.observability.openTelemetry.exporter.metrics | quote }}
             - name: OTEL_LOGS_EXPORTER
               value: {{ .Values.observability.openTelemetry.exporter.logs | quote }}
+            - name: OTEL_LOG_LEVEL
+              value: {{ .Values.observability.openTelemetry.logLevel | default "info" | quote }}
+            - name: OTEL_EXCLUDED_URLS
+              value: {{ .Values.observability.openTelemetry.excludedUrls | default "" | quote }}
             {{- end }}
             {{- if .Values.reportIssue.enabled }}
             - name: GITHUB_TOKEN

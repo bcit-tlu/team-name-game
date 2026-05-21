@@ -82,6 +82,7 @@ observability:
       logs: otlp
       endpoint: "http://opentelemetry-collector.observability.svc.cluster.local:4318"
       protocol: http/protobuf
+    logLevel: info
     excludedUrls: "/healthz"
     loggingAutoInstrumentation: "true"
 
