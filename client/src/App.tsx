@@ -18,6 +18,7 @@ import TeamDetail from './pages/TeamDetail';
 import ProfilePage from './pages/ProfilePage';
 import FeedbackPage from './pages/FeedbackPage';
 import AdminPage from './pages/AdminPage';
+import IntroPage from './pages/IntroPage';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/teams/:teamId" element={<TeamDetail />} />
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/intro" element={<IntroPage />} />
         </Route>
       </Routes>
     </Box>
