@@ -142,7 +142,6 @@ function TimerDisplay() {
     <Box>
       <PageHeader
         title="Timers"
-        description="Tap a timer's clock to start, pause, or resume the countdown."
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Timers' },
@@ -198,8 +197,11 @@ function TimerDisplay() {
         </Stack>
       </Box>
 
-      <Typography variant="h3" sx={{ mb: 1.5 }}>
+      <Typography variant="h3" sx={{ mb: 0.5 }}>
         Nuke Timers
+      </Typography>
+      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1.5 }}>
+        Tap a timer&apos;s clock to start, pause, or resume the countdown.
       </Typography>
 
       <Stack spacing={1.5}>
