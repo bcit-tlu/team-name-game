@@ -14,6 +14,7 @@ import {
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSession } from '../contexts/SessionContext';
 
@@ -59,6 +60,13 @@ function Layout() {
           >
             Team Name Game
           </Typography>
+          <IconButton
+            onClick={() => navigate('/intro')}
+            aria-label="Game info"
+            sx={{ color: 'primary.contrastText' }}
+          >
+            <InfoOutlinedIcon />
+          </IconButton>
           <IconButton
             onClick={handleProfileClick}
             aria-label="Open profile"
