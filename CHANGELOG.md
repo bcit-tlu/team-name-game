@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.10.0](https://github.com/bcit-tlu/team-name-game/compare/v0.9.1...v0.10.0) (2026-05-22)
+
+
+### Features
+
+* **client:** add info icon to app bar linking to intro page ([838cef3](https://github.com/bcit-tlu/team-name-game/commit/838cef3f05a065e200aab25927321a83a6977893))
+* **client:** add intro page and game timer to timer screen ([24a595c](https://github.com/bcit-tlu/team-name-game/commit/24a595c0862a8de04c5f6301e35003f556cd8a3c))
+* **client:** add intro page and game timer to timer screen ([2c3158d](https://github.com/bcit-tlu/team-name-game/commit/2c3158de6c0f844b6415b260375b009293fd3c2d))
+* **client:** improve nuke timer row alignment and icon sizing ([8f03d74](https://github.com/bcit-tlu/team-name-game/commit/8f03d74989d3fcbc6c56cd8a8ccf55b2bfb90a06))
+* **client:** move timer instructions below Nuke Timers heading ([5f19c33](https://github.com/bcit-tlu/team-name-game/commit/5f19c339c6519c56ce4a2a8072b3738615b09c3f))
+
 ## [0.9.1](https://github.com/bcit-tlu/team-name-game/compare/v0.9.0...v0.9.1) (2026-05-21)
 
 
