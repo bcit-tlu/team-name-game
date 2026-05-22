@@ -216,7 +216,7 @@ function TimerDisplay() {
               key={timer.id}
               sx={{
                 display: 'flex',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 gap: 1,
               }}
             >
@@ -247,7 +247,6 @@ function TimerDisplay() {
                     sx={{
                       width: 52,
                       height: 52,
-                      mt: 0.25,
                       color: visual.color,
                       bgcolor: visual.bgColor,
                       borderRadius: '50%',
@@ -265,12 +264,12 @@ function TimerDisplay() {
                 </span>
               </Tooltip>
               <Typography
-                variant="h3"
                 sx={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
                   fontVariantNumeric: 'tabular-nums',
                   minWidth: 72,
-                  textAlign: 'right',
-                  mt: 1,
+                  textAlign: 'center',
                   color: isCompleted || isLowTime ? 'error.main' : 'text.primary',
                 }}
               >
@@ -280,9 +279,17 @@ function TimerDisplay() {
                 <IconButton
                   onClick={() => resetTimer(timer.id)}
                   aria-label="Reset timer"
-                  sx={{ color: 'text.secondary', mt: 0.25 }}
+                  sx={{
+                    width: 52,
+                    height: 52,
+                    color: 'text.secondary',
+                    borderRadius: '50%',
+                    border: '1.5px solid',
+                    borderColor: 'divider',
+                    '&:hover': { bgcolor: 'action.hover' },
+                  }}
                 >
-                  <RestartAltIcon />
+                  <RestartAltIcon sx={{ fontSize: 40 }} />
                 </IconButton>
               </Tooltip>
             </Box>
