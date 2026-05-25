@@ -2,36 +2,23 @@
 
 ## Setup Commands
 
-### Quick Start (with Docker)
-- Start dev environment: `docker compose up`
-- Client available at: `http://localhost:5173`
-- Server available at: `http://localhost:3001`
-
-### Without Docker
+- Local development: `docker compose up` (starts client + server with hot-reload)
 - Install all dependencies: `npm install`
 - Start both client and server: `npm run dev`
 - Start server only: `npm run dev --workspace=server`
 - Start client only: `npm run dev --workspace=client`
-
-### Build
 - Lint all workspaces: `npm run lint`
 - Build all workspaces: `npm run build`
-- Build production Docker image: `docker build --target production -t team-name-game .`
+- Helm lint: `helm lint charts/team-name-game/`
+- Helm validate: `helm template test charts/team-name-game/ | kubeconform -strict -summary -schema-location default -ignore-missing-schemas`
 
 ## Code Style
 
-### Frontend (`client/`)
 - Use TypeScript strict mode
-- Prefer functional components in React
-- Use MUI components for UI (no Tailwind)
-- Use ESLint configuration in `client/eslint.config.js`
-- Follow conventional commit format
-
-### Backend (`server/`)
-- Use TypeScript with ES modules (`"type": "module"`)
-- Use type annotations for all Socket.io event contracts
-- Use ESLint configuration in `server/eslint.config.js`
-- Follow conventional commit format
+- Prefer functional components in React (MUI, no Tailwind)
+- Use ESLint configurations in `client/eslint.config.js` and `server/eslint.config.js`
+- Follow conventional commit format for PR titles
+- License: MPL-2.0
 
 ## Testing Guidelines
 
@@ -40,35 +27,43 @@
 - Run server tests only: `npm run test --workspace=server`
 - Run client tests only: `npm run test --workspace=client`
 - Watch mode: `npm run test:watch --workspace=server` (or `client`)
-- Write unit tests for new utility functions in `src/__tests__/`
 - Client tests use `@testing-library/react` with jsdom environment
-- Manual testing via `docker compose up` with multiple browser tabs to verify real-time sync
-- Test plan: register a team → adjudicator approves 4 entries → ability unlocks → timer countdown
-- Run `npm run lint` and `npm run build` before committing
 
 ## Project Structure
-- `/client/src/pages` - React page components (one per screen/role)
-- `/client/src/components` - Shared UI components (NameForm, Breadcrumbs, Layout)
-- `/client/src/contexts` - React contexts (GameContext for state, SocketContext for connection)
-- `/client/src/theme` - MUI theme configuration (purple palette, accessibility)
-- `/server/src` - Express + Socket.io backend
-- `/server/src/types.ts` - Shared TypeScript type definitions for Socket.io events
-- `/server/src/state.ts` - In-memory game state store
-- `/server/src/socket.ts` - Socket.io event handlers
-- `/conf.d` - Nginx configuration (if using nginx reverse proxy)
-- `/charts/team-name-game` - Helm chart for Kubernetes deployment
-- `/.github/workflows` - CI/CD pipelines
+
+- `/client` — React frontend (Vite + MUI)
+- `/server` — Node.js/Express backend (Socket.io + OpenTelemetry)
+- `/charts/team-name-game` — Helm chart for Kubernetes deployment
+- `/.github/workflows/` — CI/CD pipelines
+- `/package.json` — Root monorepo orchestration using npm workspaces
 
 ## Architecture
 
-- **State management**: In-memory on server, broadcast via Socket.io to all clients
+- **Runtime**: Node.js/Express on port 8080 (serves both API and built client assets)
 - **Real-time sync**: Socket.io events for user registration, team creation, entry approval, ability conferral, timer management
+- **State management**: In-memory on server, broadcast via Socket.io to all clients
 - **No persistence**: Game state resets on server restart; admin can reset via the app
 - **Ability threshold**: 4 approved entries unlocks 1 ability choice (star, nuke, interceptor, meh)
 
 ## Development Workflow
+
 - Create feature branches from `main`
-- Use pull requests with conventional commit titles for code review
-- Squash merge into `main`
-- release-please automates versioning and changelogs
-- OCI images built and pushed to GHCR on merge to `main`
+- Use pull requests for code review
+- PR titles must follow conventional commit format (enforced by `pr-title-lint.yaml`)
+- Squash commits before merging
+
+## CI/CD
+
+- CI uses shared `bcit-tlu/.github` OCI build reusable workflow
+- `helm-lint` validates Helm charts on every push and PR
+- `release-please` manages versioning via conventional commits (`release-type: "simple"`)
+- Version is tracked in `.release-please-manifest.json` and `Chart.yaml` (`# x-release-please-version` annotations)
+- Images are published to `ghcr.io/bcit-tlu/team-name-game/team-name-game`
+- Charts are published to `oci://ghcr.io/bcit-tlu/team-name-game/charts`
+- `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` is set in all workflows
+
+## Deployment
+
+- Deployed to Kubernetes via Flux CD (see `bcit-tlu/flux-fleet`)
+- Ingress: `team-name-game.<CLUSTER_ENV>.ltc.bcit.ca`
+- Both `latest` (cluster03) and `stable` (cluster04) overlays exist
