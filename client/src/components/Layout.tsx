@@ -65,7 +65,7 @@ function Layout() {
             aria-label="Game info"
             sx={{ color: 'primary.contrastText' }}
           >
-            <InfoOutlinedIcon />
+            <InfoOutlinedIcon sx={{ fontSize: 28 }} />
           </IconButton>
           <IconButton
             onClick={handleProfileClick}
