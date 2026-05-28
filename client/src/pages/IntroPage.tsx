@@ -91,6 +91,49 @@ function IntroPage() {
 
       <Divider sx={{ my: 2 }} />
 
+      <Typography variant="h2" sx={{ mb: 1 }}>
+        Abilities
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 2 }}>
+        Abilities are earned after 4 approved entries. They are used to decorate the entries on the
+        game board.
+      </Typography>
+      <Box component="dl" sx={{ mb: 3 }}>
+        <Typography component="dt" variant="body1" sx={{ fontWeight: 700 }}>
+          Star
+        </Typography>
+        <Typography component="dd" variant="body1" sx={{ ml: 3, mb: 1.5 }}>
+          &ldquo;I like this entry!&rdquo; &mdash; Stars communicate that an entry is a good one.
+        </Typography>
+
+        <Typography component="dt" variant="body1" sx={{ fontWeight: 700 }}>
+          Nuke
+        </Typography>
+        <Typography component="dd" variant="body1" sx={{ ml: 3, mb: 1.5 }}>
+          &ldquo;This entry is terrible&rdquo; &mdash; Nukes are time-limited eliminators; when a
+          team adds a nuke to an entry on the gameboard, that entry will be removed from the
+          gameboard after the time limit is reached.
+        </Typography>
+
+        <Typography component="dt" variant="body1" sx={{ fontWeight: 700 }}>
+          Interceptor
+        </Typography>
+        <Typography component="dd" variant="body1" sx={{ ml: 3, mb: 1.5 }}>
+          &ldquo;Noooooo... I&rsquo;m going to save that entry!&rdquo; &mdash; Interceptors save
+          entries from elimination. They are not pre-emptive; they can only be used after a Nuke has
+          been added to an entry.
+        </Typography>
+
+        <Typography component="dt" variant="body1" sx={{ fontWeight: 700 }}>
+          Meh
+        </Typography>
+        <Typography component="dd" variant="body1" sx={{ ml: 3, mb: 1.5 }}>
+          &ldquo;Not my fav&rdquo; &mdash; Meh&rsquo;s express disapproval for an entry.
+        </Typography>
+      </Box>
+
+      <Divider sx={{ my: 2 }} />
+
       <Typography variant="h2" sx={{ mb: 2 }}>
         Support Roles
       </Typography>
