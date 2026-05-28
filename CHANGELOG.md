@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/bcit-tlu/team-name-game/compare/v0.10.0...v0.11.0) (2026-05-28)
+
+
+### Features
+
+* **client:** enlarge info icon and add Abilities section to intro page ([3750f68](https://github.com/bcit-tlu/team-name-game/commit/3750f689d05451a2783160caa1d48220b218de2e))
+
 ## [0.10.0](https://github.com/bcit-tlu/team-name-game/compare/v0.9.1...v0.10.0) (2026-05-22)
 
 
